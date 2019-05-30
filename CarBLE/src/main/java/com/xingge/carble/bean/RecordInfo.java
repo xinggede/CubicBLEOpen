@@ -2,7 +2,8 @@ package com.xingge.carble.bean;
 
 import android.graphics.Color;
 
-import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps.model.LatLng;
+
 import java.util.List;
 
 

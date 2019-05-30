@@ -38,7 +38,7 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <com.amap.api.maps2d.MapView
+    <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +52,7 @@
             android:onClick="onClick"
             android:text="卫星地图" />
 
-    </com.amap.api.maps2d.MapView>
+    </com.amap.api.maps.MapView>
 
     <SeekBar
         android:id="@+id/seekBar"

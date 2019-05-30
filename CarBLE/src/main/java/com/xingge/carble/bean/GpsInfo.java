@@ -1,6 +1,6 @@
 package com.xingge.carble.bean;
 
-import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps.model.LatLng;
 import com.xingge.carble.util.Tool;
 
 public class GpsInfo {

@@ -1,5 +1,7 @@
 package com.xingge.carble.ui;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xingge.carble.R;
+import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.States;
@@ -354,6 +357,17 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 } else {
                     Tool.toastShow(this, "设置失败");
                 }
+                break;
+
+            case R.id.lin_off_map:
+                checkPermission(new BaseActivity.CheckPermListener() {
+                    @Override
+                    public void superPermission() {
+                        startActivity(new Intent(SettingActivity.this,
+                                com.amap.api.maps.offlinemap.OfflineMapActivity.class));
+                    }
+                }, R.string.permiss_tip, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
                 break;
 
             default:

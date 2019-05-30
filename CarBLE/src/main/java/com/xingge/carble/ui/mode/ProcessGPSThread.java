@@ -5,9 +5,9 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 
-import com.amap.api.maps2d.AMapUtils;
-import com.amap.api.maps2d.CoordinateConverter;
-import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CoordinateConverter;
+import com.amap.api.maps.model.LatLng;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bean.PackInfo;
 import com.xingge.carble.util.Tool;
@@ -35,7 +35,7 @@ public class ProcessGPSThread extends Thread {
 
     public ProcessGPSThread(Context context, Handler handler, int time) {
         this.handler = handler;
-        converter = new CoordinateConverter();
+        converter = new CoordinateConverter(context);
         converter.from(CoordinateConverter.CoordType.GPS);
         mPauseLock = new Object();
         this.time = time;

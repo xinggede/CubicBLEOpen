@@ -133,6 +133,11 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
             <LinearLayout style="@style/linStyle">
 
                 <TextView
@@ -144,6 +149,23 @@
                     style="@style/tvBJStyle"
                     android:layout_width="150dp"
                     android:text="30分钟" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_off_map"
+                style="@style/linStyle"
+                android:layout_height="50dp"
+                android:onClick="onClick">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="离线地图：" />
 
             </LinearLayout>
 
