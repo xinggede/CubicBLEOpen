@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/et_input1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="经度坐标"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="200"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="analyticalCode"
+            android:text="解析文档"
+            android:textColor="#000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/et_input2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="纬度坐标"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="100"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="skipMap"
+            android:text="打开地图"
+            android:textColor="#000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

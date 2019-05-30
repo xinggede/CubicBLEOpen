@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="submitLahyout">#FFFFCC</color>
+    <color name="clear">#00000000</color>
+    <color name="listbg">#D1EEEE</color>
+    <color name="arraybg">#FAEBD7</color>
+    <color name="textHintColor">#EBEBEB</color>
+    <color name="textPressed">#FFD700</color>
+    <color name="textNormal">#BF3EFF</color>
+    <color name="more_list_divider">#dddddd</color>
+    <color name="popgridViewbg">#E6E6FA</color>
+    <color name="segmentNormal">#436EEE</color>
+    
+    <color name="bgColor">#E0EEE0</color>
+
+</resources>

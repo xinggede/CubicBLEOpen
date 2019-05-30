@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rfstar.kevin">
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:name="com.rfstar.kevin.app.App"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".main.WelcomeActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.rfstar.kevin.main.MainActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.rfstar.kevin.main.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.SendDataActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".main.ReceivedataActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.PWMActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.ADC_Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <service
+            android:name="com.rfstar.kevin.service.RFStarBLEService"
+            android:enabled="true" >
+        </service>
+
+        <activity
+            android:name=".main.BatteryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.RssiActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.DeviceInformationActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.Programmable8Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".main.ModuleParameterActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
+
+</manifest>

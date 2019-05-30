@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_zone">
+        <item>+01</item>
+        <item>+02</item>
+        <item>+03</item>
+        <item>+04</item>
+        <item>+05</item>
+        <item>+06</item>
+        <item>+07</item>
+        <item>+08</item>
+        <item>+09</item>
+        <item>+10</item>
+        <item>+11</item>
+        <item>+12</item>
+        <item>-01</item>
+        <item>-02</item>
+        <item>-03</item>
+        <item>-04</item>
+        <item>-05</item>
+        <item>-06</item>
+        <item>-07</item>
+        <item>-08</item>
+        <item>-09</item>
+        <item>-10</item>
+        <item>-11</item>
+        <item>-12</item>
+    </string-array>
+
+    <string-array name="acc">
+        <item>关</item>
+        <item>开</item>
+        <item>自动</item>
+    </string-array>
+
+    <string-array name="location_mode">
+        <item>默认</item>
+        <item>美国-GPS</item>
+        <item>中国-BEIDOU</item>
+        <item>俄罗斯-GLONASS</item>
+        <item>混合(GPS+BEIDOU)</item>
+        <item>混合(GPS+GLONASS)</item>
+        <item>混合(BEIDOU+GLONASS)</item>
+    </string-array>
+
+    <string-array name="gps_show_type">
+        <item>度 分.分(DMM)</item>
+        <item>度 分 秒(DMS)</item>
+        <item>度.度 度(DDD)</item>
+    </string-array>
+
+    <string-array name="output_level">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="tl_time">
+        <item>10分钟</item>
+        <item>30分钟</item>
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>6小时</item>
+        <item>12小时</item>
+    </string-array>
+
+    <string-array name="tf_time">
+        <item>5S</item>
+        <item>10S</item>
+        <item>15S</item>
+        <item>20S</item>
+        <item>30S</item>
+        <item>60S</item>
+    </string-array>
+</resources>

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bj_color"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="信息显示" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lin1"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="电压：" />
+
+                <TextView
+                    android:id="@+id/tv_voltage"
+                    style="@style/tcStyle"
+                    android:text="0V" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="IGV：" />
+
+                <TextView
+                    android:id="@+id/tv_igv"
+                    style="@style/tcStyle"
+                    android:text="--" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin3"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="温度：" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="内：" />
+
+                <TextView
+                    android:id="@+id/tv_wd_n"
+                    style="@style/tcStyle"
+                    android:text="0°C" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="外：" />
+
+                <TextView
+                    android:id="@+id/tv_wd_w"
+                    style="@style/tcStyle"
+                    android:text="0C°" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin2"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="坡度：" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="俯仰：" />
+
+                <TextView
+                    android:id="@+id/tv_fy"
+                    style="@style/tcStyle"
+                    android:text="0°" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="侧倾：" />
+
+                <TextView
+                    android:id="@+id/tv_qc"
+                    style="@style/tcStyle"
+                    android:text="0°" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin4"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="大气压：" />
+
+                <TextView
+                    android:id="@+id/tv_dqy"
+                    style="@style/tcStyle"
+                    android:text="0hPa" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="气压绝对海拔:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_dqyhb"
+                    style="@style/tvStyle"
+                    android:text="0米"
+                    android:textSize="10sp" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="海拔：" />
+
+                <TextView
+                    android:id="@+id/tv_altitude"
+                    style="@style/tcStyle"
+                    android:text="0米" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_location"
+                style="@style/linStyle"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="定位状态：" />
+
+                <TextView
+                    android:id="@+id/tv_location_state"
+                    style="@style/tcStyle"
+                    android:text="无效" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="50dp"
+                    android:text="卫星数：" />
+
+                <TextView
+                    android:id="@+id/tv_satellite"
+                    style="@style/tcStyle"
+                    android:text="0" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_ll"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="经度：" />
+
+                <TextView
+                    android:id="@+id/tv_longitude"
+                    style="@style/tcStyle"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="纬度：" />
+
+                <TextView
+                    android:id="@+id/tv_latitude"
+                    style="@style/tcStyle"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_rr"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="日出时间：" />
+
+                <TextView
+                    android:id="@+id/tv_rcsj"
+                    style="@style/tcStyle"
+                    android:text="00:00" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="40dp"
+                    android:text="日落时间：" />
+
+                <TextView
+                    android:id="@+id/tv_rlsj"
+                    style="@style/tcStyle"
+                    android:text="00:00" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_speed"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="速度：" />
+
+                <TextView
+                    android:id="@+id/tv_speed"
+                    style="@style/tcStyle"
+                    android:layout_weight="1"
+                    android:text="0KM/H"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/bt_get_gps"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:onClick="onClick"
+                    android:text="轨迹获取"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.xingge.carble.ui.CusRoundView
+                android:id="@+id/cusRoundView"
+                android:layout_width="180dp"
+                android:layout_height="180dp" />
+
+            <LinearLayout
+                android:id="@+id/lin5"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="对讲开关：" />
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:switchMinWidth="60dp" />
+
+                <Button
+                    android:id="@+id/bt_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:onClick="onClick"
+                    android:text="设置频道信息"
+                    android:textColor="@drawable/tv_hint_state_color"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin6"
+                style="@style/linStyle"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="频道：" />
+
+                <EditText
+                    android:id="@+id/tv_channel"
+                    style="@style/etStyle"
+                    android:hint="范围(0~20)"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="40dp"
+                    android:text="亚音ID：" />
+
+                <EditText
+                    android:id="@+id/tv_id"
+                    style="@style/etStyle"
+                    android:hint="范围(0~121)"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

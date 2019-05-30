@@ -1,0 +1,109 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="pop_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/pop_exit</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="segmentView_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="segmentView_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textColor">@drawable/segment_text_item_click</item>
+    </style>
+
+    <style name="io_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="io_Tab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="io_Box">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">""</item>
+    </style>
+
+    <style name="module_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="module_txt1" parent="@style/module_txt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="module_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@drawable/module_item_click</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="module_Edit">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="module_Btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@drawable/button_item_click</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+</resources>

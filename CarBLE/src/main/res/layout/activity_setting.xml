@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bj_color"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="设置" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="ACC控制方式：" />
+
+                <TextView
+                    android:id="@+id/tv_acc"
+                    style="@style/tvBJStyle"
+                    android:layout_width="100dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="时区设置：" />
+
+                <TextView
+                    android:id="@+id/tv_time_zone"
+                    style="@style/tvBJStyle"
+                    android:layout_width="100dp"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/tcStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="18:20:30"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/bt_set_time"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onClick"
+                    android:text="时间设置"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/linStyle"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="定位工作模式：" />
+
+                <TextView
+                    android:id="@+id/tv_location_mode"
+                    style="@style/tvBJStyle"
+                    android:layout_width="200dp"
+                    android:text="默认" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="经纬显示方式：" />
+
+                <TextView
+                    android:id="@+id/tv_gps_show_type"
+                    style="@style/tvBJStyle"
+                    android:layout_width="150dp"
+                    android:text="度 分.分(DMM)" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="轨迹记录频率：" />
+
+                <TextView
+                    android:id="@+id/tv_track_frequency"
+                    style="@style/tvBJStyle"
+                    android:layout_width="150dp"
+                    android:text="5s" />
+
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="停留标识时间：" />
+
+                <TextView
+                    android:id="@+id/tv_tl_time"
+                    style="@style/tvBJStyle"
+                    android:layout_width="150dp"
+                    android:text="30分钟" />
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:id="@+id/rg_rf"
+                style="@style/linStyle"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="射频功率：" />
+
+                <RadioButton
+                    android:id="@+id/rb_one"
+                    style="@style/rbStyle"
+                    android:onClick="onClick"
+                    android:text="低功率0.5W" />
+
+                <RadioButton
+                    android:id="@+id/rb_two"
+                    style="@style/rbStyle"
+                    android:layout_marginStart="20dp"
+                    android:onClick="onClick"
+                    android:text="高功率" />
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_out"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="输出音量：" />
+
+                <TextView
+                    android:id="@+id/tv_output_volume"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="咪头增益：" />
+
+                <TextView
+                    android:id="@+id/tv_mt"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_level"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="静噪级别：" />
+
+                <TextView
+                    android:id="@+id/tv_output_level"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="手咪使能：" />
+
+                <TextView
+                    android:id="@+id/tv_mtsn"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_frequency"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="频道0-频率：" />
+
+                <EditText
+                    android:id="@+id/et_frequency"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:hint="范围(4000000~4700000)"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="7" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#292525" />
+
+            <LinearLayout
+                android:id="@+id/lin_id"
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="频道0-亚音ID：" />
+
+                <EditText
+                    android:id="@+id/et_id"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:hint="范围(0~121)"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+                <Button
+                    android:id="@+id/bt_set_frequency"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onClick"
+                    android:text="设置"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/linStyle"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="密码设置：" />
+
+                <EditText
+                    android:id="@+id/et_old_pwd"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:hint="旧密码"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+                <EditText
+                    android:id="@+id/et_new_pwd"
+                    style="@style/etStyle"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:hint="新密码"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+                <Button
+                    android:id="@+id/bt_set_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="5dp"
+                    android:onClick="onClick"
+                    android:text="设置"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/linStyle"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/bt_reset"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+
+                    android:onClick="onClick"
+                    android:text="清空轨迹"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="VER:" />
+
+                <TextView
+                    android:id="@+id/tv_ver"
+                    style="@style/tvStyle"
+                    android:padding="10dp"
+                    android:text="1.0.0" />
+
+                <Button
+                    android:id="@+id/bt_save"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:onClick="onClick"
+                    android:text="保存设置"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

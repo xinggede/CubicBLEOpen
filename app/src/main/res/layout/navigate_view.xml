@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="#00000000" >
+
+    <RelativeLayout
+        android:id="@+id/navigate_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/navigate_bg" >
+
+        <TextView
+            android:id="@+id/navigateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/nodata"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titleSize" />
+
+        <Button
+            android:id="@+id/leftBtn"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/navigationbtn_dp"
+            android:background="@drawable/topbar_item_click"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/navigationbtn_dp"
+            android:background="@drawable/topbar_item_click"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

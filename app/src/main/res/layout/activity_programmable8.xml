@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:orientation="vertical" >
+
+    <include layout="@layout/navigation_relativelayout" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/set_item_normal_bg"
+                android:paddingBottom="10dp" >
+
+                <TableRow>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp" >
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　IO7~IO0的配置　" />
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　　未选中时，相应位被设置为0:bit7,bit6做信号提示脚位，低电平有效;bit5~ bit0 表示 IO5~ IO0 做为输入口"
+                            android:textColor="#008B00"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　　选中时，相应位被设置为 1: bit7,bit6 表示 IO7,IO6 做 为普通输出口bit5~ bit0 表示 IO5~ IO0 做为输出口"
+                            android:textColor="#008B00"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/setTxt"
+                            style="@style/io_txt"
+                            android:text="00 00 00 00"
+                            android:textColor="#FF0000" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO7　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox7"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO6　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox6"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO5　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox5"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO4　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox4"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO3　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox3"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO2　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox2"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO1　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox1"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO0　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioSetBox0"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/outTableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/set_item_normal_bg"
+                android:paddingBottom="10dp" >
+
+                <TableRow>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp" >
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　IO7~IO0的输出状态　" />
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　　表示在IO7~ IO0分别输出的电平,bit7 和 bit6 仅在 IO7,IO6 做为普通输出口 时有效,做为信号提示脚 位时 bit7 和 bit6 无效。"
+                            android:textColor="#008B00"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/outTxt"
+                            style="@style/io_txt"
+                            android:text="00 00 00 00"
+                            android:textColor="#FF0000" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO7　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox7"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO6　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox6"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO5　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox5"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO4　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox4"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO3　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox3"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO2　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox2"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO1　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox1"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO0　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioOutBox0"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/inTableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/set_item_normal_bg"
+                android:paddingBottom="10dp" >
+
+                <TableRow>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp" >
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　IO7~IO0的输入状态　" />
+
+                        <TextView
+                            style="@style/io_txt"
+                            android:text="　　可以读取或接收通知。在 打开通知使能的前提下, 某个输入电平的变化都 会通知到 APP。IO7,IO6 只能做为输出或者信号 提示脚,对应位无效"
+                            android:textColor="#008B00"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/inTxt"
+                                style="@style/io_txt"
+                                android:text="00 00 00 00"
+                                android:textColor="#FF0000" />
+
+                            <CheckBox
+                                android:id="@+id/ioInEnableBox7"
+                                style="@style/io_Box"
+                                android:onClick="onInEnable"
+                                android:text="通知使能"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO5　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox5"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO4　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox4"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO3　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox3"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO2　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox2"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <LinearLayout
+                        style="@style/io_Tab"
+                        android:weightSum="2" >
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO1　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox1"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/io_Tab" >
+
+                            <TextView
+                                style="@style/io_txt"
+                                android:text="IO0　:" />
+
+                            <CheckBox
+                                android:id="@+id/ioInBox0"
+                                style="@style/io_Box" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

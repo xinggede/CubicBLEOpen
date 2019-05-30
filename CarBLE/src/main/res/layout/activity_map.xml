@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lin_top"
+        style="@style/linStyle"
+        android:background="@color/colorPrimary"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="onClick"
+            android:padding="5dp"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            style="@style/tvStyle"
+            android:text="轨迹日期："
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_day"
+            style="@style/tvBJStyle"
+            android:layout_width="150dp" />
+
+        <Button
+            android:id="@+id/bt_get_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:enabled="false"
+            android:onClick="onClick"
+            android:text="显示"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lin_top">
+
+        <Button
+            android:id="@+id/bt_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:onClick="onClick"
+            android:text="卫星地图" />
+
+    </com.amap.api.maps2d.MapView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:max="100"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@drawable/circle_drawable" />
+
+
+</RelativeLayout>

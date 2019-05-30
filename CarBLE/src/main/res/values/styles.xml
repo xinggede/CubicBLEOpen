@@ -1,0 +1,85 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="popupScaleAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_hide</item>
+    </style>
+
+    <!-- 设置了 android:windowIsFloating=true 就不需要去设置屏幕亮度了 -->
+    <style name="translucentDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="exitAnimDialog">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
+    </style>
+
+
+    <style name="tvStyle">
+        <item name="android:textColor">@drawable/tv_hint_state_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:enabled">false</item>
+    </style>
+
+    <style name="tcStyle">
+        <item name="android:textColor">@drawable/tv_show_state_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:enabled">false</item>
+    </style>
+
+    <style name="tvBJStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableEnd">@mipmap/down</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/shape</item>
+    </style>
+
+    <style name="etStyle">
+        <item name="android:textColor">@drawable/tv_show_state_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="rbStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="linStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/lin_bj</item>
+    </style>
+
+</resources>

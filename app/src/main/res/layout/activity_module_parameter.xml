@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:orientation="vertical" >
+
+    <include layout="@layout/navigation_relativelayout" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                style="@style/module_layout"
+                android:background="@drawable/set_item_normal_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设备名称：" />
+
+                    <TextView
+                        android:id="@+id/FF91Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF91NameBtn"
+                        style="@style/module_Btn"
+                        android:onClick="readFF91"
+                        android:text="刷新" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设置名称：" />
+
+                    <EditText
+                        android:id="@+id/FF91Edit"
+                        style="@style/module_Edit"
+                        android:layout_weight="3"
+                        android:hint="16byte" />
+
+                    <Button
+                        android:id="@+id/resetFF91NameBtn"
+                        style="@style/module_Btn"
+                        android:onClick="writeFF91"
+                        android:text="设置" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF92Layout"
+                style="@style/module_layout" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="通讯连接间隔：" />
+
+                    <TextView
+                        android:id="@+id/FF92Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF92NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF92"
+                        android:text="刷新" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF93Layout"
+                style="@style/module_layout" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="串口波特率：" />
+
+                    <TextView
+                        android:id="@+id/FF93Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF93NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF93"
+                        android:text="刷新" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF94Layout"
+                style="@style/module_layout" >
+
+                <TextView
+                    style="@style/module_txt"
+                    android:layout_gravity="left"
+                    android:text="　　远程复位控制,写入 0x55 对模块进行复位\r\n　　远程浅恢复控制,写入 0x35对模块进行浅恢复(仅仅恢复用户数据),并复位\r\n　　远程深度恢复控制,写入 0x36 对模块进行深度恢复 (让模块所有参数回到出厂设置),并复位"
+                    android:textColor="#008B00"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="远程复位恢复" />
+
+                    <TextView
+                        android:id="@+id/FF94Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF95Layout"
+                style="@style/module_layout" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设定广播周期：" />
+
+                    <TextView
+                        android:id="@+id/FF95Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF95NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF95"
+                        android:text="刷新" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/module_layout"
+                android:background="@drawable/set_item_normal_bg" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="产品识别码：" />
+
+                    <TextView
+                        android:id="@+id/FF96Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF96NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF96"
+                        android:text="刷新" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设置识别码：" />
+
+                    <EditText
+                        android:id="@+id/FF96Edit"
+                        style="@style/module_Edit"
+                        android:layout_weight="3"
+                        android:hint="2byte"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:maxEms="2"
+                        android:maxLines="1" />
+
+                    <Button
+                        android:id="@+id/FF96Btn"
+                        style="@style/module_Btn"
+                        android:onClick="writeFF96"
+                        android:text="设置" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF97Layout"
+                style="@style/module_layout" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设定发射功率：" />
+
+                    <TextView
+                        android:id="@+id/FF97Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF97NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF97"
+                        android:text="刷新" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF98Layout"
+                style="@style/module_layout" >
+
+                <TextView
+                    style="@style/module_txt"
+                    android:text="设定自定义广播数据 自定义广播数据,0 &lt; n &lt;= 16, 默认不保存,但可以通过向 FF99 写入 0x04 触发保存"
+                    android:textColor="#008B00"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="广播内容：" />
+
+                    <TextView
+                        android:id="@+id/FF98Txt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF98NameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF98"
+                        android:text="刷新" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="设定广播内容: " />
+
+                    <EditText
+                        android:id="@+id/FF98Edit"
+                        style="@style/module_Edit"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:hint="16byte" >
+                    </EditText>
+
+                    <Button
+                        android:id="@+id/FF98Btn"
+                        style="@style/module_Btn"
+                        android:onClick="writeFF98"
+                        android:text="设置" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF99Layout"
+                style="@style/module_layout" >
+
+                <TextView
+                    style="@style/module_txt"
+                    android:text="　　0x01:IO配置输出保存触发控制,写入 0x01 可触发保存 当前的 IO 配置以及输出状态,重新上电之后都会使用 当前 IO 配置以及输出状态 初始化 IO7~IO1,IO0 上电后 总默认为输入,做为恢复出 厂设置检测口;\n　　0x02:远程关机控制,当在 脉冲使能模式下,向此通道 写入 0x02,可对模块进行远 程关机\n　　0x03:远程蓝牙断线请求, 当在蓝牙已连接情况下,向此通道写入 0x03,可请求模块主动断开蓝牙。\n　　0x04:自定义广播数据保存触发控制,写入 0x04 可触发 保存当前自定义广播内容, 重新上电之后都会按照当前 广播内容广播。"
+                    android:textColor="#008B00"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="远程控制扩展：" />
+
+                    <TextView
+                        android:id="@+id/FF99Txt"
+                        style="@style/module_txt1"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FF9ALayout"
+                style="@style/module_layout"
+                android:layout_marginBottom="10dp" >
+
+                <TextView
+                    style="@style/module_txt"
+                    android:text="　　BIT0:使能模式设置,默认为 0, 对应低电平电平使能,1 表示脉 冲使能,当 EN 脚每收到一个脉 冲,模块将会在开机(开始广播) 和关机(停止广播)之间轮流切 换。有效脉宽 T,必须满足 W > 200ms。当广播时间超过 30s,仍 未被连接,则会自动进入关机状 态。\n　　BIT1:蓝牙异常(超时,非主动 断开)断线复位使能设置,默认为 0,对应蓝牙超时断线后不重启 模块,1 表示当蓝牙超时断线后 自动重启模块。\n　　BIT2~BIT7:暂未使用"
+                    android:textColor="#008B00"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4" >
+
+                    <TextView
+                        style="@style/module_txt"
+                        android:layout_weight="1"
+                        android:text="系统功能使能开关：" />
+
+                    <TextView
+                        android:id="@+id/FF9ATxt"
+                        style="@style/module_txt"
+                        android:layout_weight="3" />
+
+                    <Button
+                        android:id="@+id/refreshFF9ANameBtn"
+                        style="@style/module_Btn"
+                        android:layout_weight="1"
+                        android:onClick="readFF9A"
+                        android:text="刷新" />
+
+                    <ImageView
+                        android:id="@+id/arror_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/arror_item_click" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

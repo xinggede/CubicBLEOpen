@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/setitem_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/about_item_click"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen_16"
+        android:paddingLeft="@dimen/jiange_16"
+        android:paddingRight="@dimen/jiange_16"
+        android:paddingTop="@dimen/dimen_16" >
+
+        <ImageView
+            android:id="@+id/setitem_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_launcher"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp" >
+
+            <TextView
+                android:id="@+id/setitem_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="name"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/setitem_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/arror_image"
+                android:lines="1"
+                android:text="message"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/arror_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/arror_item_click" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

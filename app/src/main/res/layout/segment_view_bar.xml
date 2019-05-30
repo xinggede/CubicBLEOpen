@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/segment_normal_bg"
+    android:orientation="horizontal"
+    android:weightSum="3" >
+
+    <LinearLayout
+        android:id="@+id/first_item"
+        style="@style/segmentView_style"
+        android:layout_weight="1"
+        android:background="@drawable/segment_bg_click"
+        >
+
+        <TextView
+            android:id="@+id/first_txt"
+            style="@style/segmentView_txt"
+            android:layout_gravity="center"
+            android:text="全低脉宽" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_item"
+        style="@style/segmentView_style"
+        android:layout_weight="1"
+        android:background="@drawable/segment_bg_click1" >
+
+        <TextView
+            android:id="@+id/second_txt"
+            style="@style/segmentView_txt"
+            android:layout_gravity="center"
+            android:text="全高脉宽" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/third_item"
+        style="@style/segmentView_style"
+        android:layout_weight="1"
+        android:background="@drawable/segment_bg_click2" >
+
+        <TextView
+            android:id="@+id/third_txt"
+            style="@style/segmentView_txt"
+            android:layout_gravity="center"
+            android:text="当前输出脉宽" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.xingge.carble"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.1"
+
+        resConfigs "zh" //选择默认英语和中文语言
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../CarBLE/xinggede.jks") // debug keystore路径。
+            storePassword 'xinggede' // 默认debug keystore的密码。
+            keyAlias 'xingge' // 默认debug keystore的alias。
+            keyPassword 'xinggede' // 默认debug keystore的alias的密码。
+        }
+
+        release {
+            storeFile file("../CarBLE/xinggede.jks")
+            storePassword "xinggede"
+            keyAlias "xingge"
+            keyPassword "xinggede"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            debuggable false
+
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->  // each 改为 all
+                def fileName
+                if (variant.buildType.name.equals('release')) {
+                    fileName = "OMFID_v${variant.versionName}_${releaseTime()}.apk"
+                } else {
+                    fileName = "OMFID_v${variant.versionName}_${releaseTime()}_t.apk"
+                }
+
+                def outFile = output.outputFile
+                if (outFile != null && outFile.name.endsWith('.apk')) {
+                    outputFileName = fileName
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
+}
