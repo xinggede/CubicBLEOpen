@@ -191,7 +191,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
         tv_mtsn = findViewById(R.id.tv_mtsn);
         tv_mtsn.setOnClickListener(this);
-        mtsnPopup = new ChoosePopup(this, new String[]{"0", "1"}, new ChooseAdapter.OnItemClickListener() {
+        mtsnPopup = new ChoosePopup(this, new String[]{"0", "1", "2"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 tv_mtsn.setText(mtsnPopup.getValue(position));
@@ -202,7 +202,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
                 }
-                mtPopup.dismiss();
+                mtsnPopup.dismiss();
             }
         });
 
