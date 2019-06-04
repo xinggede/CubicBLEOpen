@@ -52,7 +52,7 @@ public abstract class BasePopup {
         mPopupWindow.setAnimationStyle(anim);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(0xff3e2a2a));
         mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setFocusable(true);
+        mPopupWindow.setFocusable(false);
         mPopupWindow.setOnDismissListener(new OnDismissListener() {
 
             @Override

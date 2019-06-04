@@ -134,7 +134,9 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_get_gps) {
-            startActivity(new Intent(this, MapActivity.class));
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("showType", showType);
+            startActivity(intent);
         } else if (v.getId() == R.id.bt_save) {
             int channel = Tool.stringToInt(tv_channel.getText().toString());
             if (channel < 0 || channel > 20) {
@@ -192,6 +194,8 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             setSlope(data);
         } else if (CommandUtil.TEMP.startsWith(command)) {
             setTemp(data);
+        } else if (CommandUtil.GMDF.startsWith(command)) {
+            setGMdf(data);
         } else if (CommandUtil.HPA.startsWith(command)) {
             setHpa(data);
         } else if (CommandUtil.DHIGH.startsWith(command)) {
@@ -274,6 +278,17 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         }
     }
 
+    private int showType = 0;
+
+    private void setGMdf(String data) {
+        String[] vs = data.split(",");
+        if (vs.length == 2) {
+            String s = vs[1];
+            showType = Tool.stringToInt(s);
+        }
+    }
+
+
     private void setGInfo(String data) {
         GpsInfo gpsInfo = getPresenter().analysisGps(data);
         if (gpsInfo == null) {
@@ -292,8 +307,8 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
 
         tv_satellite.setText(String.valueOf(gpsInfo.satellite));
 
-        tv_longitude.setText(GpsInfo.format(gpsInfo.longitude));
-        tv_latitude.setText(GpsInfo.format(gpsInfo.latitude));
+        tv_longitude.setText(GpsInfo.formatLongitude(gpsInfo.longitude, showType));
+        tv_latitude.setText(GpsInfo.formatLatitude(gpsInfo.latitude, showType));
 //            tv_altitude.setText(gpsInfo.altitude + "M");
         tv_speed.setText(gpsInfo.speed + "KM/H");
         cusRoundView.setDegrees(gpsInfo.course);

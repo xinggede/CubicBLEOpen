@@ -138,6 +138,17 @@ public class Tool {
         return df.format(d);
     }
 
+    public static String calcMtoS(String str) {
+        Double d = stringToDouble(str) * 0.006;
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(d);
+    }
+
+    public static String calcMtoD(double d) {
+        DecimalFormat df = new DecimalFormat("0.000000");
+        return df.format(d);
+    }
+
     public static String getCurrentDate() {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyMMddHHmmss", Locale.getDefault());
         return sDateFormat.format(new Date());

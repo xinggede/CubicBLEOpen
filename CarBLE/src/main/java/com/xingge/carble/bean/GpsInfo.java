@@ -39,9 +39,42 @@ public class GpsInfo {
      */
     public boolean isStart = false;
 
-    public static String format(String str) {
+    public static String formatLongitude(String str, int type) {
+        if (str.length() < 10) {
+            return "";
+        }
         StringBuffer sb = new StringBuffer();
-        if (str.length() == 9) {
+        sb.append(str.charAt(0));
+        if (type == 0) { //DMM
+            String s = str.substring(1, 4);
+            sb.append(Tool.stringToInt(s) + "°");
+            s = str.substring(4, 6);
+            sb.append(s + ".");
+            s = str.substring(6, 10);
+            sb.append(s + "'");
+        } else if (type == 1) { //DMS
+            String s = str.substring(1, 4);
+            sb.append(Tool.stringToInt(s) + "°");
+            s = str.substring(4, 6);
+            sb.append(s + "'");
+            s = str.substring(6, 10);
+            sb.append(Tool.calcMtoS(s) + "''");
+        } else { //DDD
+            String a = str.substring(1, 4);
+            String b = str.substring(4, 6);
+            String c = str.substring(6, 10);
+            double d = Tool.stringToInt(a) + Tool.stringToDouble(b) / 60 + Tool.stringToDouble(c) / 600000;
+            sb.append(Tool.calcMtoD(d) + "°");
+        }
+        return sb.toString();
+    }
+
+    public static String formatLatitude(String str, int type) {
+        if (str.length() < 9) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer();
+        if (type == 0) { //DMM
             sb.append(str.charAt(0));
             String s = str.substring(1, 3);
             sb.append(Tool.stringToInt(s) + "°");
@@ -49,14 +82,19 @@ public class GpsInfo {
             sb.append(s + ".");
             s = str.substring(5, 9);
             sb.append(s + "'");
-        } else if (str.length() == 10) {
-            sb.append(str.charAt(0));
-            String s = str.substring(1, 4);
+        } else if (type == 1) { //DMS
+            String s = str.substring(1, 3);
             sb.append(Tool.stringToInt(s) + "°");
-            s = str.substring(4, 6);
-            sb.append(s + ".");
-            s = str.substring(6, 10);
+            s = str.substring(3, 5);
             sb.append(s + "'");
+            s = str.substring(5, 9);
+            sb.append(Tool.calcMtoS(s) + "''");
+        } else { //DDD
+            String a = str.substring(1, 3);
+            String b = str.substring(3, 5);
+            String c = str.substring(5, 9);
+            double d = Tool.stringToInt(a) + Tool.stringToDouble(b) / 60 + Tool.stringToDouble(c) / 600000;
+            sb.append(Tool.calcMtoD(d) + "°");
         }
         return sb.toString();
     }

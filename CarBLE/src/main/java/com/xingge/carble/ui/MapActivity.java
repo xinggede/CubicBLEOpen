@@ -55,6 +55,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
     private SeekBar seekBar;
     private int times[] = new int[]{10 * 60 * 1000, 30 * 60 * 1000, 60 * 60 * 1000, 2 * 60 * 60 * 1000, 6 * 60 * 60 * 1000, 12 * 60 * 60 * 1000};
     private String day;
+    private int showType;
 
     @Override
     protected MainPresenter onLoadPresenter() {
@@ -79,6 +80,8 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             markerOptions.draggable(true);
         }
 
+        showType = getIntent().getIntExtra("showType", 0);
+
         tvDay = findViewById(R.id.tv_day);
         tvDay.setOnClickListener(this);
         seekBar = findViewById(R.id.seekBar);
@@ -92,7 +95,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                         if (gInfo != null) {
                             aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gInfo.latLng, aMap.getCameraPosition().zoom));
                             String str = Tool.dateToTime(gInfo.date);
-                            str += "\n经度：" + gInfo.latLng.longitude + "\n纬度：" + gInfo.latLng.latitude;
+                            str += "\n经度：" + GpsInfo.formatLongitude(gInfo.longitude, showType) + "\n纬度：" + GpsInfo.formatLatitude(gInfo.latitude, showType);
                             str += "\n速度：" + gInfo.speed + "KM/H" + "\n海拔：" + gInfo.altitude + "米";
                             str += "\n距离：" + Tool.mToKM(gInfo.distance) + "KM";
                             Tool.logd(str + "  -- " + progress);
@@ -136,7 +139,8 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
 
         myLocationStyle = new MyLocationStyle();
         myLocationStyle.interval(2000);
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW_NO_CENTER);
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
+        myLocationStyle.showMyLocation(true);
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);
     }
