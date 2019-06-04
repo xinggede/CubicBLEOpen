@@ -165,7 +165,7 @@
 
                 <TextView
                     style="@style/tvStyle"
-                    android:text="离线地图：" />
+                    android:text="离线地图：高德地图" />
 
             </LinearLayout>
 
