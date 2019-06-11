@@ -123,6 +123,15 @@ public class Tool {
         return d;
     }
 
+    public static String dateToHour(String str) {
+        String d = str;
+        if (str.length() == 12) {
+            d = str.substring(6, 8) + ":" + str.substring(8, 10);
+        }
+        return d;
+    }
+
+
     public static double stringToDouble(String str) {
         try {
             return Double.parseDouble(str);
@@ -194,6 +203,39 @@ public class Tool {
     public static float mToKM(float f) {
         BigDecimal bigDecimal = new BigDecimal(f);
         return bigDecimal.divide(new BigDecimal(1000), 2, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
+    public static String sToM(long time) {
+        long second = time / 1000;
+        if (second < 60) {
+            return second + "秒";
+        }
+
+        int min = (int) (second / 60);
+        second = second % 60;
+        if (min < 60) {
+            return min + "分" + second + "秒";
+        }
+
+        int hour = min / 60;
+        min = min % 60;
+
+        return hour + "时" + min + "分" + second + "秒";
+    }
+
+    public static float sToh(long time) {
+        long second = time / 1000;
+        float hour = second * 1.0f / (60 * 60);
+        return hour;
+    }
+
+    public static String calcAverageSpeed(float distance, long time) {
+        float h = sToh(time);
+
+        float average = mToKM(distance) / h;
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        return df.format(average) + "KM/H";
     }
 
 }

@@ -16,7 +16,7 @@ public class GpsInfo {
     //日期
     public String date;
     //时间
-    public String time;
+    public long time;
     //经度
     public String longitude;
     //纬度

@@ -84,4 +84,5 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation files('libs/Android_Map3D_SDK_V6.8.0_20190401.jar')
+    implementation 'com.github.huangyanbin:SmartChart:1.4.1'
 }

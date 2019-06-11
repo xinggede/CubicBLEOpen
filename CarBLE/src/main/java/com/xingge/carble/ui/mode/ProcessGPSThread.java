@@ -31,14 +31,14 @@ public class ProcessGPSThread extends Thread {
     private Handler handler;
     private CoordinateConverter converter;
     private int colorType = 0;
-    private int time;
+    private int stopTime;
 
     public ProcessGPSThread(Context context, Handler handler, int time) {
         this.handler = handler;
         converter = new CoordinateConverter(context);
         converter.from(CoordinateConverter.CoordType.GPS);
         mPauseLock = new Object();
-        this.time = time;
+        this.stopTime = time;
     }
 
     public void addData(String data) {
@@ -104,6 +104,7 @@ public class ProcessGPSThread extends Thread {
     GpsInfo lastInfo = null;
     int color = colors[0];
     float distance = 0;
+    long time = 0;
 
     private void processCommand() {
         String data;
@@ -122,7 +123,9 @@ public class ProcessGPSThread extends Thread {
                         if (lastInfo != null) {
                             if (isWithinHour(lastInfo.date, gpsInfo.date)) {
                                 distance += AMapUtils.calculateLineDistance(lastInfo.latLng, gpsInfo.latLng);
+                                time += calcTime(lastInfo.date, gpsInfo.date);
                                 gpsInfo.distance = distance;
+                                gpsInfo.time = time;
                                 packs.add(gpsInfo);
                             } else {
                                 if (packs.size() > 0) {
@@ -138,6 +141,7 @@ public class ProcessGPSThread extends Thread {
                                 gpsInfo.color = color;
                                 gpsInfo.isStart = true;
                                 distance = 0;
+                                time = 0;
                                 packs.add(gpsInfo);
                                 Message.obtain(handler, 99, gpsInfo).sendToTarget();
                             }
@@ -181,7 +185,7 @@ public class ProcessGPSThread extends Thread {
             gpsInfo.date = d;
            /* if (d.length() == 12) {
                 gpsInfo.date = d.substring(0, 6);
-                gpsInfo.time = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
+                gpsInfo.stopTime = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
             }*/
             gpsInfo.longitude = vs[1];
             gpsInfo.latitude = vs[2];
@@ -195,6 +199,19 @@ public class ProcessGPSThread extends Thread {
             return gpsInfo;
         }
         return null;
+    }
+
+    private long calcTime(String date1, String date2) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyMMDDHHmmss", Locale.getDefault());
+        try {
+            Date d1 = simpleDateFormat.parse(date1);
+            Date d2 = simpleDateFormat.parse(date2);
+
+            return d2.getTime() - d1.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
@@ -211,7 +228,7 @@ public class ProcessGPSThread extends Thread {
         try {
             Date d1 = simpleDateFormat.parse(s1);
             Date d2 = simpleDateFormat.parse(s2);
-            return d2.getTime() - d1.getTime() < time;
+            return d2.getTime() - d1.getTime() < stopTime;
         } catch (ParseException e) {
             e.printStackTrace();
         }

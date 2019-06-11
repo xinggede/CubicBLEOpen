@@ -68,20 +68,16 @@ public class SendDataThread extends Thread {
     private void processCommand() {
         SendValue blueData;
         while ((blueData = commands.poll()) != null) {
-            boolean b = send(blueData);
-            if (!b) {
+
+            int count = 0;
+            while (!send(blueData) && (count < 5)) {
+                count++;
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(count * 500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Tool.logd("重新发送");
-                send(blueData);
-            }
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                Tool.logd("重新发送: " + count);
             }
         }
         isSendingData = false;

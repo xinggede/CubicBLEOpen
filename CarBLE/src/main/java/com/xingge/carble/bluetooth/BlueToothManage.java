@@ -160,6 +160,7 @@ public class BlueToothManage implements IBle {
     public void cancelConnect(String deviceId) {
         if (curBluetoothGatt != null) {
             if (curBluetoothGatt.getDevice().getAddress().equals(deviceId)) {
+                curBluetoothGatt.disconnect();
                 curBluetoothGatt.close();
                 mBluetoothGatts.remove(curBluetoothGatt);
                 curBluetoothGatt = null;

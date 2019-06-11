@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -26,6 +25,7 @@ import com.xingge.carble.bean.RecordInfo;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.ChooseAdapter;
 import com.xingge.carble.dialog.ChoosePopup;
+import com.xingge.carble.dialog.LineChartDialog;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.ui.mode.ProcessGPSThread;
@@ -49,13 +49,14 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
     LatLng latLng /*= new LatLng(22.539583333333333,113.95045333333334)*/;
     private Marker marker;
     private MarkerOptions markerOptions;
-    private TextView tvDay;
+    private TextView tvDay, tvTime1, tvTime2, tvTime3, tvTotalInfo;
     private ChoosePopup dayPopup;
     private ProcessGPSThread processGPSThread;
-    private SeekBar seekBar;
+    private CusSeekBar seekBar;
     private int times[] = new int[]{10 * 60 * 1000, 30 * 60 * 1000, 60 * 60 * 1000, 2 * 60 * 60 * 1000, 6 * 60 * 60 * 1000, 12 * 60 * 60 * 1000};
     private String day;
     private int showType;
+    private LineChartDialog lineChartDialog;
 
     @Override
     protected MainPresenter onLoadPresenter() {
@@ -84,43 +85,35 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
 
         tvDay = findViewById(R.id.tv_day);
         tvDay.setOnClickListener(this);
+
+        tvTime1 = findViewById(R.id.tv_time1);
+        tvTime2 = findViewById(R.id.tv_time2);
+        tvTime3 = findViewById(R.id.tv_time3);
+        tvTotalInfo = findViewById(R.id.tv_total_info);
+
         seekBar = findViewById(R.id.seekBar);
         seekBar.setEnabled(false);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setChangedListener(new CusSeekBar.onChangedListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                synchronized (listMap) {
-                    if (fromUser && listMap.get(day) != null) {
-                        GpsInfo gInfo = Objects.requireNonNull(listMap.get(day)).get(progress);
-                        if (gInfo != null) {
-                            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gInfo.latLng, aMap.getCameraPosition().zoom));
-                            String str = Tool.dateToTime(gInfo.date);
-                            str += "\n经度：" + GpsInfo.formatLongitude(gInfo.longitude, showType) + "\n纬度：" + GpsInfo.formatLatitude(gInfo.latitude, showType);
-                            str += "\n速度：" + gInfo.speed + "KM/H" + "\n海拔：" + gInfo.altitude + "米";
-                            str += "\n距离：" + Tool.mToKM(gInfo.distance) + "KM";
-                            Tool.logd(str + "  -- " + progress);
-                            if (marker != null && marker.isInfoWindowShown()) {
-                                marker.setTitle(str);
-                                marker.setPosition(gInfo.latLng);
-                            } else {
-                                markerOptions.title(str);
-                                markerOptions.position(gInfo.latLng);
-                                marker = aMap.addMarker(markerOptions);
-                            }
-                            marker.showInfoWindow();
-                        }
+            public void onProgressChanged(int progress) {
+                GpsInfo gInfo = Objects.requireNonNull(listMap.get(day)).get(progress);
+                if (gInfo != null) {
+                    aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gInfo.latLng, aMap.getCameraPosition().zoom));
+                    String str = Tool.dateToTime(gInfo.date);
+                    str += "\n经度：" + GpsInfo.formatLongitude(gInfo.longitude, showType) + "\n纬度：" + GpsInfo.formatLatitude(gInfo.latitude, showType);
+                    str += "\n速度：" + gInfo.speed + "KM/H" + "\n海拔：" + gInfo.altitude + "米";
+                    str += "\n距离：" + Tool.mToKM(gInfo.distance) + "KM";
+                    Tool.logd(str + "  -- " + progress);
+                    if (marker != null && marker.isInfoWindowShown()) {
+                        marker.setTitle(str);
+                        marker.setPosition(gInfo.latLng);
+                    } else {
+                        markerOptions.title(str);
+                        markerOptions.position(gInfo.latLng);
+                        marker = aMap.addMarker(markerOptions);
                     }
+                    marker.showInfoWindow();
                 }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
     }
@@ -177,14 +170,15 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
 
     private Map<String, List<GpsInfo>> listMap = new HashMap<>();
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
             if (msg.what == 97) { //开始
                 seekBar.setEnabled(false);
                 seekBar.setMax(msg.arg1);
                 GpsInfo gpsInfo = (GpsInfo) msg.obj;
                 showFirst(gpsInfo);
+                tvTime1.setText(Tool.dateToHour(gpsInfo.date));
             } else if (msg.what == 98) { //更新每个包
                 List<GpsInfo> infos = (List<GpsInfo>) msg.obj;
 
@@ -206,15 +200,49 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             } else if (msg.what == 99) { //分包
                 GpsInfo gpsInfo = (GpsInfo) msg.obj;
                 showFirst(gpsInfo);
+                seekBar.setColor(gpsInfo.color);
             } else if (msg.what == 100) { //进度
                 seekBar.setProgress(msg.arg2);
             } else if (msg.what == 101) { //结束
-                seekBar.setMax(listMap.get(day).size() - 1);
+
+                List<GpsInfo> gpsInfoList = listMap.get(day);
+
+                seekBar.setMax(gpsInfoList.size() - 1);
                 seekBar.setProgress(seekBar.getMax());
                 seekBar.setEnabled(true);
+
+                tvTime2.setText(Tool.dateToHour(gpsInfoList.get(gpsInfoList.size() / 2).date));
+                tvTime3.setText(Tool.dateToHour(gpsInfoList.get(seekBar.getMax()).date));
+
+                float totalDistance = 0;
+                long totalTime = 0;
+
+                for (int i = 0; i < gpsInfoList.size(); i++) {
+                    if (gpsInfoList.get(i).isStart) {
+                        GpsInfo gpsInfo = gpsInfoList.get(i - 1);
+                        totalDistance += gpsInfo.distance;
+                        totalTime += gpsInfo.time;
+                    }
+                }
+                totalDistance += gpsInfoList.get(seekBar.getMax()).distance;
+                totalTime += gpsInfoList.get(seekBar.getMax()).time;
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("总路程：").append(Tool.mToKM(totalDistance)).append("KM  ")
+                        .append("用时：").append(Tool.sToM(totalTime)).append("  平均时速：")
+                        .append(Tool.calcAverageSpeed(totalDistance, totalTime));
+                tvTotalInfo.setText(sb.toString());
             }
+            return false;
         }
-    };
+    });
+
+    private void showChartDialog(List<GpsInfo> infoList) {
+        if (lineChartDialog == null) {
+            lineChartDialog = new LineChartDialog(this);
+        }
+        lineChartDialog.showData(infoList);
+    }
 
     @Override
     public void onClick(View v) {
@@ -223,43 +251,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                 dayPopup.showAsDropDown(v);
             }
         } else if (v.getId() == R.id.bt_get_gps) {
-            for (Polyline polyline : polylines) {
-                polyline.remove();
-            }
-            if (marker != null) {
-                marker.hideInfoWindow();
-            }
-            List<GpsInfo> infoList = listMap.get(day);
-            if (infoList != null && infoList.size() > 0) {
-                seekBar.setEnabled(true);
-                seekBar.setProgress(0);
-                seekBar.setMax(infoList.size());
-
-                showFirst(infoList.get(0));
-                List<GpsInfo> list = new ArrayList<>();
-                for (GpsInfo gpsInfo : infoList) {
-                    if (!gpsInfo.isStart) {
-                        list.add(gpsInfo);
-                    } else {
-                        showMap(null, list);
-                        list.clear();
-                        list.add(gpsInfo);
-                    }
-                }
-                showMap(null, list);
-                return;
-            }
-
-            if (processGPSThread == null || processGPSThread.isStop()) {
-                String t = getPresenter().getTLTime().split("-")[0];
-                processGPSThread = new ProcessGPSThread(this, handler, times[Tool.stringToInt(t)]);
-                processGPSThread.start();
-            }
-
-            if (getPresenter().getGTRkd(1, day, day)) {
-                seekBar.setEnabled(false);
-                seekBar.setProgress(0);
-            }
+            showGpsInfo();
         } else if (v.getId() == R.id.bt_change) {
             if (aMap.getMapType() == AMap.MAP_TYPE_NORMAL) {
                 aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
@@ -268,8 +260,88 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                 aMap.setMapType(AMap.MAP_TYPE_NORMAL);
                 ((Button) v).setText("卫星地图");
             }
+        } else if (v.getId() == R.id.bt_chart) {
+            List<GpsInfo> infoList = listMap.get(day);
+            if (infoList != null && infoList.size() > 0) {
+                showChartDialog(infoList);
+            }
         } else if (v.getId() == R.id.ic_back) {
             finish();
+        }
+    }
+
+    private void showGpsInfo() {
+        for (Polyline polyline : polylines) {
+            polyline.remove();
+        }
+        if (marker != null) {
+            marker.hideInfoWindow();
+        }
+        tvTime1.setText("");
+        tvTime2.setText("");
+        tvTime3.setText("");
+        tvTotalInfo.setText("");
+        List<GpsInfo> infoList = listMap.get(day);
+        if (infoList != null && infoList.size() > 0) {
+            int size = infoList.size();
+            seekBar.clear();
+            seekBar.setEnabled(true);
+            seekBar.setProgress(0);
+            seekBar.setMax(size - 1);
+            tvTime1.setText(Tool.dateToHour(infoList.get(0).date));
+            tvTime2.setText(Tool.dateToHour(infoList.get(size / 2).date));
+            tvTime3.setText(Tool.dateToHour(infoList.get(size - 1).date));
+
+            float totalDistance = 0;
+            long totalTime = 0;
+
+            showFirst(infoList.get(0));
+            List<GpsInfo> list = new ArrayList<>();
+            int first = 0;
+            for (int i = 0; i < size; i++) {
+                GpsInfo gpsInfo = infoList.get(i);
+                if (!gpsInfo.isStart) {
+                    list.add(gpsInfo);
+                } else {
+
+                    GpsInfo g = infoList.get(i - 1);
+                    seekBar.addProgress(first, i - 1, g.color);
+                    first = i;
+                    totalDistance += g.distance;
+                    totalTime += g.time;
+
+                    showMap(null, list);
+                    list.clear();
+                    list.add(gpsInfo);
+                }
+
+            }
+
+            GpsInfo g = infoList.get(seekBar.getMax());
+            totalDistance += g.distance;
+            totalTime += g.time;
+            StringBuilder sb = new StringBuilder();
+            sb.append("总路程：").append(Tool.mToKM(totalDistance)).append("KM     ")
+                    .append("用时：").append(Tool.sToM(totalTime)).append("      平均时速：")
+                    .append(Tool.calcAverageSpeed(totalDistance, totalTime));
+            tvTotalInfo.setText(sb.toString());
+
+            seekBar.addProgress(first, size - 1, g.color);
+            seekBar.setProgress(seekBar.getMax());
+            showMap(null, list);
+            return;
+        }
+
+        if (processGPSThread == null || processGPSThread.isStop()) {
+            String t = getPresenter().getTLTime().split("-")[0];
+            processGPSThread = new ProcessGPSThread(this, handler, times[Tool.stringToInt(t)]);
+            processGPSThread.start();
+        }
+
+        if (getPresenter().getGTRkd(1, day, day)) {
+            seekBar.clear();
+            seekBar.setEnabled(false);
+            seekBar.setProgress(0);
         }
     }
 
@@ -287,7 +359,9 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
         if (CommandUtil.GTRKI.startsWith(command)) {
             setGTRki(data);
         } else if (CommandUtil.GTRKD.startsWith(command)) {
-            processGPSThread.addData(data);
+            if (processGPSThread != null) {
+                processGPSThread.addData(data);
+            }
 //            setGTRkd(data);
         }
     }

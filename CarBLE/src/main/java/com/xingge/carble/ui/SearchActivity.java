@@ -18,6 +18,7 @@ import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputPwdDialog;
+import com.xingge.carble.dialog.LineChartDialog;
 import com.xingge.carble.ui.mode.SearchContract;
 import com.xingge.carble.ui.mode.SearchPresenter;
 import com.xingge.carble.util.Tool;
@@ -60,8 +61,8 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
                 getPresenter().refreshDevices(searchTime);
             }
         });*/
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

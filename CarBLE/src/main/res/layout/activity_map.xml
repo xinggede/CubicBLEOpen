@@ -52,19 +52,62 @@
             android:onClick="onClick"
             android:text="卫星地图" />
 
+        <Button
+            android:id="@+id/bt_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginTop="100dp"
+            android:onClick="onClick"
+            android:text="线形图" />
+
     </com.amap.api.maps.MapView>
 
-    <SeekBar
-        android:id="@+id/seekBar"
+    <RelativeLayout
+        android:id="@+id/re_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/seekBar"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/tv_time1"
+            style="@style/tcStyle"
+            android:enabled="true" />
+
+        <TextView
+            android:id="@+id/tv_time2"
+            style="@style/tcStyle"
+            android:layout_centerInParent="true"
+            android:enabled="true" />
+
+        <TextView
+            android:id="@+id/tv_time3"
+            style="@style/tcStyle"
+            android:layout_alignParentEnd="true"
+            android:enabled="true" />
+
+    </RelativeLayout>
+
+    <com.xingge.carble.ui.CusSeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_above="@+id/tv_total_info"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/tv_total_info"
+        style="@style/tcStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:max="100"
-        android:progressDrawable="@drawable/seekbar_style"
-        android:thumb="@drawable/circle_drawable" />
+        android:enabled="true"
+        android:textSize="10sp" />
 
 
 </RelativeLayout>

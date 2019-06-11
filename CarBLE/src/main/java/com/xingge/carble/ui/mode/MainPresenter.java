@@ -81,7 +81,7 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
             String d = vs[5];
             if (d.length() == 12) {
                 gpsInfo.date = d.substring(0, 6);
-                gpsInfo.time = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
+//                gpsInfo.time = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
             }
             gpsInfo.longitude = vs[6];
             gpsInfo.latitude = vs[7];
@@ -110,7 +110,7 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
             String d = vs[1];
             if (d.length() == 12) {
                 gpsInfo.date = d.substring(0, 6);
-                gpsInfo.time = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
+//                gpsInfo.time = d.substring(6, 8) + ":" + d.substring(8, 10) + ":" + d.substring(10, 12);
             }
             gpsInfo.longitude = vs[2];
             gpsInfo.latitude = vs[3];
