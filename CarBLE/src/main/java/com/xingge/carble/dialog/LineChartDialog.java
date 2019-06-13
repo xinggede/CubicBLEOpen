@@ -182,14 +182,16 @@ public class LineChartDialog extends BaseDialog {
 
 
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
-        leftAxis.setStartZero(true);
-        leftAxis.setMaxValue(sMax);
-
+        leftAxis.setStartZero(false);
+        leftAxis.setMinValue(aMin);
+        leftAxis.setMaxValue(aMax);
+        leftAxis.getAxisStyle().setColor(Color.BLUE);
 
         VerticalAxis rightAxis = lineChart.getRightVerticalAxis();
-        rightAxis.setStartZero(false);
-        rightAxis.setMinValue(aMin);
-        rightAxis.setMaxValue(aMax);
+        rightAxis.setStartZero(true);
+        rightAxis.setMaxValue(sMax);
+        rightAxis.getAxisStyle().setColor(Color.GREEN);
+
 
         LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.BLUE, altitudeList);
 
