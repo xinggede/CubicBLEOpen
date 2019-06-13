@@ -8,7 +8,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
 
         resConfigs "zh" //选择默认英语和中文语言
     }
@@ -85,4 +85,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation files('libs/Android_Map3D_SDK_V6.8.0_20190401.jar')
     implementation 'com.github.huangyanbin:SmartChart:1.4.1'
+    implementation files('libs/pgyer_sdk_3.0.4.jar')
 }

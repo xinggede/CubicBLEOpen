@@ -146,6 +146,9 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             processGPSThread.closeProcessThread();
         }
         handler.removeCallbacksAndMessages(null);
+        if (lineChartDialog != null) {
+            lineChartDialog.dismiss();
+        }
         super.onDestroy();
         mMapView.onDestroy();
     }

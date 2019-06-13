@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bj_color"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -68,13 +69,11 @@
 
                 <Button
                     android:id="@+id/bt_set_time"
+                    style="@style/btStyle"
                     android:layout_width="90dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
-                    android:onClick="onClick"
-                    android:text="时间设置"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:text="时间设置" />
             </LinearLayout>
 
 
@@ -306,13 +305,11 @@
 
                 <Button
                     android:id="@+id/bt_set_frequency"
+                    style="@style/btStyle"
                     android:layout_width="70dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
-                    android:onClick="onClick"
-                    android:text="设置"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:text="设置" />
             </LinearLayout>
 
             <LinearLayout
@@ -344,13 +341,11 @@
 
                 <Button
                     android:id="@+id/bt_set_pwd"
+                    style="@style/btStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:layout_marginStart="5dp"
-                    android:onClick="onClick"
-                    android:text="设置"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:text="设置" />
             </LinearLayout>
 
 
@@ -360,13 +355,10 @@
 
                 <Button
                     android:id="@+id/bt_reset"
+                    style="@style/btStyle"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
-
-                    android:onClick="onClick"
-                    android:text="清空轨迹"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:text="清空轨迹" />
 
                 <TextView
                     style="@style/tvStyle"
@@ -381,13 +373,11 @@
 
                 <Button
                     android:id="@+id/bt_save"
+                    style="@style/btStyle"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="20dp"
-                    android:onClick="onClick"
-                    android:text="保存设置"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:text="保存设置" />
 
             </LinearLayout>
         </LinearLayout>

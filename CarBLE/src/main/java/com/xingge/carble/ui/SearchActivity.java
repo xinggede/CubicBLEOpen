@@ -13,12 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.pgyersdk.update.PgyUpdateManager;
 import com.xingge.carble.R;
 import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputPwdDialog;
-import com.xingge.carble.dialog.LineChartDialog;
 import com.xingge.carble.ui.mode.SearchContract;
 import com.xingge.carble.ui.mode.SearchPresenter;
 import com.xingge.carble.util.Tool;
@@ -74,7 +74,7 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.search) {
-            getPresenter().refreshDevices(searchTime);
+            searchBle();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -90,18 +90,24 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
         checkPermission(new BaseActivity.CheckPermListener() {
             @Override
             public void superPermission() {
-                if (!getPresenter().isOpenBlue()) {
-                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    enableBtIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivityForResult(enableBtIntent, 1);
-                } else {
-                    if (getPresenter().searchDevices(searchTime)) {
-//                        swipeRefreshLayout.setRefreshing(true);
-                    }
-                }
+                searchBle();
             }
         }, R.string.permiss_tip, Manifest.permission.ACCESS_FINE_LOCATION);
-        getPresenter().searchDevices(10 * 1000);
+
+        checkPermission(new BaseActivity.CheckPermListener() {
+            @Override
+            public void superPermission() {
+                checkApp();
+            }
+        }, R.string.permiss_tip, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    private void checkApp() {
+        new PgyUpdateManager.Builder()
+                .setForced(false)
+                .setUserCanRetry(true)
+                .setDeleteHistroyApk(true)
+                .register();
     }
 
     @Override
@@ -121,9 +127,7 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (getPresenter().searchDevices(searchTime)) {
-//                swipeRefreshLayout.setRefreshing(true);
-            }
+            searchBle();
         }
     }
 
@@ -135,6 +139,16 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
             Tool.toastLongShow(this, "权限申请失败，可能无法搜索到设备");
         }
         return b;
+    }
+
+    private void searchBle() {
+        if (!getPresenter().isOpenBlue()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            enableBtIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityForResult(enableBtIntent, 1);
+        } else {
+            getPresenter().refreshDevices(searchTime);
+        }
     }
 
     @Override

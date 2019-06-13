@@ -115,6 +115,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -234,8 +235,6 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             tv_channel.setText(vs[1]);
             tv_id.setText(String.valueOf(Tool.stringToInt(vs[2])));
 
-            findViewById(R.id.bt_save).setEnabled(state == 1);
-            setViewEnable((ViewGroup) findViewById(R.id.lin6), state == 1);
             init = true;
         }
         dismissProDialog();
@@ -245,10 +244,13 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
 
     private void setRFPvs(String data) {
         String[] vs = data.split(",");
-        if (vs.length == 4) {
+        if (vs.length == 6) {
             rfState = Tool.stringToInt(vs[0]);
-            findViewById(R.id.lin5).setVisibility(rfState == 0 ? View.GONE : View.VISIBLE);
-            findViewById(R.id.lin6).setVisibility(rfState == 0 ? View.GONE : View.VISIBLE);
+//            findViewById(R.id.lin5).setVisibility(rfState == 0 ? View.GONE : View.VISIBLE);
+//            findViewById(R.id.lin6).setVisibility(rfState == 0 ? View.GONE : View.VISIBLE);
+
+            setViewEnable((ViewGroup) findViewById(R.id.lin5), rfState == 1);
+            setViewEnable((ViewGroup) findViewById(R.id.lin6), rfState == 1);
         }
     }
 
@@ -319,7 +321,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             for (int i = 0; i < viewGroup.getChildCount(); i++) {
                 viewGroup.getChildAt(i).setEnabled(b);
             }
-//            viewGroup.setEnabled(b);
+            viewGroup.setEnabled(b);
         }
     }
 

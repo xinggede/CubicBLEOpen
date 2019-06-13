@@ -8,4 +8,6 @@
 
     <color name="purple">#bb0ac7</color>
     <color name="bj_color">#649c9494</color>
+
+    <color name="unable_color">#afafaf</color>
 </resources>

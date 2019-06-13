@@ -2,6 +2,7 @@ package com.xingge.carble.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 
 import com.daivd.chart.component.axis.BaseAxis;
 import com.daivd.chart.component.axis.VerticalAxis;
@@ -38,7 +39,7 @@ public class LineChartDialog extends BaseDialog {
     private void initView() {
         FontStyle.setDefaultTextSpSize(getContext(), 12);
 
-        lineChart.setLineModel(LineChart.CURVE_MODEL);
+        lineChart.setLineModel(LineChart.LINE_MODEL);
 
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
         leftAxis.setStartZero(false);
@@ -54,7 +55,7 @@ public class LineChartDialog extends BaseDialog {
         leftAxis.setAxisDirection(IAxis.AxisDirection.LEFT);
 
         //设置网格
-//        verticalAxis.setDrawGrid(true);
+        leftAxis.setDrawGrid(true);
         //设置横轴方向
         horizontalAxis.setAxisDirection(IAxis.AxisDirection.BOTTOM);
 //        horizontalAxis.setDrawGrid(true);
@@ -129,7 +130,7 @@ public class LineChartDialog extends BaseDialog {
         LegendPoint legendPoint = (LegendPoint) lineChart.getLegend().getPoint();
         PointStyle style = legendPoint.getPointStyle();
         style.setShape(PointStyle.RECT);
-        lineChart.getLegend().setPercent(0.2f);
+
         lineChart.getHorizontalAxis().setRotateAngle(90);
         lineChart.setFirstAnim(false);
 
@@ -166,15 +167,23 @@ public class LineChartDialog extends BaseDialog {
                 speedList.add(speed);
             }
         }
+
         if (list.size() % 20 != 0) {
             GpsInfo info = list.get(list.size() - 1);
             chartYDataList.add(Tool.dateToHour(info.date));
             altitudeList.add(Double.parseDouble(info.altitude));
             speedList.add(Double.parseDouble(info.speed));
         }
+
+        DisplayMetrics mDisplayMetrics = getContext().getResources().getDisplayMetrics();
+        int w = mDisplayMetrics.widthPixels - Tool.dip2px(getContext(), 60);
+
+        lineChart.getLegend().setPercent(chartYDataList.size() * 1.0f / w);
+
+
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
         leftAxis.setStartZero(true);
-        leftAxis.setMaxValue(sMax * 1.5);
+        leftAxis.setMaxValue(sMax);
 
 
         VerticalAxis rightAxis = lineChart.getRightVerticalAxis();
@@ -183,6 +192,7 @@ public class LineChartDialog extends BaseDialog {
         rightAxis.setMaxValue(aMax);
 
         LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.BLUE, altitudeList);
+
         LineData columnData2 = new LineData("速度", "KM/H", Color.GREEN, speedList);
         List<LineData> columnDatas = new ArrayList<>();
         columnDatas.add(columnData1);

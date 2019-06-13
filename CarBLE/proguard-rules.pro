@@ -50,3 +50,7 @@
 -dontwarn okhttp3.**
 -keep class okio.** {*;}
 -dontwarn okio.**
+
+-dontwarn com.pgyersdk.**
+-keep class com.pgyersdk.** { *; }
+-keep class com.pgyersdk.**$* { *; }

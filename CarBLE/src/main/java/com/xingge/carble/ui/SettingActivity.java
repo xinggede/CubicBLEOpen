@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -479,15 +480,16 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
             ((RadioButton) rg_rf.getChildAt(Tool.stringToInt(vs[1]) + 1)).setChecked(true);
 
-            rg_rf.setEnabled(rfState == 1);
+            setViewEnable(rg_rf, rfState == 1);
 
             tv_output_volume.setText(String.valueOf(Tool.stringToInt(vs[2])));
-            findViewById(R.id.lin_out).setEnabled(rfState == 1);
-            findViewById(R.id.lin_level).setEnabled(rfState == 1);
-            findViewById(R.id.lin_id).setEnabled(rfState == 1);
+            setViewEnable((ViewGroup) findViewById(R.id.lin_out), rfState == 1);
+            setViewEnable((ViewGroup) findViewById(R.id.lin_level), rfState == 1);
+            setViewEnable((ViewGroup) findViewById(R.id.lin_id), rfState == 1);
 
             tv_output_level.setText(String.valueOf(Tool.stringToInt(vs[3])));
-            findViewById(R.id.lin_frequency).setEnabled(rfState == 1);
+
+            setViewEnable((ViewGroup) findViewById(R.id.lin_frequency), rfState == 1);
 
             tv_mt.setText(String.valueOf(Tool.stringToInt(vs[4])));
             tv_mtsn.setText(String.valueOf(Tool.stringToInt(vs[5])));
@@ -560,6 +562,15 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
     private void setAcc(String str) {
         int value = Tool.stringToInt(str);
         tv_acc.setText(accPopup.getValue(value));
+    }
+
+    private void setViewEnable(ViewGroup viewGroup, boolean b) {
+        if (viewGroup != null) {
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                viewGroup.getChildAt(i).setEnabled(b);
+            }
+            viewGroup.setEnabled(b);
+        }
     }
 
 }

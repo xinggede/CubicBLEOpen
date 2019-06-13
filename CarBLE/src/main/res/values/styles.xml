@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fitsSystemWindows">true</item>
+        <!--设置该属性会使Dialog变形，所以在布局中设置-->
+        <!--<item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="popupScaleAnimation" mce_bogus="1" parent="android:Animation">
@@ -47,7 +48,7 @@
     </style>
 
     <style name="tvBJStyle">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@drawable/tv_hint_state_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -62,11 +63,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/shape</item>
+        <item name="android:textColorHint">@color/unable_color</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="rbStyle">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@drawable/tv_hint_state_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:padding">5dp</item>
@@ -80,6 +82,14 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/lin_bj</item>
+    </style>
+
+    <style name="btStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:textColor">@drawable/tv_hint_state_color</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

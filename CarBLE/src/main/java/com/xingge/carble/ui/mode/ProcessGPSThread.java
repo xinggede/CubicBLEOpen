@@ -109,6 +109,7 @@ public class ProcessGPSThread extends Thread {
     private void processCommand() {
         String data;
         while ((data = commands.poll()) != null) {
+            Tool.logd("data= " + data);
             PackInfo packInfo = analysisPack(data);
             if (packInfo != null) {
                 List<GpsInfo> packs = new ArrayList<>();
@@ -258,6 +259,8 @@ public class ProcessGPSThread extends Thread {
                 packInfo.gpsInfolist = gpsInfos;
                 return packInfo;
             }
+        } else {
+            Tool.logd("analysisPack is null");
         }
         return null;
     }
