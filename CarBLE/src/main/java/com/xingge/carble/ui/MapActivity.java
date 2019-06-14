@@ -214,7 +214,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                 seekBar.setProgress(seekBar.getMax());
                 seekBar.setEnabled(true);
 
-                tvTime2.setText(Tool.dateToHour(gpsInfoList.get(gpsInfoList.size() / 2).date));
+//                tvTime2.setText(Tool.dateToHour(gpsInfoList.get(gpsInfoList.size() / 2).date));
                 tvTime3.setText(Tool.dateToHour(gpsInfoList.get(seekBar.getMax()).date));
 
                 float totalDistance = 0;
@@ -235,6 +235,8 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                         .append("用时：").append(Tool.sToM(totalTime)).append("  平均时速：")
                         .append(Tool.calcAverageSpeed(totalDistance, totalTime));
                 tvTotalInfo.setText(sb.toString());
+            } else if (msg.what == 102) {
+                seekBar.setMax(seekBar.getMax() - 1);
             }
             return false;
         }
@@ -292,7 +294,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             seekBar.setProgress(0);
             seekBar.setMax(size - 1);
             tvTime1.setText(Tool.dateToHour(infoList.get(0).date));
-            tvTime2.setText(Tool.dateToHour(infoList.get(size / 2).date));
+//            tvTime2.setText(Tool.dateToHour(infoList.get(size / 2).date));
             tvTime3.setText(Tool.dateToHour(infoList.get(size - 1).date));
 
             float totalDistance = 0;

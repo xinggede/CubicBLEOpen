@@ -124,6 +124,10 @@ public class ProcessGPSThread extends Thread {
                         if (lastInfo != null) {
                             if (isWithinHour(lastInfo.date, gpsInfo.date)) {
                                 distance += AMapUtils.calculateLineDistance(lastInfo.latLng, gpsInfo.latLng);
+                                if (distance - lastInfo.distance > 10000) {
+                                    Message.obtain(handler, 102).sendToTarget();
+                                    continue;
+                                }
                                 time += calcTime(lastInfo.date, gpsInfo.date);
                                 gpsInfo.distance = distance;
                                 gpsInfo.time = time;

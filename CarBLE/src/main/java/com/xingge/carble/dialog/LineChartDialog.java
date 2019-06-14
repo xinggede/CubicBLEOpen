@@ -2,7 +2,6 @@ package com.xingge.carble.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
 
 import com.daivd.chart.component.axis.BaseAxis;
 import com.daivd.chart.component.axis.VerticalAxis;
@@ -109,8 +108,7 @@ public class LineChartDialog extends BaseDialog {
         lineChart.getProvider().setTip(tip);*/
         //设置显示标题
         lineChart.setShowChartName(true);
-        //控制显示的数量
-        lineChart.getMatrixHelper().setWidthMultiple(1f);
+
         //设置标题方向
         lineChart.getChartTitle().setDirection(IComponent.TOP);
         //设置标题比例
@@ -132,6 +130,7 @@ public class LineChartDialog extends BaseDialog {
         style.setShape(PointStyle.RECT);
 
         lineChart.getHorizontalAxis().setRotateAngle(90);
+        lineChart.getHorizontalAxis().setDisplay(false);
         lineChart.setFirstAnim(false);
 
         lineChart.startChartAnim(1000);
@@ -161,35 +160,39 @@ public class LineChartDialog extends BaseDialog {
             sMin = Math.min(sMin, speed);
             sMax = Math.max(sMax, speed);
 
-            if (i % 20 == 0) {
-                chartYDataList.add(Tool.dateToHour(info.date));
-                altitudeList.add(altitude);
-                speedList.add(speed);
-            }
-        }
-
-        if (list.size() % 20 != 0) {
-            GpsInfo info = list.get(list.size() - 1);
+//            if (i % 5 == 0) {
             chartYDataList.add(Tool.dateToHour(info.date));
-            altitudeList.add(Double.parseDouble(info.altitude));
-            speedList.add(Double.parseDouble(info.speed));
+            altitudeList.add(altitude);
+            speedList.add(speed);
+//            }
         }
 
-        DisplayMetrics mDisplayMetrics = getContext().getResources().getDisplayMetrics();
-        int w = mDisplayMetrics.widthPixels - Tool.dip2px(getContext(), 60);
+//        if (list.size() % 20 != 0) {
+//            GpsInfo info = list.get(list.size() - 1);
+//            chartYDataList.add(Tool.dateToHour(info.date));
+//            altitudeList.add(Double.parseDouble(info.altitude));
+//            speedList.add(Double.parseDouble(info.speed));
+//        }
 
-        lineChart.getLegend().setPercent(chartYDataList.size() * 1.0f / w);
+//        DisplayMetrics mDisplayMetrics = getContext().getResources().getDisplayMetrics();
+//        int w = mDisplayMetrics.widthPixels - Tool.dip2px(getContext(), 80);
+
+        //控制显示的数量
+//        lineChart.getMatrixHelper().setWidthMultiple(chartYDataList.size() * 1.0f / w);
+        lineChart.getMatrixHelper().setWidthMultiple(2f);
+
+        lineChart.getLegend().setPercent(0.3f);
 
 
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
         leftAxis.setStartZero(false);
-        leftAxis.setMinValue(aMin);
-        leftAxis.setMaxValue(aMax);
+        leftAxis.setMinValue(aMin - 20);
+        leftAxis.setMaxValue(aMax + 20);
         leftAxis.getAxisStyle().setColor(Color.BLUE);
 
         VerticalAxis rightAxis = lineChart.getRightVerticalAxis();
         rightAxis.setStartZero(true);
-        rightAxis.setMaxValue(sMax);
+        rightAxis.setMaxValue(sMax + 20);
         rightAxis.getAxisStyle().setColor(Color.GREEN);
 
 
@@ -197,8 +200,8 @@ public class LineChartDialog extends BaseDialog {
 
         LineData columnData2 = new LineData("速度", "KM/H", Color.GREEN, speedList);
         List<LineData> columnDatas = new ArrayList<>();
-        columnDatas.add(columnData1);
         columnDatas.add(columnData2);
+        columnDatas.add(columnData1);
         ChartData<LineData> chartData = new ChartData<>("速度与海拔", chartYDataList, columnDatas);
 //        chartData.getScaleData().totalScale = 10;
         lineChart.setChartData(chartData);

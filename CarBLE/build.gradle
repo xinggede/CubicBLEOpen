@@ -7,7 +7,7 @@ android {
         applicationId "com.xingge.carble"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
+        versionCode 6
         versionName "1.0.2"
 
         resConfigs "zh" //选择默认英语和中文语言
