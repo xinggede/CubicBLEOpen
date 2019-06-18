@@ -196,9 +196,9 @@ public class LineChartDialog extends BaseDialog {
         rightAxis.getAxisStyle().setColor(Color.GREEN);
 
 
-        LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.BLUE, altitudeList);
+        LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.GREEN, altitudeList);
 
-        LineData columnData2 = new LineData("速度", "KM/H", Color.GREEN, speedList);
+        LineData columnData2 = new LineData("速度", "KM/H", Color.BLUE, speedList);
         List<LineData> columnDatas = new ArrayList<>();
         columnDatas.add(columnData2);
         columnDatas.add(columnData1);

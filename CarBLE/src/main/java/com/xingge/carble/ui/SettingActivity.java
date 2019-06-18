@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -31,9 +30,10 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
     private TextView tv_time, tv_ver;
     private EditText et_frequency, et_old_pwd, et_new_pwd, et_id;
     private RadioGroup rg_rf;
-    private TextView tv_acc, tv_time_zone, tv_location_mode, tv_gps_show_type, tv_output_volume, tv_output_level, tv_mt, tv_mtsn, tv_tl_time, tv_track_frequency;
-    private ChoosePopup accPopup, timeZonePopup, locationModePopup, showTypePopup, volumePopup, levelPopup, mtPopup, mtsnPopup, tlPopup, tfPopup;
-    private int mode, type;
+    private TextView tv_acc, tv_time_zone, tv_location_mode, tv_gps_show_type, tv_output_volume, tv_output_level, tv_mt, tv_mtsn, tv_tl_time, tv_track_frequency, tv_channel;
+    private ChoosePopup accPopup, timeZonePopup, locationModePopup, showTypePopup, volumePopup, levelPopup, mtPopup, mtsnPopup, tlPopup, tfPopup, channelPopup;
+    private int mode, type, mtsn;
+
 
     @Override
     protected MainPresenter onLoadPresenter() {
@@ -148,7 +148,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 tv_output_volume.setText(volumePopup.getValue(position));
                 int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
                 if (getPresenter().setRFPvs(rfState, value, position, Tool.stringToInt(tv_output_level.getText().toString()),
-                        Tool.stringToInt(tv_mt.getText().toString()), Tool.stringToInt(tv_mtsn.getText().toString()))) {
+                        Tool.stringToInt(tv_mt.getText().toString()), mtsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
@@ -165,7 +165,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 tv_output_level.setText(levelPopup.getValue(position));
                 int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), position,
-                        Tool.stringToInt(tv_mt.getText().toString()), Tool.stringToInt(tv_mtsn.getText().toString()))) {
+                        Tool.stringToInt(tv_mt.getText().toString()), mtsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
@@ -182,7 +182,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 tv_mt.setText(mtPopup.getValue(position));
                 int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
-                        position, Tool.stringToInt(tv_mtsn.getText().toString()))) {
+                        position, mtsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
@@ -193,13 +193,14 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
         tv_mtsn = findViewById(R.id.tv_mtsn);
         tv_mtsn.setOnClickListener(this);
-        mtsnPopup = new ChoosePopup(this, new String[]{"0", "1", "2"}, new ChooseAdapter.OnItemClickListener() {
+        mtsnPopup = new ChoosePopup(this, new String[]{"关闭", "使能内放", "使能外放"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
+                mtsn = position;
                 tv_mtsn.setText(mtsnPopup.getValue(position));
                 int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
-                        Tool.stringToInt(tv_mtsn.getText().toString()), position)) {
+                        Tool.stringToInt(tv_mt.getText().toString()), position)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
@@ -240,6 +241,49 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             }
         });
 
+        tv_channel = findViewById(R.id.tv_id);
+        tv_channel.setOnClickListener(this);
+        channelPopup = new ChoosePopup(this, new String[]{"频道0", "频道21", "频道22"}, new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                channelPopup.dismiss();
+                channel = position;
+                if (position == 1) {
+                    channel = 21;
+                } else if (position == 2) {
+                    channel = 22;
+                }
+
+                String text = et_frequency.getText().toString().trim();
+                int f = Tool.stringToInt(text);
+                if (f < 4000000 || f > 4700000) {
+                    Tool.toastShow(SettingActivity.this, "对讲机频率范围为 4000000~4700000");
+                    return;
+                }
+
+                if (f % 50 != 0) {
+                    Tool.toastShow(SettingActivity.this, "对讲机频率必须为50的倍数");
+                    return;
+                }
+
+                int id = Tool.stringToInt(et_id.getText().toString());
+
+                if (id < 0 || id > 121) {
+                    Tool.toastShow(SettingActivity.this, "亚音ID范围为 0~121");
+                    return;
+                }
+
+                if (getPresenter().setRFReq(channel, id, f)) {
+                    Tool.toastShow(SettingActivity.this, "设置成功");
+                } else {
+                    Tool.toastShow(SettingActivity.this, "设置失败");
+                }
+
+                tv_channel.setText(channelPopup.getValue(position));
+
+            }
+        });
+
         rg_rf = findViewById(R.id.rg_rf);
     }
 
@@ -275,7 +319,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
     private void setRF(int value) {
         if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
-                Tool.stringToInt(tv_mt.getText().toString()), Tool.stringToInt(tv_mtsn.getText().toString()))) {
+                Tool.stringToInt(tv_mt.getText().toString()), mtsn)) {
             Tool.toastShow(SettingActivity.this, "设置成功");
         } else {
             Tool.toastShow(SettingActivity.this, "设置失败");
@@ -400,6 +444,8 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             tlPopup.showAsDropDown(v);
         } else if (v.getId() == R.id.tv_track_frequency) {
             tfPopup.showAsDropDown(v);
+        } else if (v.getId() == R.id.tv_id) {
+            channelPopup.showAsDropDown(v);
         }
     }
 
@@ -465,6 +511,13 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             et_frequency.setSelection(et_frequency.length());
 
             channel = Tool.stringToInt(vs[0]);
+            if (channel == 0) {
+                tv_channel.setText(channelPopup.getValue(0));
+            } else if (channel == 21) {
+                tv_channel.setText(channelPopup.getValue(1));
+            } else if (channel == 22) {
+                tv_channel.setText(channelPopup.getValue(2));
+            }
             et_id.setText(String.valueOf(Tool.stringToInt(vs[1])));
         }
         dismissProDialog();
@@ -492,7 +545,9 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             setViewEnable((ViewGroup) findViewById(R.id.lin_frequency), rfState == 1);
 
             tv_mt.setText(String.valueOf(Tool.stringToInt(vs[4])));
-            tv_mtsn.setText(String.valueOf(Tool.stringToInt(vs[5])));
+
+            mtsn = Tool.stringToInt(vs[5]);
+            tv_mtsn.setText(mtsnPopup.getValue(mtsn));
         }
     }
 
