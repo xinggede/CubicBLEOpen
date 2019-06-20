@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -24,7 +25,8 @@ import com.xingge.carble.util.Tool;
 public class MainActivity extends IBaseActivity<MainPresenter> implements MainContract.View, AdapterView.OnItemSelectedListener {
 
     private TextView tv_voltage, tv_igv, tv_wd_n, tv_wd_w, tv_fy, tv_qc, tv_dqy, tv_dqyhb, tv_altitude, tv_rcsj, tv_rlsj,
-            tv_location_state, tv_satellite, tv_longitude, tv_latitude, tv_speed, tv_channel, tv_id;
+            tv_location_state, tv_satellite, tv_longitude, tv_latitude, tv_speed;
+    private EditText et_channel, et_id;
     private CusRoundView cusRoundView;
     private Switch aSwitch;
     private boolean init = false;
@@ -71,8 +73,8 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         tv_longitude = findViewById(R.id.tv_longitude);
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_speed = findViewById(R.id.tv_speed);
-        tv_channel = findViewById(R.id.tv_channel);
-        tv_id = findViewById(R.id.tv_id);
+        et_channel = findViewById(R.id.et_channel);
+        et_id = findViewById(R.id.et_id);
 
         cusRoundView = findViewById(R.id.cusRoundView);
 
@@ -86,12 +88,12 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
                 findViewById(R.id.bt_save).setEnabled(isChecked);
                 setViewEnable((ViewGroup) findViewById(R.id.lin6), isChecked);
 
-                int channel = Tool.stringToInt(tv_channel.getText().toString());
-                if (channel < 0 || channel > 20) {
-                    Tool.toastShow(MainActivity.this, "频道范围为0~20");
+                int channel = Tool.stringToInt(et_channel.getText().toString());
+                if (channel < 0 || channel > 22) {
+                    Tool.toastShow(MainActivity.this, "频道范围为0~22");
                     return;
                 }
-                int id = Tool.stringToInt(tv_id.getText().toString());
+                int id = Tool.stringToInt(et_id.getText().toString());
                 if (id < 0 || id > 121) {
                     Tool.toastShow(MainActivity.this, "频道范围为0~121");
                     return;
@@ -119,7 +121,9 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
     @Override
     protected void onResume() {
         super.onResume();
-        getPresenter().setCallback();
+        if (!isShowDialog()) {
+            getPresenter().getGMDF();
+        }
     }
 
     @Override
@@ -139,12 +143,12 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             intent.putExtra("showType", showType);
             startActivity(intent);
         } else if (v.getId() == R.id.bt_save) {
-            int channel = Tool.stringToInt(tv_channel.getText().toString());
+            int channel = Tool.stringToInt(et_channel.getText().toString());
             if (channel < 0 || channel > 20) {
-                Tool.toastShow(MainActivity.this, "频道范围为0~20");
+                Tool.toastShow(MainActivity.this, "频道范围为0~22");
                 return;
             }
-            int id = Tool.stringToInt(tv_id.getText().toString());
+            int id = Tool.stringToInt(et_id.getText().toString());
             if (id < 0 || id > 121) {
                 Tool.toastShow(MainActivity.this, "频道范围为0~121");
                 return;
@@ -152,7 +156,12 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             if (getPresenter().setRFCtrl(aSwitch.isChecked() ? 1 : 0, channel, id)) {
                 Tool.toastShow(MainActivity.this, "设置成功");
             }
+        } else if (v.getId() == R.id.bt_get_location) {
+            Intent intent = new Intent(this, LocationActivity.class);
+            intent.putExtra("showType", showType);
+            startActivity(intent);
         }
+
     }
 
     @Override
@@ -219,8 +228,8 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
     private void setRFReq(String data) {
         String[] vs = data.split(",");
         if (vs.length == 3) {
-//            tv_channel.setText(vs[0]);
-//            tv_id.setText(String.valueOf(Tool.stringToInt(vs[1])));
+//            et_channel.setText(vs[0]);
+//            et_id.setText(String.valueOf(Tool.stringToInt(vs[1])));
 //
 //            setViewEnable((ViewGroup) findViewById(R.id.lin5), true);
         }
@@ -232,8 +241,8 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         if (vs.length == 3) {
             int state = Tool.stringToInt(vs[0]);
             aSwitch.setChecked(state == 1);
-            tv_channel.setText(vs[1]);
-            tv_id.setText(String.valueOf(Tool.stringToInt(vs[2])));
+            et_channel.setText(vs[1]);
+            et_id.setText(String.valueOf(Tool.stringToInt(vs[2])));
 
             init = true;
         }
@@ -299,7 +308,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         setViewEnable((ViewGroup) findViewById(R.id.lin_location), gpsInfo.state == 1);
         setViewEnable((ViewGroup) findViewById(R.id.lin_ll), gpsInfo.state == 1);
         setViewEnable((ViewGroup) findViewById(R.id.lin_speed), gpsInfo.state == 1);
-        findViewById(R.id.bt_get_gps).setEnabled(true);
+        findViewById(R.id.bt_get_location).setEnabled(true);
 
         tv_location_state.setText(gpsInfo.state == 0 ? "无效" : "有效");
 

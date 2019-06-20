@@ -34,6 +34,13 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
     private InputPwdDialog inputPwdDialog;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getPresenter().releaseAll();
+        searchBle();
+    }
+
+    @Override
     protected SearchPresenter onLoadPresenter() {
         return new SearchPresenter(this);
     }
@@ -82,6 +89,8 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
 
     @Override
     protected void initEventAndData() {
+        getPresenter().releaseAll();
+
         searchDevAdapter = new SearchDevAdapter(this, getPresenter().getDevices());
         searchDevAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(searchDevAdapter);

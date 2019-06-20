@@ -149,6 +149,12 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
+    public boolean setRFRpt(int state, int value) {
+        String data = state + "," + value;
+        return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.RFRPT, data));
+    }
+
+    @Override
     public void setTLTime(String time) {
         prefs.saveString(TL_TIME, time);
     }

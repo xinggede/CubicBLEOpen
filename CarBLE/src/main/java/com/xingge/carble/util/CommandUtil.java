@@ -34,6 +34,7 @@ public class CommandUtil {
     public static final String RFPVS = "RFPVS-"; //对讲信息的获取和设置； APP- 或 APP->MCU:-Dx ；MCU->APP:-Dx
 
     public static final String RFCTRL = "RFCTRL-";
+    public static final String RFRPT = "RFRPT-";
     public static final String RFREQ = "RFREQ-"; //对讲频率的获取和设置； APP- 或 APP->MCU:-Dx ；MCU->APP:-Dx
     public static final String DERR = "DERR-"; //异常信息的获取和设置； APP- 或 APP->MCU:-Dx ；MCU->APP:-Dx
     public static final String RESET = "RESET-"; ///复位的设置; APP->MCU:-Dx

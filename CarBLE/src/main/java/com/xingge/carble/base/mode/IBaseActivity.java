@@ -68,6 +68,10 @@ public abstract class IBaseActivity<P extends BaseNetPresenter> extends BaseActi
         }
     }
 
+    public boolean isShowDialog(){
+        return proDialog != null && proDialog.isShowing();
+    }
+
     @Override
     public void setShowText(String text) {
         if (proDialog != null) {

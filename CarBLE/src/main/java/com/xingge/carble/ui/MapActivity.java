@@ -57,6 +57,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
     private String day;
     private int showType;
     private LineChartDialog lineChartDialog;
+    private Button btGetGps;
 
     @Override
     protected MainPresenter onLoadPresenter() {
@@ -83,6 +84,8 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
 
         showType = getIntent().getIntExtra("showType", 0);
 
+        btGetGps = findViewById(R.id.bt_get_gps);
+
         tvDay = findViewById(R.id.tv_day);
         tvDay.setOnClickListener(this);
 
@@ -103,7 +106,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                     str += "\n经度：" + GpsInfo.formatLongitude(gInfo.longitude, showType) + "\n纬度：" + GpsInfo.formatLatitude(gInfo.latitude, showType);
                     str += "\n速度：" + gInfo.speed + "KM/H" + "\n海拔：" + gInfo.altitude + "米";
                     str += "\n距离：" + Tool.mToKM(gInfo.distance) + "KM";
-                    Tool.logd(str + "  -- " + progress);
+//                    Tool.logd(str + "  -- " + progress);
                     if (marker != null && marker.isInfoWindowShown()) {
                         marker.setTitle(str);
                         marker.setPosition(gInfo.latLng);
@@ -177,6 +180,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == 97) { //开始
+                btGetGps.setEnabled(false);
                 seekBar.setEnabled(false);
                 seekBar.setMax(msg.arg1);
                 GpsInfo gpsInfo = (GpsInfo) msg.obj;
@@ -207,7 +211,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             } else if (msg.what == 100) { //进度
                 seekBar.setProgress(msg.arg2);
             } else if (msg.what == 101) { //结束
-
+                btGetGps.setEnabled(true);
                 List<GpsInfo> gpsInfoList = listMap.get(day);
 
                 seekBar.setMax(gpsInfoList.size() - 1);
@@ -286,6 +290,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
         tvTime2.setText("");
         tvTime3.setText("");
         tvTotalInfo.setText("");
+        btGetGps.setEnabled(false);
         List<GpsInfo> infoList = listMap.get(day);
         if (infoList != null && infoList.size() > 0) {
             int size = infoList.size();
@@ -334,6 +339,8 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             seekBar.addProgress(first, size - 1, g.color);
             seekBar.setProgress(seekBar.getMax());
             showMap(null, list);
+
+            btGetGps.setEnabled(true);
             return;
         }
 
@@ -455,7 +462,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             Tool.logd("总天数：" + countDay + "; 数据长度: " + (vs.length - 1));
             if (countDay == 0) {
                 tvDay.setEnabled(false);
-                findViewById(R.id.bt_get_gps).setEnabled(false);
+                btGetGps.setEnabled(false);
                 return;
             }
             if (countDay == vs.length - 1) {
@@ -465,7 +472,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                     list[i] = Tool.stringToDate(vs[i + 1]);
                 }
 
-                findViewById(R.id.bt_get_gps).setEnabled(true);
+                btGetGps.setEnabled(true);
                 tvDay.setText(list[0]);
                 day = Tool.dateToString(tvDay.getText().toString());
 

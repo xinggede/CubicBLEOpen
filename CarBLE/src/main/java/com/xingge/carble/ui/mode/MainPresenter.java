@@ -55,6 +55,12 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
         mainModel.setBlueToothCallback(this);
     }
 
+    public boolean getGMDF() {
+        mainModel.setBlueToothCallback(this);
+        mModel.getGMDF();
+        return true;
+    }
+
     public boolean getSetAll() {
         mainModel.setBlueToothCallback(this);
         mModel.getACC();
@@ -274,6 +280,11 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     @Override
     public void setTLTime(String time) {
         mModel.setTLTime(time);
+    }
+
+    @Override
+    public boolean setRFRpt(int state, int value) {
+        return mModel.setRFRpt(state, value);
     }
 
     @Override

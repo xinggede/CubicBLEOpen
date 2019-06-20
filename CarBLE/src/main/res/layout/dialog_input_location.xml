@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_bj"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_hint"
+            style="@style/tvStyle"
+            android:layout_marginTop="10dp"
+            android:enabled="true"
+            android:padding="10dp"
+            android:text="经纬度" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/et_longitude1"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="3" />
+
+            <TextView
+                android:id="@+id/tv_lo1"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="°"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_longitude2"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="2" />
+
+            <TextView
+                android:id="@+id/tv_lo2"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:gravity="bottom"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="."
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_longitude3"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="经度"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:maxLength="4" />
+
+            <TextView
+                android:id="@+id/tv_lo3"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="'"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/et_latitude1"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="2" />
+
+            <TextView
+                android:id="@+id/tv_la1"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="°"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_latitude2"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="2" />
+
+            <TextView
+                android:id="@+id/tv_la2"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:gravity="bottom"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="."
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_latitude3"
+                style="@style/etStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="纬度"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="4" />
+
+            <TextView
+                android:id="@+id/tv_la3"
+                style="@style/tcStyle"
+                android:layout_height="match_parent"
+                android:enabled="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="'"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="20dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_cancel"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_dialog_left"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@string/cancel"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="30dp"
+                android:background="@color/black" />
+
+            <Button
+                android:id="@+id/bt_confirm"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_dialog_right"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

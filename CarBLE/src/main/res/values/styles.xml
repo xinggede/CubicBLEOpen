@@ -16,7 +16,7 @@
     </style>
 
     <!-- 设置了 android:windowIsFloating=true 就不需要去设置屏幕亮度了 -->
-    <style name="translucentDialogStyle" parent="@android:style/Theme.Dialog">
+    <style name="translucentDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFrame">@null</item>
@@ -62,7 +62,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/shape</item>
+        <item name="android:background">@drawable/et_bj</item>
         <item name="android:textColorHint">@color/unable_color</item>
         <item name="android:padding">10dp</item>
     </style>

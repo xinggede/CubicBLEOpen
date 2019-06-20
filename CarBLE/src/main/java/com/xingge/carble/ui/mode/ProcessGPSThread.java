@@ -79,7 +79,7 @@ public class ProcessGPSThread extends Thread {
         }
     }
 
-    private double getLatitude(String latitude) {
+    public static double getLatitude(String latitude) {
         latitude = latitude.substring(1);
         String a = latitude.substring(0, 2);
         String b = latitude.substring(2, 4);
@@ -89,7 +89,7 @@ public class ProcessGPSThread extends Thread {
         return d;
     }
 
-    private double getLongitude(String longitude) {
+    public static double getLongitude(String longitude) {
         longitude = longitude.substring(1);
         String a = longitude.substring(0, 3);
         String b = longitude.substring(3, 5);

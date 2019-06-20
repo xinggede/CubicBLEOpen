@@ -26,6 +26,7 @@ public class SearchContract {
         boolean readPwdResult(String mac);
 
         boolean isPwdCid(String uuid);
+
     }
 
 

@@ -65,6 +65,8 @@ public class MainContract {
 
         boolean setRFCtrl(int state, int channel, int id);
 
+        boolean setRFRpt(int state, int value);
+
         void setTLTime(String time);
 
         String getTLTime();
@@ -105,6 +107,8 @@ public class MainContract {
         boolean setRFCtrl(int state, int channel, int id);
 
         void setTLTime(String time);
+
+        boolean setRFRpt(int state, int value);
 
         String getTLTime();
     }

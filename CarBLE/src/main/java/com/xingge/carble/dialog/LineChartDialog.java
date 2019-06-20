@@ -185,20 +185,20 @@ public class LineChartDialog extends BaseDialog {
 
 
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
-        leftAxis.setStartZero(false);
-        leftAxis.setMinValue(aMin - 20);
-        leftAxis.setMaxValue(aMax + 20);
-        leftAxis.getAxisStyle().setColor(Color.BLUE);
+        leftAxis.setStartZero(true);
+        leftAxis.setMaxValue(sMax + 20);
+        leftAxis.getAxisStyle().setColor(Color.GREEN);
 
         VerticalAxis rightAxis = lineChart.getRightVerticalAxis();
-        rightAxis.setStartZero(true);
-        rightAxis.setMaxValue(sMax + 20);
-        rightAxis.getAxisStyle().setColor(Color.GREEN);
+        rightAxis.setStartZero(false);
+        rightAxis.setMinValue(aMin - 20);
+        rightAxis.setMaxValue(aMax + 20);
+        rightAxis.getAxisStyle().setColor(Color.BLUE);
 
 
-        LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.GREEN, altitudeList);
+        LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.BLUE, altitudeList);
 
-        LineData columnData2 = new LineData("速度", "KM/H", Color.BLUE, speedList);
+        LineData columnData2 = new LineData("速度", "KM/H", Color.GREEN, speedList);
         List<LineData> columnDatas = new ArrayList<>();
         columnDatas.add(columnData2);
         columnDatas.add(columnData1);

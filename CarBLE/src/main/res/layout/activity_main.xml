@@ -53,6 +53,14 @@
                     style="@style/tcStyle"
                     android:text="--" />
 
+                <Button
+                    android:id="@+id/bt_get_gps"
+                    style="@style/btStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="40dp"
+                    android:text="轨迹获取" />
+
             </LinearLayout>
 
             <View
@@ -274,12 +282,12 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/bt_get_gps"
+                    android:id="@+id/bt_get_location"
                     style="@style/btStyle"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
-                    android:text="轨迹获取" />
+                    android:text="位置获取" />
             </LinearLayout>
 
             <com.xingge.carble.ui.CusRoundView
@@ -327,9 +335,9 @@
                     android:text="频道：" />
 
                 <EditText
-                    android:id="@+id/tv_channel"
+                    android:id="@+id/et_channel"
                     style="@style/etStyle"
-                    android:hint="范围(0~20)"
+                    android:hint="范围(0~22)"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="2" />
@@ -340,7 +348,7 @@
                     android:text="亚音ID：" />
 
                 <EditText
-                    android:id="@+id/tv_id"
+                    android:id="@+id/et_id"
                     style="@style/etStyle"
                     android:hint="范围(0~121)"
                     android:imeOptions="actionDone"
