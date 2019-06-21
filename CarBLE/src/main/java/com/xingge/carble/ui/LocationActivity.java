@@ -161,10 +161,12 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             sendLocationDialog.show();
         } else if (v.getId() == R.id.bt_confirm) {
             LatLng latLng = inputLocationDialog.getLatlng(showType);
-            float distance = AMapUtils.calculateLineDistance(curLatLng, latLng);
+            converter.coord(latLng);
+            LatLng mLatLng = converter.convert();
+            float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             String title = inputLocationDialog.getTitle(showType);
             title += "距离:" + Tool.mToKM(distance) + "KM";
-            addMark(latLng, title);
+            addMark(mLatLng, title);
             inputLocationDialog.dismiss();
         } else if (v.getId() == R.id.bt_ok) {
             sendLocationDialog.dismiss();
@@ -215,13 +217,15 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             String lat = vs[3];
 
             LatLng latLng = new LatLng(ProcessGPSThread.getLatitude(lat), ProcessGPSThread.getLongitude(lng));
+            converter.coord(latLng);
+            LatLng mLatLng = converter.convert();
 
             StringBuilder sb = new StringBuilder();
             sb.append("经度:").append(GpsInfo.formatLongitude(lng, showType)).append("\n");
             sb.append("纬度:").append(GpsInfo.formatLatitude(lat, showType)).append("\n");
-            float distance = AMapUtils.calculateLineDistance(curLatLng, latLng);
+            float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             sb.append("距离:").append(Tool.mToKM(distance)).append("KM");
-            addMarks(latLng, sb.toString(), sn + "-" + id);
+            addMarks(mLatLng, sb.toString(), sn + "-" + id);
         }
     }
 
