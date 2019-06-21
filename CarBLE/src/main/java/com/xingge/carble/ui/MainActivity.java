@@ -305,12 +305,12 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         if (gpsInfo == null) {
             return;
         }
-        setViewEnable((ViewGroup) findViewById(R.id.lin_location), gpsInfo.state == 1);
-        setViewEnable((ViewGroup) findViewById(R.id.lin_ll), gpsInfo.state == 1);
-        setViewEnable((ViewGroup) findViewById(R.id.lin_speed), gpsInfo.state == 1);
+        setViewEnable((ViewGroup) findViewById(R.id.lin_location), gpsInfo.state == 1 || gpsInfo.delayState == 1);
+        setViewEnable((ViewGroup) findViewById(R.id.lin_ll), gpsInfo.state == 1 || gpsInfo.delayState == 1);
+        setViewEnable((ViewGroup) findViewById(R.id.lin_speed), gpsInfo.state == 1 || gpsInfo.delayState == 1);
         findViewById(R.id.bt_get_location).setEnabled(true);
 
-        tv_location_state.setText(gpsInfo.state == 0 ? "无效" : "有效");
+        tv_location_state.setText(gpsInfo.state == 0 || gpsInfo.delayState == 1 ? "无效" : "有效");
 
         if (gpsInfo.state == 0 && gpsInfo.delayState == 1) {
             return;
