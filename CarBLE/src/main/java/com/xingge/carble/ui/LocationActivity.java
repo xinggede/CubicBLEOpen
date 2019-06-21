@@ -79,6 +79,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             aMap.setOnMyLocationChangeListener(this);
         }
 
+        findViewById(R.id.bt_send).setEnabled(getIntent().getBooleanExtra("enable", true));
+
     }
 
     @Override
@@ -266,11 +268,12 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
     @Override
     public void onMyLocationChange(Location location) {
         Tool.logd("onMyLocationChange= " + location.toString());
-        curLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        showPoint(curLatLng);
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        showPoint(latLng);
     }
 
     private void showPoint(LatLng latLng) {
+        curLatLng = latLng;
         if (marker != null) {
             marker.setPosition(latLng);
         } else {

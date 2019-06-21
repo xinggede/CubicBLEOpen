@@ -159,6 +159,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         } else if (v.getId() == R.id.bt_get_location) {
             Intent intent = new Intent(this, LocationActivity.class);
             intent.putExtra("showType", showType);
+            intent.putExtra("enable", aSwitch.isChecked());
             startActivity(intent);
         }
 
