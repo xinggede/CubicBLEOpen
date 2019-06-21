@@ -170,7 +170,7 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             inputLocationDialog.dismiss();
         } else if (v.getId() == R.id.bt_ok) {
             sendLocationDialog.dismiss();
-            if (getPresenter().setRFRpt(1, sendLocationDialog.getValue())) {
+            if (getPresenter().setRFRpt(sendLocationDialog.getDefault(), sendLocationDialog.getValue())) {
                 Tool.toastShow(this, "位置分享成功");
             }
         }
@@ -209,23 +209,23 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
 
     private void setRFRpt(String data) {
         String[] vs = data.split(",");
-        if (vs.length == 4) {
-            String sn = vs[0];
-            String id = vs[1];
+        if (vs.length == 3) {
+            String id = vs[0];
 
-            String lng = vs[2];
-            String lat = vs[3];
+            String lng = vs[1];
+            String lat = vs[2];
 
             LatLng latLng = new LatLng(ProcessGPSThread.getLatitude(lat), ProcessGPSThread.getLongitude(lng));
             converter.coord(latLng);
             LatLng mLatLng = converter.convert();
 
             StringBuilder sb = new StringBuilder();
+            sb.append("ID:").append(id).append("\n");
             sb.append("经度:").append(GpsInfo.formatLongitude(lng, showType)).append("\n");
             sb.append("纬度:").append(GpsInfo.formatLatitude(lat, showType)).append("\n");
             float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             sb.append("距离:").append(Tool.mToKM(distance)).append("KM");
-            addMarks(mLatLng, sb.toString(), sn + "-" + id);
+            addMarks(mLatLng, sb.toString(), id);
         }
     }
 
