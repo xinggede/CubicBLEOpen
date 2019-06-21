@@ -150,7 +150,7 @@ public class MainModel extends BleModel implements MainContract.Model {
 
     @Override
     public boolean setRFRpt(int state, int value) {
-        String data = state + "," + value;
+        String data = state + "," + getLenData(value, 2);
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.RFRPT, data));
     }
 

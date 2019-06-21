@@ -55,7 +55,7 @@ public class InputLocationDialog extends BaseDialog {
         etLongitude1.setText("");
         etLongitude2.setText("");
         etLongitude3.setText("");
-        etLatitude1.requestFocus();
+        etLongitude1.requestFocus();
         requestLayout(type);
         super.show();
     }
