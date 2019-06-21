@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_dialog_bj"
         android:gravity="center_horizontal"
@@ -19,24 +19,39 @@
             android:padding="10dp"
             android:text="对讲位置分享" />
 
-        <Switch
-            android:id="@+id/switch1"
-            style="@style/tcStyle"
-            android:layout_width="wrap_content"
-            android:enabled="true"
-            android:padding="10dp"
-            android:textOff="默认ID"
-            android:textOn="自定义ID" />
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                style="@style/rbStyle"
+                android:checked="true"
+                android:text="默认ID" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                style="@style/rbStyle"
+                android:layout_marginStart="20dp"
+                android:text="自定义ID" />
+
+        </RadioGroup>
+
 
         <EditText
             android:id="@+id/et_id"
             style="@style/etStyle"
+            android:layout_width="150dp"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:hint="ID范围(0-99)"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="2"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"

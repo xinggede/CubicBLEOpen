@@ -5,24 +5,23 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
+import android.widget.RadioGroup;
 
 import com.xingge.carble.R;
 import com.xingge.carble.util.Tool;
 
 
-public class SendLocationDialog extends BaseDialog implements CompoundButton.OnCheckedChangeListener {
+public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheckedChangeListener {
     private EditText etId;
     private Button btConfirm, btCancel;
-    private Switch aSwitch;
+    private RadioGroup rg;
 
     public SendLocationDialog(Context context) {
         super(context);
         setCanceledOnTouchOutside(false);
         etId = getDialog().findViewById(R.id.et_id);
-        aSwitch = getDialog().findViewById(R.id.switch1);
+        rg = getDialog().findViewById(R.id.rg);
         btConfirm = getDialog().findViewById(R.id.bt_ok);
         btCancel = getDialog().findViewById(R.id.bt_cancel);
         btCancel.setOnClickListener(new OnClickListener() {
@@ -31,7 +30,7 @@ public class SendLocationDialog extends BaseDialog implements CompoundButton.OnC
                 dismiss();
             }
         });
-        aSwitch.setOnCheckedChangeListener(this);
+        rg.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class SendLocationDialog extends BaseDialog implements CompoundButton.OnC
     }
 
     public int getDefault() {
-        return aSwitch.isChecked() ? 1 : 0;
+        return rg.getCheckedRadioButtonId() == R.id.rb2 ? 1 : 0;
     }
 
     public int getValue() {
@@ -51,9 +50,8 @@ public class SendLocationDialog extends BaseDialog implements CompoundButton.OnC
         btConfirm.setOnClickListener(listener);
     }
 
-
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        etId.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        etId.setVisibility(checkedId == R.id.rb2 ? View.VISIBLE : View.GONE);
     }
 }
