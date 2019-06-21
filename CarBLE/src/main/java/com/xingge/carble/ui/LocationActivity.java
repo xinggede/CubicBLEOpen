@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.CoordinateConverter;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -43,6 +44,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
     private int showType;
     private InputLocationDialog inputLocationDialog;
     private SendLocationDialog sendLocationDialog;
+    private CoordinateConverter converter;
+
 
     @Override
     protected MainPresenter onLoadPresenter() {
@@ -70,6 +73,9 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
         });
 
         showType = getIntent().getIntExtra("showType", 0);
+
+        converter = new CoordinateConverter(this);
+        converter.from(CoordinateConverter.CoordType.GPS);
 
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
@@ -261,7 +267,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
         } else {
             startLocation(false);
             LatLng latLng = new LatLng(ProcessGPSThread.getLatitude(gpsInfo.latitude), ProcessGPSThread.getLongitude(gpsInfo.longitude));
-            showPoint(latLng);
+            converter.coord(latLng);
+            showPoint(converter.convert());
         }
     }
 
