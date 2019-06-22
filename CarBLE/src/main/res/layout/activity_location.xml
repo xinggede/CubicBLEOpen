@@ -35,15 +35,6 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/bt_send"
-            style="@style/btStyle"
-            android:layout_gravity="top|start"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="80dp"
-            android:text="位置分享"
-            android:textSize="14sp" />
-
-        <Button
             android:id="@+id/bt_change"
             style="@style/btStyle"
             android:layout_gravity="top|start"
@@ -53,5 +44,14 @@
             android:textSize="14sp" />
 
     </com.amap.api.maps.MapView>
+
+    <Button
+        android:id="@+id/bt_send"
+        style="@style/btStyle"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:text="位置分享"
+        android:textSize="14sp" />
 
 </RelativeLayout>
