@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.xingge.carble.R;
 import com.xingge.carble.util.Tool;
@@ -14,6 +15,7 @@ import com.xingge.carble.util.Tool;
 
 public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheckedChangeListener {
     private EditText etId;
+    private TextView tvId;
     private Button btConfirm, btCancel;
     private RadioGroup rg;
 
@@ -22,6 +24,7 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
         setCanceledOnTouchOutside(false);
         etId = getDialog().findViewById(R.id.et_id);
         rg = getDialog().findViewById(R.id.rg);
+        tvId = getDialog().findViewById(R.id.tv_id);
         btConfirm = getDialog().findViewById(R.id.bt_ok);
         btCancel = getDialog().findViewById(R.id.bt_cancel);
         btCancel.setOnClickListener(new OnClickListener() {
@@ -31,6 +34,11 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
             }
         });
         rg.setOnCheckedChangeListener(this);
+    }
+
+    public void showText(String id) {
+        tvId.setText(id);
+        super.show();
     }
 
     @Override

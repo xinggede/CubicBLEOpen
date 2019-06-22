@@ -41,6 +41,8 @@ public class MainContract {
 
         boolean getGMDF();
 
+        boolean getVer();
+
         boolean setGMDF(int mode, int showType);
 
         boolean getRFPvs();

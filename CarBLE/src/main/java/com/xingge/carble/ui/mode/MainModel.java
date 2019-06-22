@@ -84,6 +84,11 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
+    public boolean getVer() {
+        return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.getCommandByte(CommandUtil.VER));
+    }
+
+    @Override
     public boolean setGMDF(int mode, int showType) {
         String data = mode + "," + showType;
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.GMDF, data));

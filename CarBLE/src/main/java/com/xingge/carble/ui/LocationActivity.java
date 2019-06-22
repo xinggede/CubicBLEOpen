@@ -92,6 +92,7 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
     @Override
     protected void initEventAndData() {
         getPresenter().getGMDF();
+
         UiSettings uiSettings = aMap.getUiSettings();
         uiSettings.setMyLocationButtonEnabled(true);
         uiSettings.setZoomControlsEnabled(false);
@@ -158,7 +159,7 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
                 sendLocationDialog = new SendLocationDialog(this);
                 sendLocationDialog.setBtClick(this);
             }
-            sendLocationDialog.show();
+            sendLocationDialog.showText(ver);
         } else if (v.getId() == R.id.bt_confirm) {
             LatLng latLng = inputLocationDialog.getLatlng(showType);
             converter.coord(latLng);
@@ -204,6 +205,17 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             setGMdf(data);
         } else if (CommandUtil.RFRPT.startsWith(command)) {
             setRFRpt(data);
+        } else if (CommandUtil.VER.startsWith(command)) {
+            setVer(data);
+        }
+    }
+
+    private String ver = "";
+
+    private void setVer(String data) {
+        String[] vs = data.split(",");
+        if (vs.length == 2) {
+            ver = vs[1];
         }
     }
 

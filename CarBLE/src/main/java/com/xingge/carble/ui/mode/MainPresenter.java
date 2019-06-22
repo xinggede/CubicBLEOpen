@@ -58,6 +58,12 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     public boolean getGMDF() {
         mainModel.setBlueToothCallback(this);
         mModel.getGMDF();
+        getVer();
+        return true;
+    }
+
+    public boolean getVer() {
+        mModel.getVer();
         return true;
     }
 

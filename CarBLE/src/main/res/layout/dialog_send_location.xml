@@ -30,7 +30,11 @@
                 android:id="@+id/rb1"
                 style="@style/rbStyle"
                 android:checked="true"
-                android:text="默认ID" />
+                android:text="默认ID:" />
+
+            <TextView
+                android:id="@+id/tv_id"
+                style="@style/tvStyle" />
 
             <RadioButton
                 android:id="@+id/rb2"
