@@ -359,8 +359,8 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                     return;
                 }
 
-                if (f % 50 != 0) {
-                    Tool.toastShow(this, "对讲机频率必须为50的倍数");
+                if (f % 10 != 0) {
+                    Tool.toastShow(this, "对讲机频率必须为10的倍数");
                     return;
                 }
 
