@@ -144,7 +144,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             startActivity(intent);
         } else if (v.getId() == R.id.bt_save) {
             int channel = Tool.stringToInt(et_channel.getText().toString());
-            if (channel < 0 || channel > 20) {
+            if (channel < 0 || channel > 23) {
                 Tool.toastShow(MainActivity.this, "频道范围为0~22");
                 return;
             }

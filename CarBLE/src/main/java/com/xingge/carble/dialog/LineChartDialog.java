@@ -2,6 +2,7 @@ package com.xingge.carble.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 
 import com.daivd.chart.component.axis.BaseAxis;
 import com.daivd.chart.component.axis.VerticalAxis;
@@ -13,10 +14,12 @@ import com.daivd.chart.data.LineData;
 import com.daivd.chart.data.style.FontStyle;
 import com.daivd.chart.data.style.PointStyle;
 import com.daivd.chart.listener.OnClickColumnListener;
+import com.daivd.chart.provider.component.level.LevelLine;
 import com.daivd.chart.provider.component.point.LegendPoint;
 import com.daivd.chart.provider.component.point.Point;
 import com.xingge.carble.R;
 import com.xingge.carble.bean.GpsInfo;
+import com.xingge.carble.ui.CusLevelLine;
 import com.xingge.carble.util.Tool;
 
 import java.util.ArrayList;
@@ -185,24 +188,30 @@ public class LineChartDialog extends BaseDialog {
 
 
         VerticalAxis leftAxis = lineChart.getLeftVerticalAxis();
-        leftAxis.setStartZero(true);
-        leftAxis.setMaxValue(sMax + 20);
-        leftAxis.getAxisStyle().setColor(Color.GREEN);
+        leftAxis.setStartZero(false);
+        leftAxis.setMinValue(aMin - 20);
+        leftAxis.setMaxValue(aMax + 20);
+        leftAxis.getAxisStyle().setColor(Color.BLUE);
 
         VerticalAxis rightAxis = lineChart.getRightVerticalAxis();
-        rightAxis.setStartZero(false);
-        rightAxis.setMinValue(aMin - 20);
-        rightAxis.setMaxValue(aMax + 20);
-        rightAxis.getAxisStyle().setColor(Color.BLUE);
+        rightAxis.setStartZero(true);
+        rightAxis.setMaxValue(sMax + 20);
+        rightAxis.getAxisStyle().setColor(Color.GREEN);
+
+        DashPathEffect effects = new DashPathEffect(new float[]{10, 10}, 0);
+        CusLevelLine levelLine = new CusLevelLine(0);
+        levelLine.getLineStyle().setWidth(getContext(), 1).setColor(Color.BLUE).setEffect(effects);
+        levelLine.getTextStyle().setTextColor(Color.BLUE);
+        lineChart.getProvider().addLevelLine(levelLine);
 
 
-        LineData columnData1 = new LineData("海拔", "M", IAxis.AxisDirection.RIGHT, Color.BLUE, altitudeList);
+        LineData columnData1 = new LineData("海拔", "M", Color.BLUE, altitudeList);
 
-        LineData columnData2 = new LineData("速度", "KM/H", Color.GREEN, speedList);
+        LineData columnData2 = new LineData("速度", "KM/H", IAxis.AxisDirection.RIGHT, Color.GREEN, speedList);
         List<LineData> columnDatas = new ArrayList<>();
-        columnDatas.add(columnData2);
         columnDatas.add(columnData1);
-        ChartData<LineData> chartData = new ChartData<>("速度与海拔", chartYDataList, columnDatas);
+        columnDatas.add(columnData2);
+        ChartData<LineData> chartData = new ChartData<>("海拔与速度", chartYDataList, columnDatas);
 //        chartData.getScaleData().totalScale = 10;
         lineChart.setChartData(chartData);
         super.show();

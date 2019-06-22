@@ -182,8 +182,7 @@
                     android:id="@+id/rb_one"
                     style="@style/rbStyle"
                     android:onClick="onClick"
-                    android:text="低功率0.5W"
-                    android:visibility="gone" />
+                    android:text="低功率" />
 
                 <RadioButton
                     android:id="@+id/rb_two"
