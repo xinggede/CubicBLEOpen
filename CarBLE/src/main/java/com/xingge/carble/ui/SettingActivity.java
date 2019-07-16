@@ -213,7 +213,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
         tv_location = findViewById(R.id.tv_location);
         tv_location.setOnClickListener(this);
-        locationPopup = new ChoosePopup(this, new String[]{"关闭", "ID寻呼", "广播寻呼"}, new ChooseAdapter.OnItemClickListener() {
+        locationPopup = new ChoosePopup(this, Tool.dip2px(this, 150), new String[]{"关闭", "ID寻呼", "广播寻呼"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 xhsn = position;
