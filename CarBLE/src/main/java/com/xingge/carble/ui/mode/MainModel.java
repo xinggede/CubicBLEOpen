@@ -100,8 +100,8 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
-    public boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn) {
-        String data = flag + "," + power + "," + volume + "," + level + "," + mt + "," + sn;
+    public boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn, int location) {
+        String data = flag + "," + power + "," + volume + "," + level + "," + mt + "," + sn + "," + location;
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.RFPVS, data));
     }
 

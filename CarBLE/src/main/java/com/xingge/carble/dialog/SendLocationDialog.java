@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.xingge.carble.R;
 import com.xingge.carble.util.Tool;
@@ -15,7 +14,6 @@ import com.xingge.carble.util.Tool;
 
 public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheckedChangeListener {
     private EditText etId;
-    private TextView tvId;
     private Button btConfirm, btCancel;
     private RadioGroup rg;
 
@@ -24,7 +22,6 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
         setCanceledOnTouchOutside(false);
         etId = getDialog().findViewById(R.id.et_id);
         rg = getDialog().findViewById(R.id.rg);
-        tvId = getDialog().findViewById(R.id.tv_id);
         btConfirm = getDialog().findViewById(R.id.bt_ok);
         btCancel = getDialog().findViewById(R.id.bt_cancel);
         btCancel.setOnClickListener(new OnClickListener() {
@@ -37,7 +34,8 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
     }
 
     public void showText(String id) {
-        tvId.setText(id);
+        etId.setText(String.valueOf(Tool.stringToInt(id)));
+        etId.setSelection(etId.length());
         super.show();
     }
 
@@ -47,7 +45,7 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
     }
 
     public int getDefault() {
-        return rg.getCheckedRadioButtonId() == R.id.rb2 ? 1 : 0;
+        return rg.getCheckedRadioButtonId() == R.id.rb2 ? 0 : 1;
     }
 
     public int getValue() {
@@ -60,6 +58,8 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        etId.setVisibility(checkedId == R.id.rb2 ? View.VISIBLE : View.GONE);
+        if (checkedId == R.id.rb2) {
+            etId.setText("");
+        }
     }
 }

@@ -232,8 +232,8 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     }
 
     @Override
-    public boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn) {
-        return mModel.setRFPvs(flag, power, volume, level, mt, sn);
+    public boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn, int location) {
+        return mModel.setRFPvs(flag, power, volume, level, mt, sn, location);
     }
 
     @Override

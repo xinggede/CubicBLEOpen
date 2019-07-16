@@ -47,7 +47,7 @@ public class MainContract {
 
         boolean getRFPvs();
 
-        boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn);
+        boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn, int location);
 
         boolean getRFReq();
 
@@ -87,7 +87,7 @@ public class MainContract {
         boolean setGMdf(int mode, int showType);
 
 
-        boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn);
+        boolean setRFPvs(int flag, int power, int volume, int level, int mt, int sn, int location);
 
 
         boolean setRFReq(int channel, int id, int frequency);
