@@ -172,7 +172,7 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
         } else if (v.getId() == R.id.bt_ok) {
             sendLocationDialog.dismiss();
             if (getPresenter().setRFRpt(sendLocationDialog.getDefault(), sendLocationDialog.getValue())) {
-                Tool.toastShow(this, "位置分享成功");
+                Tool.toastShow(this, "设置成功");
             }
         }
     }

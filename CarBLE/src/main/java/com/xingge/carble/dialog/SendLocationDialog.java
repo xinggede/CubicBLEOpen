@@ -34,6 +34,7 @@ public class SendLocationDialog extends BaseDialog implements RadioGroup.OnCheck
     }
 
     public void showText(String id) {
+        rg.check(R.id.rb1);
         etId.setText(String.valueOf(Tool.stringToInt(id)));
         etId.setSelection(etId.length());
         super.show();

@@ -30,13 +30,13 @@
                 android:id="@+id/rb1"
                 style="@style/rbStyle"
                 android:checked="true"
-                android:text="位置发送" />
+                android:text="播报本机" />
 
             <RadioButton
                 android:id="@+id/rb2"
                 style="@style/rbStyle"
                 android:layout_marginStart="20dp"
-                android:text="位置获取" />
+                android:text="寻呼其他机" />
 
         </RadioGroup>
 
