@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xingge.carble.R;
@@ -29,11 +27,10 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
     private TextView tv_time, tv_ver;
     private EditText et_frequency, et_old_pwd, et_new_pwd, et_id;
-    private RadioGroup rg_rf;
     private TextView tv_acc, tv_time_zone, tv_location_mode, tv_gps_show_type, tv_output_volume,
-            tv_output_level, tv_mt, tv_mtsn, tv_tl_time, tv_track_frequency, tv_channel, tv_location;
+            tv_output_level, tv_mt, tv_mtsn, tv_tl_time, tv_track_frequency, tv_channel, tv_location, tv_output_gl;
     private ChoosePopup accPopup, timeZonePopup, locationModePopup, showTypePopup,
-            volumePopup, levelPopup, mtPopup, mtsnPopup, tlPopup, tfPopup, channelPopup, locationPopup;
+            volumePopup, levelPopup, mtPopup, mtsnPopup, tlPopup, tfPopup, channelPopup, locationPopup, glPopup;
     private int mode, type, mtsn, xhsn;
 
 
@@ -148,7 +145,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             @Override
             public void onItemClickListener(View view, int position) {
                 tv_output_volume.setText(volumePopup.getValue(position));
-                int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
+                int value = gl;
                 if (getPresenter().setRFPvs(rfState, value, position, Tool.stringToInt(tv_output_level.getText().toString()),
                         Tool.stringToInt(tv_mt.getText().toString()), mtsn, xhsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
@@ -165,7 +162,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             @Override
             public void onItemClickListener(View view, int position) {
                 tv_output_level.setText(levelPopup.getValue(position));
-                int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
+                int value = gl;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), position,
                         Tool.stringToInt(tv_mt.getText().toString()), mtsn, xhsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
@@ -182,7 +179,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             @Override
             public void onItemClickListener(View view, int position) {
                 tv_mt.setText(mtPopup.getValue(position));
-                int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
+                int value = gl;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
                         position, mtsn, xhsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
@@ -195,12 +192,12 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
         tv_mtsn = findViewById(R.id.tv_mtsn);
         tv_mtsn.setOnClickListener(this);
-        mtsnPopup = new ChoosePopup(this, new String[]{"关闭", "使能内放", "使能外放"}, new ChooseAdapter.OnItemClickListener() {
+        mtsnPopup = new ChoosePopup(this, new String[]{"关闭", "内放", "外放"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 mtsn = position;
                 tv_mtsn.setText(mtsnPopup.getValue(position));
-                int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
+                int value = gl;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
                         Tool.stringToInt(tv_mt.getText().toString()), position, xhsn)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
@@ -213,12 +210,12 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
 
         tv_location = findViewById(R.id.tv_location);
         tv_location.setOnClickListener(this);
-        locationPopup = new ChoosePopup(this, Tool.dip2px(this, 150), new String[]{"关闭", "ID寻呼", "广播寻呼"}, new ChooseAdapter.OnItemClickListener() {
+        locationPopup = new ChoosePopup(this, new String[]{"关闭", "ID", "广播"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 xhsn = position;
                 tv_location.setText(locationPopup.getValue(position));
-                int value = rg_rf.getCheckedRadioButtonId() == R.id.rb_one ? 0 : 1;
+                int value = gl;
                 if (getPresenter().setRFPvs(rfState, value, Tool.stringToInt(tv_output_volume.getText().toString()), Tool.stringToInt(tv_output_level.getText().toString()),
                         Tool.stringToInt(tv_mt.getText().toString()), mtsn, position)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
@@ -274,7 +271,7 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                     channel = 22;
                 }
 
-                String text = et_frequency.getText().toString().trim();
+                /*String text = et_frequency.getText().toString().trim();
                 int f = Tool.stringToInt(text);
                 if (f < 4000000 || f > 4700000) {
                     Tool.toastShow(SettingActivity.this, "对讲机频率范围为 4000000~4700000");
@@ -292,19 +289,36 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                     Tool.toastShow(SettingActivity.this, "亚音ID范围为 0~121");
                     return;
                 }
-
                 if (getPresenter().setRFReq(channel, id, f)) {
                     Tool.toastShow(SettingActivity.this, "设置成功");
                 } else {
                     Tool.toastShow(SettingActivity.this, "设置失败");
-                }
+                }*/
 
                 tv_channel.setText(channelPopup.getValue(position));
+                try {
+                    et_frequency.setText(frequencys[position]);
+                    et_id.setText(String.valueOf(ids[position]));
+                } catch (Exception e) {
+
+                }
 
             }
         });
 
-        rg_rf = findViewById(R.id.rg_rf);
+        tv_output_gl = findViewById(R.id.tv_output_gl);
+        tv_output_gl.setText(getPresenter().getTLTime().split("-")[1]);
+        tv_output_gl.setOnClickListener(this);
+        glPopup = new ChoosePopup(this, new String[]{"低", "高"}, new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                gl = position;
+                String track = glPopup.getValue(position);
+                tv_output_gl.setText(track);
+                setRF(position);
+                glPopup.dismiss();
+            }
+        });
     }
 
 
@@ -350,14 +364,6 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rb_one:
-                setRF(0);
-                break;
-
-            case R.id.rb_two:
-                setRF(1);
-                break;
-
             case R.id.bt_save:
                 getPresenter().save();
                 break;
@@ -392,6 +398,20 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 }
                 if (getPresenter().setRFReq(channel, id, f)) {
                     Tool.toastShow(this, "设置成功");
+                    if (channel == 0) {
+                        tv_channel.setText(channelPopup.getValue(0));
+                        ids[0] = id;
+                        frequencys[0] = text;
+                    } else if (channel == 21) {
+                        tv_channel.setText(channelPopup.getValue(1));
+                        ids[1] = id;
+                        frequencys[1] = text;
+                    } else if (channel == 22) {
+                        tv_channel.setText(channelPopup.getValue(2));
+                        ids[2] = id;
+                        frequencys[2] = text;
+                    }
+
                 } else {
                     Tool.toastShow(this, "设置失败");
                 }
@@ -468,6 +488,8 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             channelPopup.showAsDropDown(v);
         } else if (v.getId() == R.id.tv_location) {
             locationPopup.showAsDropDown(v);
+        } else if (v.getId() == R.id.tv_output_gl) {
+            glPopup.showAsDropDown(v);
         }
     }
 
@@ -500,6 +522,8 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             setGTRkd(data);
         } else if (CommandUtil.RFPVS.startsWith(command)) {
             setRFPvs(data);
+        } else if (CommandUtil.RFCTRL.startsWith(command)) {
+            setRFCtrl(data);
         } else if (CommandUtil.RFREQ.startsWith(command)) {
             setRFReq(data);
         } else if ("SET_PWD".equals(command)) {
@@ -524,11 +548,48 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
         }
     }
 
+
     int channel;
+    String[] frequencys = new String[3];
+    int[] ids = new int[3];
+
+    private void setRFCtrl(String data) {
+        String[] vs = data.split(",");
+        if (vs.length >= 3) {
+            channel = Tool.stringToInt(vs[1]);
+        }
+    }
 
     private void setRFReq(String data) {
-        String[] vs = data.split(",");
-        if (vs.length == 3) {
+        String[] vs = data.split(";");
+        int index = 0;
+        for (int i = 0; i < vs.length; i++) {
+            String[] str = vs[i].split(",");
+            if (str.length >= 3) {
+                frequencys[i] = String.valueOf(Tool.stringToInt(str[2]));
+                ids[i] = Tool.stringToInt(str[1]);
+
+                int c = Tool.stringToInt(str[0]);
+
+                if (c == channel) {
+                    index = i;
+                }
+            }
+        }
+
+        et_frequency.setText(frequencys[index]);
+        et_frequency.setSelection(et_frequency.length());
+
+        if (channel == 21) {
+            tv_channel.setText(channelPopup.getValue(1));
+        } else if (channel == 22) {
+            tv_channel.setText(channelPopup.getValue(2));
+        } else {
+            tv_channel.setText(channelPopup.getValue(0));
+        }
+        et_id.setText(String.valueOf(ids[index]));
+
+        /*if (vs.length >= 3) {
             et_frequency.setText(String.valueOf(Tool.stringToInt(vs[2])));
             et_frequency.setSelection(et_frequency.length());
 
@@ -541,11 +602,12 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
                 tv_channel.setText(channelPopup.getValue(2));
             }
             et_id.setText(String.valueOf(Tool.stringToInt(vs[1])));
-        }
+        }*/
         dismissProDialog();
     }
 
     int rfState;
+    int gl;
 
     private void setRFPvs(String data) {
         String[] vs = data.split(",");
@@ -553,9 +615,10 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
             rfState = Tool.stringToInt(vs[0]);
             findViewById(R.id.bt_set_frequency).setEnabled(rfState == 1);
 
-            ((RadioButton) rg_rf.getChildAt(Tool.stringToInt(vs[1]) + 1)).setChecked(true);
+            gl = Tool.stringToInt(vs[1]);
+            tv_output_gl.setText(glPopup.getValue(gl));
 
-            setViewEnable(rg_rf, rfState == 1);
+            setViewEnable((ViewGroup) findViewById(R.id.rg_rf), rfState == 1);
 
             tv_output_volume.setText(String.valueOf(Tool.stringToInt(vs[2])));
             setViewEnable((ViewGroup) findViewById(R.id.lin_out), rfState == 1);

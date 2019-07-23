@@ -168,7 +168,7 @@
             </LinearLayout>
 
 
-            <RadioGroup
+            <LinearLayout
                 android:id="@+id/rg_rf"
                 style="@style/linStyle"
                 android:layout_marginTop="20dp">
@@ -177,20 +177,24 @@
                     style="@style/tvStyle"
                     android:text="射频功率：" />
 
-                <RadioButton
-                    android:id="@+id/rb_one"
-                    style="@style/rbStyle"
-                    android:onClick="onClick"
-                    android:text="低功率" />
+                <TextView
+                    android:id="@+id/tv_output_gl"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="低" />
 
-                <RadioButton
-                    android:id="@+id/rb_two"
-                    style="@style/rbStyle"
+                <TextView
+                    style="@style/tvStyle"
                     android:layout_marginStart="20dp"
-                    android:onClick="onClick"
-                    android:text="高功率" />
+                    android:text="静噪级别：" />
 
-            </RadioGroup>
+                <TextView
+                    android:id="@+id/tv_output_level"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -235,10 +239,10 @@
 
                 <TextView
                     style="@style/tvStyle"
-                    android:text="静噪级别：" />
+                    android:text="手咪使能：" />
 
                 <TextView
-                    android:id="@+id/tv_output_level"
+                    android:id="@+id/tv_mtsn"
                     style="@style/tvBJStyle"
                     android:layout_width="80dp"
                     android:text="0" />
@@ -246,33 +250,12 @@
                 <TextView
                     style="@style/tvStyle"
                     android:layout_marginStart="20dp"
-                    android:text="手咪使能：" />
-
-                <TextView
-                    android:id="@+id/tv_mtsn"
-                    style="@style/tvBJStyle"
-                    android:layout_width="100dp"
-                    android:text="0" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#292525" />
-
-            <LinearLayout
-                android:id="@+id/lin_location"
-                style="@style/linStyle">
-
-                <TextView
-                    style="@style/tvStyle"
                     android:text="位置寻呼：" />
 
                 <TextView
                     android:id="@+id/tv_location"
                     style="@style/tvBJStyle"
-                    android:layout_width="150dp"
+                    android:layout_width="80dp"
                     android:text="关闭" />
 
             </LinearLayout>
@@ -318,8 +301,16 @@
                 android:id="@+id/lin_id"
                 style="@style/linStyle">
 
+                <Button
+                    android:id="@+id/bt_set_frequency"
+                    style="@style/btStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:text="设置" />
+
                 <TextView
                     style="@style/tvStyle"
+                    android:layout_marginStart="10dp"
                     android:text="亚音ID：" />
 
                 <EditText
@@ -331,13 +322,6 @@
                     android:inputType="number"
                     android:maxLength="3" />
 
-                <Button
-                    android:id="@+id/bt_set_frequency"
-                    style="@style/btStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="10dp"
-                    android:text="设置" />
             </LinearLayout>
 
             <LinearLayout
@@ -402,7 +386,7 @@
                 <Button
                     android:id="@+id/bt_save"
                     style="@style/btStyle"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="20dp"
                     android:text="保存设置" />
