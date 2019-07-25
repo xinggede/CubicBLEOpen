@@ -165,6 +165,9 @@ public class InputLocationDialog extends BaseDialog {
                 m = 59;
             }
             s = Tool.stringToDouble(etLatitude3.getText().toString().trim());
+            if(s >= 60){
+                s = 59;
+            }
             lat = d + m / 60 + s / 3600;
 
             d = Tool.stringToDouble(etLongitude1.getText().toString().trim());
@@ -177,6 +180,9 @@ public class InputLocationDialog extends BaseDialog {
                 m = 59;
             }
             s = Tool.stringToDouble(etLongitude3.getText().toString().trim());
+            if(s >= 60){
+                s = 59;
+            }
             lng = d + m / 60 + s / 3600;
         } else {
             d = Tool.stringToDouble(etLatitude1.getText().toString().trim());
