@@ -95,7 +95,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
                 }
                 int id = Tool.stringToInt(et_id.getText().toString());
                 if (id < 0 || id > 121) {
-                    Tool.toastShow(MainActivity.this, "频道范围为0~121");
+                    Tool.toastShow(MainActivity.this, "亚音ID范围为0~121");
                     return;
                 }
                 if (getPresenter().setRFCtrl(isChecked ? 1 : 0, channel, id)) {
@@ -242,6 +242,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
         if (vs.length == 3) {
             int state = Tool.stringToInt(vs[0]);
             aSwitch.setChecked(state == 1);
+            findViewById(R.id.bt_save).setEnabled(state == 1);
             et_channel.setText(vs[1]);
             et_id.setText(String.valueOf(Tool.stringToInt(vs[2])));
 

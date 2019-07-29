@@ -8,7 +8,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 16
-        versionName "1.0.7"
+        versionName "1.0.8"
 
         resConfigs "zh" //选择默认英语和中文语言
     }

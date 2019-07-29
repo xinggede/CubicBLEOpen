@@ -74,8 +74,8 @@ public class GpsInfo {
             return "";
         }
         StringBuffer sb = new StringBuffer();
+        sb.append(str.charAt(0));
         if (type == 0) { //DMM
-            sb.append(str.charAt(0));
             String s = str.substring(1, 3);
             sb.append(Tool.stringToInt(s) + "°");
             s = str.substring(3, 5);
