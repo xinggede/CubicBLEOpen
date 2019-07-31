@@ -86,4 +86,5 @@ dependencies {
     implementation files('libs/Android_Map3D_SDK_V6.8.0_20190401.jar')
     implementation 'com.github.huangyanbin:SmartChart:1.4.1'
     implementation files('libs/pgyer_sdk_3.0.4.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
 }

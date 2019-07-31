@@ -17,6 +17,8 @@ import com.xingge.carble.R;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.States;
+import com.xingge.carble.ui.gd.LocationActivity;
+import com.xingge.carble.ui.gd.GDMapActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.util.CommandUtil;
@@ -139,7 +141,7 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bt_get_gps) {
-            Intent intent = new Intent(this, MapActivity.class);
+            Intent intent = new Intent(this, GDMapActivity.class);
             intent.putExtra("showType", showType);
             startActivity(intent);
         } else if (v.getId() == R.id.bt_save) {

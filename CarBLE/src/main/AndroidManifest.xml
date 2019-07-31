@@ -49,8 +49,8 @@
         <activity
             android:name=".ui.SettingActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.MapActivity" />
-        <activity android:name=".ui.LocationActivity"/>
+        <activity android:name=".ui.gd.GDMapActivity" />
+        <activity android:name=".ui.gd.LocationActivity"/>
         <activity
             android:name="com.amap.api.maps.offlinemap.OfflineMapActivity"
             android:screenOrientation="portrait" />

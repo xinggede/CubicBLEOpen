@@ -1,4 +1,4 @@
-package com.xingge.carble.ui;
+package com.xingge.carble.ui.gd;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputLocationDialog;
 import com.xingge.carble.dialog.SendLocationDialog;
+import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.ui.mode.ProcessGPSThread;
@@ -237,6 +238,10 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             sb.append("纬度:").append(GpsInfo.formatLatitude(lat, showType)).append("\n");
             float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             sb.append("距离:").append(Tool.mToKM(distance)).append("KM");
+
+            double course = Tool.getDirection(curLatLng.longitude,curLatLng.latitude, mLatLng.longitude,mLatLng.latitude);
+            sb.append("方向:").append(course).append("KM");
+
             addMarks(mLatLng, sb.toString(), id);
         }
     }

@@ -40,10 +40,15 @@
 #-keep class com.amap.api.navi.**{*;}
 #-keep class com.autonavi.**{*;}
 
-#地图
+#高德
 -dontwarn com.amap.api.**
 -dontwarn com.a.a.**
 -dontwarn com.autonavi.**
+
+#百度
+-keep class com.baidu.** {*;}
+-keep class mapsdkvi.com.** {*;}
+-dontwarn com.baidu.**
 
 #okhttp
 -keep class okhttp3.** {*;}

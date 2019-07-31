@@ -1,4 +1,4 @@
-package com.xingge.carble.ui;
+package com.xingge.carble.ui.bd;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +26,8 @@ import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.ChooseAdapter;
 import com.xingge.carble.dialog.ChoosePopup;
 import com.xingge.carble.dialog.LineChartDialog;
+import com.xingge.carble.ui.CusSeekBar;
+import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.ui.mode.ProcessGPSThread;
@@ -41,7 +43,7 @@ import java.util.Objects;
 /**
  * @author 星哥的
  */
-public class MapActivity extends IBaseActivity<MainPresenter> implements MainContract.View {
+public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainContract.View {
 
     MapView mMapView = null;
     AMap aMap;
