@@ -7,17 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Polyline;
-import com.amap.api.maps.model.PolylineOptions;
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.InfoWindow;
+import com.baidu.mapapi.map.LogoPosition;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Overlay;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.model.LatLng;
 import com.xingge.carble.R;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
@@ -46,11 +52,11 @@ import java.util.Objects;
 public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainContract.View {
 
     MapView mMapView = null;
-    AMap aMap;
-    MyLocationStyle myLocationStyle;
-    LatLng latLng /*= new LatLng(22.539583333333333,113.95045333333334)*/;
-    private Marker marker;
-    private MarkerOptions markerOptions;
+    BaiduMap aMap;
+    LocationClient mLocationClient;
+    private MapStatus mapStatus;
+    private InfoWindow infoWindow;
+
     private TextView tvDay, tvTime1, tvTime2, tvTime3, tvTotalInfo;
     private ChoosePopup dayPopup;
     private ProcessGPSThread processGPSThread;
@@ -68,20 +74,28 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_map;
+        return R.layout.activity_map_bd;
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        mMapView = findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);
+        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
+        SDKInitializer.initialize(getApplicationContext());
+        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
+        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
+        SDKInitializer.setCoordType(CoordType.BD09LL);
 
+        mMapView = findViewById(R.id.map);
+        mMapView.setLogoPosition(LogoPosition.logoPostionleftTop);
+        mMapView.showZoomControls(false);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            markerOptions = new MarkerOptions();
-            markerOptions.icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            markerOptions.draggable(true);
+            aMap.setMyLocationEnabled(true);
+
+            MapStatus.Builder builder = new MapStatus.Builder();
+            builder.zoom(18.0f);
+            mapStatus = builder.build();
+            aMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatus));
         }
 
         showType = getIntent().getIntExtra("showType", 0);
@@ -103,21 +117,24 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
             public void onProgressChanged(int progress) {
                 GpsInfo gInfo = Objects.requireNonNull(listMap.get(day)).get(progress);
                 if (gInfo != null) {
-                    aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gInfo.latLng, aMap.getCameraPosition().zoom));
+                    LatLng latLng = new LatLng(gInfo.latLng.latitude, gInfo.latLng.longitude);
+                    aMap.animateMapStatus(MapStatusUpdateFactory.newLatLngZoom(latLng, aMap.getMapStatus().zoom));
+
                     String str = Tool.dateToTime(gInfo.date);
                     str += "\n经度：" + GpsInfo.formatLongitude(gInfo.longitude, showType) + "\n纬度：" + GpsInfo.formatLatitude(gInfo.latitude, showType);
                     str += "\n速度：" + gInfo.speed + "KM/H" + "\n海拔：" + gInfo.altitude + "米";
                     str += "\n距离：" + Tool.mToKM(gInfo.distance) + "KM";
-//                    Tool.logd(str + "  -- " + progress);
-                    if (marker != null && marker.isInfoWindowShown()) {
-                        marker.setTitle(str);
-                        marker.setPosition(gInfo.latLng);
-                    } else {
-                        markerOptions.title(str);
-                        markerOptions.position(gInfo.latLng);
-                        marker = aMap.addMarker(markerOptions);
-                    }
-                    marker.showInfoWindow();
+
+//
+//                    if (marker != null && marker.isInfoWindowShown()) {
+//                        marker.setTitle(str);
+//                        marker.setPosition(gInfo.latLng);
+//                    } else {
+//                        markerOptions.title(str);
+//                        markerOptions.position(gInfo.latLng);
+//                        marker = aMap.addMarker(markerOptions);
+//                    }
+//                    marker.showInfoWindow();
                 }
             }
         });
@@ -131,16 +148,40 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
 
     private void startLocation() {
-        UiSettings uiSettings = aMap.getUiSettings();
-        uiSettings.setMyLocationButtonEnabled(true);
-        uiSettings.setZoomControlsEnabled(false);
+        //定位初始化
+        mLocationClient = new LocationClient(this);
 
-        myLocationStyle = new MyLocationStyle();
-        myLocationStyle.interval(2000);
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        myLocationStyle.showMyLocation(true);
-        aMap.setMyLocationStyle(myLocationStyle);
-        aMap.setMyLocationEnabled(true);
+        //通过LocationClientOption设置LocationClient相关参数
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(2000);
+
+        //设置locationClientOption
+        mLocationClient.setLocOption(option);
+
+        //注册LocationListener监听器
+        MyLocationListener myLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(myLocationListener);
+        //开启地图定位图层
+        mLocationClient.start();
+    }
+
+    public class MyLocationListener extends BDAbstractLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //mapView 销毁后不在处理新接收的位置
+            if (location == null || mMapView == null) {
+                return;
+            }
+            MyLocationData locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                    // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(location.getDirection()).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            aMap.setMyLocationData(locData);
+        }
     }
 
 
@@ -155,6 +196,8 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
             lineChartDialog.dismiss();
         }
         super.onDestroy();
+        mLocationClient.stop();
+        aMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
     }
 
@@ -267,11 +310,11 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
         } else if (v.getId() == R.id.bt_get_gps) {
             showGpsInfo();
         } else if (v.getId() == R.id.bt_change) {
-            if (aMap.getMapType() == AMap.MAP_TYPE_NORMAL) {
-                aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+            if (aMap.getMapType() == BaiduMap.MAP_TYPE_NORMAL) {
+                aMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
                 ((Button) v).setText("普通地图");
             } else {
-                aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+                aMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
                 ((Button) v).setText("卫星地图");
             }
         } else if (v.getId() == R.id.bt_chart) {
@@ -285,12 +328,12 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
     }
 
     private void showGpsInfo() {
-        for (Polyline polyline : polylines) {
+        for (Overlay polyline : polylines) {
             polyline.remove();
         }
-        if (marker != null) {
-            marker.hideInfoWindow();
-        }
+//        if (marker != null) {
+//            marker.hideInfoWindow();
+//        }
         tvTime1.setText("");
         tvTime2.setText("");
         tvTime3.setText("");
@@ -384,10 +427,11 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
         }
     }
 
-    List<Polyline> polylines = new ArrayList<>();
+    List<Overlay> polylines = new ArrayList<>();
 
     private void showFirst(GpsInfo gpsInfo) {
-        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gpsInfo.latLng, 15));
+        LatLng latLng = new LatLng(gpsInfo.latLng.latitude, gpsInfo.latLng.longitude);
+        aMap.animateMapStatus(MapStatusUpdateFactory.newLatLngZoom(latLng, 15));
     }
 
     private synchronized void showMap(GpsInfo lastInfo, List<GpsInfo> infoList) {
@@ -396,55 +440,38 @@ public class BDMapActivity extends IBaseActivity<MainPresenter> implements MainC
         }
         List<LatLng> latLngs = new ArrayList<>();
         if (lastInfo != null) {
-            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastInfo.latLng, 15));
-            latLngs.add(lastInfo.latLng);
+            LatLng latLng = new LatLng(lastInfo.latLng.latitude, lastInfo.latLng.longitude);
+            aMap.animateMapStatus(MapStatusUpdateFactory.newLatLngZoom(latLng, 15));
+
+            latLngs.add(latLng);
         }
         for (GpsInfo gpsInfo : infoList) {
-            latLngs.add(gpsInfo.latLng);
+            LatLng latLng = new LatLng(gpsInfo.latLng.latitude, gpsInfo.latLng.longitude);
+            latLngs.add(latLng);
         }
-        PolylineOptions options = new PolylineOptions();
-        options.addAll(latLngs);
 
-        options.width(20).geodesic(true).color(infoList.get(0).color)
-                .setDottedLine(false);//是否画虚线
-        polylines.add(aMap.addPolyline(options));
+        OverlayOptions mOverlayOptions = new PolylineOptions()
+                .width(20)
+                .color(infoList.get(0).color)
+                .points(latLngs);
+
+        polylines.add(aMap.addOverlay(mOverlayOptions));
     }
 
     private void showMap(RecordInfo recordInfo) {
         if (recordInfo.latLngList.size() == 0) {
             return;
         }
-        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(recordInfo.latLngList.get(0), 15));
-        PolylineOptions options = new PolylineOptions();
-        options.addAll(recordInfo.latLngList);
+        LatLng latLng = new LatLng(recordInfo.latLngList.get(0).latitude, recordInfo.latLngList.get(0).longitude);
+        aMap.animateMapStatus(MapStatusUpdateFactory.newLatLngZoom(latLng, 15));
 
-        options.width(20).geodesic(true).color(recordInfo.color)
-                .setDottedLine(false);//是否画虚线
-        polylines.add(aMap.addPolyline(options));
-    }
 
-    private void moveMap(List<LatLng> points) {
-        /*aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        OverlayOptions mOverlayOptions = new PolylineOptions()
+                .width(20)
+                .color(recordInfo.color)
+                /*.points(recordInfo.latLngList)*/;
 
-        LatLngBounds bounds = new LatLngBounds(points.get(0), points.get(points.size() - 2));
-        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-
-        SmoothMoveMarker smoothMarker = new SmoothMoveMarker(aMap);
-        // 设置滑动的图标
-        smoothMarker.setDescriptor(BitmapDescriptorFactory.defaultMarker());
-
-        LatLng drivePoint = points.get(0);
-        Pair<Integer, LatLng> pair = SpatialRelationUtil.calShortestDistancePoint(points, drivePoint);
-        points.set(pair.first, drivePoint);
-        List<LatLng> subList = points.subList(pair.first, points.size());
-
-        // 设置滑动的轨迹左边点
-        smoothMarker.setPoints(subList);
-        // 设置滑动的总时间
-        smoothMarker.setTotalDuration(200);
-        // 开始滑动
-        smoothMarker.startSmoothMove();*/
-
+        polylines.add(aMap.addOverlay(mOverlayOptions));
     }
 
 

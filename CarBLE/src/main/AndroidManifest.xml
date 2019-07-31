@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -55,6 +56,12 @@
             android:name="com.amap.api.maps.offlinemap.OfflineMapActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.bd.BDMapActivity"/>
+
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="3d9f00c870c213a38d83c8c4a08e192c" />
@@ -67,6 +74,10 @@
         <meta-data
             android:name="PGYER_APPID"
             android:value="f27007e87efde23fa5137486220eda01" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="0VoqqFO7p02Oux5x5fhlwxqa3UtmzNFo" />
 
         <meta-data
             android:name="android.max_aspect"

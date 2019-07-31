@@ -68,7 +68,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_map;
+        return R.layout.activity_map_gd;
     }
 
     @Override

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/lin_top"
+        style="@style/linStyle"
+        android:background="@color/colorPrimary"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="onClick"
+            android:padding="5dp"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            style="@style/tvStyle"
+            android:text="轨迹日期："
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_day"
+            style="@style/tvBJStyle"
+            android:layout_width="150dp" />
+
+        <Button
+            android:id="@+id/bt_get_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:enabled="false"
+            android:onClick="onClick"
+            android:text="显示"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lin_top" />
+
+    <Button
+        android:id="@+id/bt_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lin_top"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:onClick="onClick"
+        android:text="卫星地图" />
+
+    <Button
+        android:id="@+id/bt_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_change"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onClick"
+        android:text="图表" />
+
+
+    <RelativeLayout
+        android:id="@+id/re_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBar"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/tv_time1"
+            style="@style/tcStyle"
+            android:enabled="true" />
+
+        <TextView
+            android:id="@+id/tv_time2"
+            style="@style/tcStyle"
+            android:layout_centerInParent="true"
+            android:enabled="true" />
+
+        <TextView
+            android:id="@+id/tv_time3"
+            style="@style/tcStyle"
+            android:layout_alignParentEnd="true"
+            android:enabled="true" />
+
+    </RelativeLayout>
+
+    <com.xingge.carble.ui.CusSeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_above="@+id/tv_total_info"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/tv_total_info"
+        style="@style/tcStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:enabled="true"
+        android:textSize="10sp" />
+
+
+</RelativeLayout>
