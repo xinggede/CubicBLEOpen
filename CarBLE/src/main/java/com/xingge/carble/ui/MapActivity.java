@@ -241,6 +241,9 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
                 tvTotalInfo.setText(sb.toString());
             } else if (msg.what == 102) {
                 seekBar.setMax(seekBar.getMax() - 1);
+            } else if (msg.what == 103) {
+                btGetGps.setEnabled(true);
+                seekBar.setEnabled(true);
             }
             return false;
         }
@@ -354,6 +357,7 @@ public class MapActivity extends IBaseActivity<MainPresenter> implements MainCon
             seekBar.clear();
             seekBar.setEnabled(false);
             seekBar.setProgress(0);
+            handler.sendEmptyMessageDelayed(103, 15000);
         }
     }
 
