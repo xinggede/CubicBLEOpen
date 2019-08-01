@@ -131,70 +131,89 @@ public class InputLocationDialog extends BaseDialog {
         double d, m, s;
         if (type == 0) {
             d = Tool.stringToDouble(etLatitude1.getText().toString().trim());
-            if (d > 89) {
-                d = 89;
+            if (d >= 90) {
+                d = 90;
+                etLatitude1.setText("90");
+                etLatitude2.setText("0");
+                etLatitude3.setText("0");
             }
 
             m = Tool.stringToDouble(etLatitude2.getText().toString().trim());
             if (m > 59) {
                 m = 59;
+                etLatitude2.setText("59");
             }
 
             s = Tool.stringToDouble(etLatitude3.getText().toString().trim());
             lat = d + m / 60 + s / 600000;
 
             d = Tool.stringToDouble(etLongitude1.getText().toString().trim());
-            if (d > 179) {
-                d = 179;
+            if (d >= 180) {
+                d = 180;
+                etLongitude1.setText("180");
+                etLongitude2.setText("0");
+                etLongitude3.setText("0");
             }
 
             m = Tool.stringToDouble(etLongitude2.getText().toString().trim());
             if (m > 59) {
                 m = 59;
+                etLongitude2.setText("59");
             }
 
             s = Tool.stringToDouble(etLongitude3.getText().toString().trim());
             lng = d + m / 60 + s / 600000;
         } else if (type == 1) {
             d = Tool.stringToDouble(etLatitude1.getText().toString().trim());
-            if (d > 89) {
-                d = 89;
+            if (d >= 90) {
+                d = 90;
+                etLatitude1.setText("90");
+                etLatitude2.setText("0");
+                etLatitude3.setText("0");
             }
             m = Tool.stringToDouble(etLatitude2.getText().toString().trim());
             if (m > 59) {
                 m = 59;
+                etLatitude2.setText("59");
             }
             s = Tool.stringToDouble(etLatitude3.getText().toString().trim());
-            if(s >= 60){
+            if (s >= 60) {
                 s = 59;
+                etLatitude3.setText("59");
             }
             lat = d + m / 60 + s / 3600;
 
             d = Tool.stringToDouble(etLongitude1.getText().toString().trim());
-            if (d > 179) {
-                d = 179;
+            if (d >= 180) {
+                d = 180;
+                etLongitude1.setText("180");
+                etLongitude2.setText("0");
+                etLongitude3.setText("0");
             }
 
             m = Tool.stringToDouble(etLongitude2.getText().toString().trim());
             if (m > 59) {
                 m = 59;
+                etLongitude2.setText("59");
             }
             s = Tool.stringToDouble(etLongitude3.getText().toString().trim());
-            if(s >= 60){
+            if (s >= 60) {
                 s = 59;
+                etLongitude3.setText("59");
             }
             lng = d + m / 60 + s / 3600;
         } else {
             d = Tool.stringToDouble(etLatitude1.getText().toString().trim());
-
-            if (d > 89) {
-                d = 89;
+            if (d >= 90) {
+                d = 90;
+                etLatitude1.setText("90");
             }
             lat = d;
 
             d = Tool.stringToDouble(etLongitude1.getText().toString().trim());
-            if (d > 179) {
-                d = 179;
+            if (d >= 180) {
+                d = 180;
+                etLongitude1.setText("180");
             }
             lng = d;
         }

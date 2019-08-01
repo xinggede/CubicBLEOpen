@@ -238,14 +238,62 @@ public class Tool {
         return df.format(average) + "KM/H";
     }
 
-    public static int getDirection(double lng1, double lat1, double lng2, double lat2) {
-        double x = lng2 - lng1;
-        double y = lat2 - lat1;
-
-        double a = Math.atan(y / x);
-        int degree = (int) (180 * a / Math.PI);
-
-        return 90 - degree;
+    public static int getDegree(double lng1, double lat1, double lng2, double lat2) {
+        double d = lng2 - lng1;
+        if (d > 0) { //1\2
+            double x = lng2 - lng1;
+            double y = lat2 - lat1;
+            double a = Math.atan(y / x);
+            int degree = (int) (180 * a / Math.PI);
+            return 90 - degree;
+        } else if (d < 0) {  //3/4
+            double x = lng1 - lng2;
+            double y = lat1 - lat2;
+            double a = Math.atan(y / x);
+            int degree = (int) (180 * a / Math.PI);
+            return 270 - degree;
+        } else {
+            if (lat2 - lat1 >= 0) {
+                return 0;
+            }
+            return 180;
+        }
     }
+
+    public static String getDirection(int degree) {
+        if(degree >= 345 || degree <= 15){
+            return "北";
+        }
+
+        if(degree < 75){
+            return "东北";
+        }
+
+        if(degree <= 105){
+            return "东";
+        }
+
+        if(degree < 165){
+            return "东南";
+        }
+
+        if(degree <= 195){
+            return "南";
+        }
+
+        if(degree < 255){
+            return "西南";
+        }
+
+        if(degree <= 285){
+            return "西";
+        }
+
+        /*if(degree < 345){
+            return "西北";
+        }*/
+        return "西北";
+    }
+
 
 }
