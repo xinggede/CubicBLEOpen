@@ -261,31 +261,31 @@ public class Tool {
     }
 
     public static String getDirection(int degree) {
-        if(degree >= 345 || degree <= 15){
+        if (degree >= 345 || degree <= 15) {
             return "北";
         }
 
-        if(degree < 75){
+        if (degree < 75) {
             return "东北";
         }
 
-        if(degree <= 105){
+        if (degree <= 105) {
             return "东";
         }
 
-        if(degree < 165){
+        if (degree < 165) {
             return "东南";
         }
 
-        if(degree <= 195){
+        if (degree <= 195) {
             return "南";
         }
 
-        if(degree < 255){
+        if (degree < 255) {
             return "西南";
         }
 
-        if(degree <= 285){
+        if (degree <= 285) {
             return "西";
         }
 
@@ -293,6 +293,33 @@ public class Tool {
             return "西北";
         }*/
         return "西北";
+    }
+
+    private static double rad(double d) {
+        return d * Math.PI / 180d;
+    }
+
+    public static double getDirection(double lng1, double lat1, double lng2, double lat2) {
+        double a = rad(90 - lat2);
+        double b = rad(90 - lat1);
+        double c = rad(lng2 - lng1);
+        double cos_c = (Math.cos(b) * Math.cos(a)) + (Math.sin(b) * Math.sin(a) * Math.cos(c));
+        double sin_c = Math.sqrt(1 - Math.pow(cos_c, 2));
+        double sin_a = Math.sin(Math.sin(b) * Math.sin(c) / sin_c);
+        double Azimuth = Math.asin(sin_a) * 180 / Math.PI;
+
+        double x = lng2 - lng1;//经度
+        double y = lat2 - lat1;//纬度
+        if (x > 0 && y > 0)//第一象限
+        {
+            return Azimuth;
+        } else if (y > 0 && x < 0)//第二象限
+        {
+            return 360 + Azimuth;
+        } else//第三第四象限
+        {
+            return 180 - Azimuth;
+        }
     }
 
 

@@ -168,8 +168,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             String title = inputLocationDialog.getTitle(showType);
             title += "距离:" + Tool.mToKM(distance) + "KM" + "\n";
-            int course = Tool.getDegree(curLatLng.longitude,curLatLng.latitude, mLatLng.longitude,mLatLng.latitude);
-            title += "方向:" + course + "(" + Tool.getDirection(course) +")";
+            int course = Tool.getDegree(curLatLng.longitude, curLatLng.latitude, mLatLng.longitude, mLatLng.latitude);
+            title += "方向:" + course + "(" + Tool.getDirection(course) + ")";
             addMark(mLatLng, title);
             inputLocationDialog.dismiss();
         } else if (v.getId() == R.id.bt_ok) {
@@ -241,7 +241,7 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
             float distance = AMapUtils.calculateLineDistance(curLatLng, mLatLng);
             sb.append("距离:").append(Tool.mToKM(distance)).append("KM").append("\n");
 
-            int course = Tool.getDegree(curLatLng.longitude,curLatLng.latitude, mLatLng.longitude,mLatLng.latitude);
+            int course = Tool.getDegree(curLatLng.longitude, curLatLng.latitude, mLatLng.longitude, mLatLng.latitude);
             sb.append("方向:").append(course).append("(").append(Tool.getDirection(course)).append(")");
 
             addMarks(mLatLng, sb.toString(), id);
