@@ -4,9 +4,12 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
+import android.os.Handler;
+import android.os.Message;
 
 import com.xingge.carble.util.Tool;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -18,9 +21,11 @@ public class SendDataThread extends Thread {
     private boolean stop = false;
     private ConcurrentLinkedQueue<SendValue> commands = new ConcurrentLinkedQueue<>();
     private BluetoothGatt bluetoothGatt;
+    private Handler handler;
 
-    public SendDataThread(BluetoothGatt bluetoothGatt) {
+    public SendDataThread(BluetoothGatt bluetoothGatt, Handler handler) {
         this.bluetoothGatt = bluetoothGatt;
+        this.handler = handler;
         mPauseLock = new Object();
         start();
     }
@@ -68,16 +73,15 @@ public class SendDataThread extends Thread {
     private void processCommand() {
         SendValue blueData;
         while ((blueData = commands.poll()) != null) {
-
-            int count = 0;
-            while (!send(blueData) && (count < 5)) {
-                count++;
-                try {
-                    Thread.sleep(count * 500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            boolean b = send(blueData);
+            ResultData resultData = new ResultData(ResultData.WRITE, blueData.characteristicId);
+            resultData.mac = blueData.deviceId;
+            if (blueData.type == 0) {
+                if (b) {
+                    Message.obtain(handler, States.WRITE_OK, resultData).sendToTarget();
+                } else {
+                    Message.obtain(handler, States.WRITE_ERROR, resultData).sendToTarget();
                 }
-                Tool.logd("重新发送: " + count);
             }
         }
         isSendingData = false;
@@ -90,7 +94,6 @@ public class SendDataThread extends Thread {
         boolean b = true;
         if (sendValue.type == 0) {
             b = check(sendValue.serviceId, sendValue.characteristicId, sendValue.deviceId, sendValue.value);
-            Tool.logd("writeValue= " + b);
         } else if (sendValue.type == 1) {
             b = setNotification(sendValue.serviceId, sendValue.characteristicId, sendValue.enable);
         }
@@ -114,9 +117,15 @@ public class SendDataThread extends Thread {
                 for (BluetoothGattCharacteristic bluetoothGattCharacteristic : gattService.getCharacteristics()) {
                     String characterUUID = Long.toHexString(bluetoothGattCharacteristic.getUuid().getMostSignificantBits()).substring(0, 4);
                     if (characterUUID.equals(characteristicId)) {
-                        bluetoothGattCharacteristic.setValue(value);
-                        bluetoothGattCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
-                        return writeValue(bluetoothGattCharacteristic);
+                        List<byte[]> list = fen(value, 20);
+                        boolean b = false;
+                        for (byte[] bytes : list) {
+                            bluetoothGattCharacteristic.setValue(bytes);
+                            bluetoothGattCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+                            b = writeValue(bluetoothGattCharacteristic);
+                            Tool.logd("send " + bytes.length + "  " + b);
+                        }
+                        return b;
                     }
                 }
             }
@@ -125,11 +134,20 @@ public class SendDataThread extends Thread {
     }
 
     private synchronized boolean writeValue(BluetoothGattCharacteristic characteristic) {
-        if (bluetoothGatt != null) {
-            return bluetoothGatt.writeCharacteristic(characteristic);
-        } else {
+        if (bluetoothGatt == null) {
             return false;
         }
+        int count = 0;
+        while (!bluetoothGatt.writeCharacteristic(characteristic) && (count < 5)) {
+            count++;
+            try {
+                Thread.sleep(count * 200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Tool.logd("重新发送: " + count);
+        }
+        return count != 5;
     }
 
     public boolean setNotification(String serviceId, String characteristicId, boolean enable) {
@@ -165,7 +183,50 @@ public class SendDataThread extends Thread {
             }
             gatt.writeDescriptor(localBluetoothGattDescriptor);
         }
-        return gatt.setCharacteristicNotification(characteristic, enable);
+
+        int count = 0;
+        while (!gatt.setCharacteristicNotification(characteristic, enable) && (count < 5)) {
+            count++;
+            try {
+                Thread.sleep(count * 200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Tool.logd("setNotification: " + count);
+        }
+        return count != 5;
     }
 
+
+    public static List<byte[]> fen(byte[] data, int length) {
+        ArrayList data2 = new ArrayList();
+        int num = data.length / length;
+        int num2 = data.length % length;
+        if (data.length < length) {
+            data2.add(data);
+            return data2;
+        } else {
+            for (int buffer2 = 0; buffer2 < num; ++buffer2) {
+                byte[] k = new byte[length];
+
+                for (int j = 0; j < length; ++j) {
+                    k[j] = data[j + buffer2 * length];
+                }
+
+                data2.add(k);
+            }
+
+            if (num2 != 0) {
+                byte[] var8 = new byte[num2];
+
+                for (int var9 = 0; var9 < num2; ++var9) {
+                    var8[var9] = data[var9 + num * length];
+                }
+
+                data2.add(var8);
+            }
+
+            return data2;
+        }
+    }
 }

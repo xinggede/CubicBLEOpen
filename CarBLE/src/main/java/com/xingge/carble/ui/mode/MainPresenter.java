@@ -5,6 +5,7 @@ import android.content.Context;
 import com.xingge.carble.base.mode.BaseNetPresenter;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.BlueToothCallback;
+import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.util.Tool;
 
 
@@ -208,7 +209,12 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
 
     @Override
     public void onWriteData(int state, String characteristicId) {
-
+        if(state == States.WRITE_ERROR) {
+            if(getView() != null){
+                getView().onConnectState(States.ERROR);
+                getView().dismissProDialog();
+            }
+        }
     }
 
     @Override

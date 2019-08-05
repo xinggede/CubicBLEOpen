@@ -1,7 +1,5 @@
 package com.xingge.carble.bluetooth;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import java.util.Arrays;
 
 public class ResultData {
@@ -10,17 +8,17 @@ public class ResultData {
     public static int READ = 1;
     public String mac;
 
-    public BluetoothGattCharacteristic bluetoothGattCharacteristic;
+    public String bluetoothGattCharacteristic;
     public byte[] value;
     public int type;
 
-    public ResultData(int type, BluetoothGattCharacteristic bluetoothGattCharacteristic, byte[] value) {
+    public ResultData(int type, String bluetoothGattCharacteristic, byte[] value) {
         this.bluetoothGattCharacteristic = bluetoothGattCharacteristic;
         this.value = value;
         this.type = type;
     }
 
-    public ResultData(int type, BluetoothGattCharacteristic bluetoothGattCharacteristic) {
+    public ResultData(int type, String bluetoothGattCharacteristic) {
         this.bluetoothGattCharacteristic = bluetoothGattCharacteristic;
         this.type = type;
     }

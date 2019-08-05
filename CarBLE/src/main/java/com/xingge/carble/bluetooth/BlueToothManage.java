@@ -214,7 +214,7 @@ public class BlueToothManage implements IBle {
         }
         SendDataThread sendDataThread = threadHashMap.get(deviceId);
         if (sendDataThread == null || sendDataThread.isStop()) {
-            sendDataThread = new SendDataThread(bluetoothGatt);
+            sendDataThread = new SendDataThread(bluetoothGatt, handler);
             threadHashMap.put(deviceId, sendDataThread);
         }
         return sendDataThread.sendData(new SendValue(serviceId, characteristicId, deviceId, value));
@@ -234,7 +234,7 @@ public class BlueToothManage implements IBle {
         }
         SendDataThread sendDataThread = threadHashMap.get(deviceId);
         if (sendDataThread == null || sendDataThread.isStop()) {
-            sendDataThread = new SendDataThread(bluetoothGatt);
+            sendDataThread = new SendDataThread(bluetoothGatt, handler);
             threadHashMap.put(deviceId, sendDataThread);
         }
         return sendDataThread.sendData(new SendValue(1, serviceId, characteristicId, deviceId, enable));
@@ -259,7 +259,7 @@ public class BlueToothManage implements IBle {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             Tool.logd("onConnectionStateChange= " + status + " <> " + newState);
-            if (status == BluetoothGatt.GATT_SUCCESS) {
+//            if (status == BluetoothGatt.GATT_SUCCESS) {
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
                     try {
                         Thread.sleep(500);
@@ -275,7 +275,7 @@ public class BlueToothManage implements IBle {
                     mBluetoothGatts.remove(gatt);
                     handler.sendEmptyMessage(States.DISCONNECTED);
                 }
-            } else {
+         /*   } else {
                 if (status == 8) {
                     if (gatt != null) {
                         gatt.close();
@@ -287,7 +287,7 @@ public class BlueToothManage implements IBle {
                 mBluetoothGatts.remove(gatt);
                 gatt.close();
                 retryConnect(gatt.getDevice().getAddress());
-            }
+            }*/
         }
 
         @Override
@@ -305,7 +305,7 @@ public class BlueToothManage implements IBle {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             byte[] data = characteristic.getValue();
-            ResultData blueData = new ResultData(ResultData.READ, characteristic);
+            ResultData blueData = new ResultData(ResultData.READ, characteristic.getUuid().toString());
             blueData.mac = gatt.getDevice().getAddress();
             blueData.value = data;
             Message.obtain(handler, States.RECEIVE_OK, blueData).sendToTarget();
@@ -315,7 +315,7 @@ public class BlueToothManage implements IBle {
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             Tool.logd("read= " + status);
             byte[] data = characteristic.getValue();
-            ResultData blueData = new ResultData(ResultData.READ, characteristic);
+            ResultData blueData = new ResultData(ResultData.READ, characteristic.getUuid().toString());
             blueData.value = data;
             blueData.mac = gatt.getDevice().getAddress();
             if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -327,7 +327,7 @@ public class BlueToothManage implements IBle {
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            ResultData blueData = new ResultData(ResultData.WRITE, characteristic);
+            ResultData blueData = new ResultData(ResultData.WRITE, characteristic.getUuid().toString());
             blueData.mac = gatt.getDevice().getAddress();
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Message.obtain(handler, States.WRITE_OK, blueData).sendToTarget();
@@ -414,27 +414,29 @@ public class BlueToothManage implements IBle {
             } else if (msg.what == States.WRITE_OK) {
                 ResultData blueData = (ResultData) msg.obj;
                 if (blueToothCallback != null) {
-                    blueToothCallback.onWriteData(States.WRITE_OK, blueData.bluetoothGattCharacteristic.getUuid().toString());
+                    blueToothCallback.onWriteData(States.WRITE_OK, blueData.bluetoothGattCharacteristic);
                 }
             } else if (msg.what == States.WRITE_ERROR) {
                 ResultData blueData = (ResultData) msg.obj;
                 if (blueToothCallback != null) {
-                    blueToothCallback.onWriteData(States.WRITE_ERROR, blueData.bluetoothGattCharacteristic.getUuid().toString());
+                    blueToothCallback.onWriteData(States.WRITE_ERROR, blueData.bluetoothGattCharacteristic);
                 }
+
             } else if (msg.what == States.READ_OK) {
                 ResultData blueData = (ResultData) msg.obj;
                 if (blueToothCallback != null) {
-                    blueToothCallback.onReadData(States.READ_OK, blueData.bluetoothGattCharacteristic.getUuid().toString(), blueData.value);
+                    blueToothCallback.onReadData(States.READ_OK, blueData.bluetoothGattCharacteristic, blueData.value);
                 }
             } else if (msg.what == States.READ_ERROR) {
                 ResultData blueData = (ResultData) msg.obj;
                 if (blueToothCallback != null) {
-                    blueToothCallback.onReadData(States.READ_ERROR, blueData.bluetoothGattCharacteristic.getUuid().toString(), blueData.value);
+                    blueToothCallback.onReadData(States.READ_ERROR, blueData.bluetoothGattCharacteristic, blueData.value);
                 }
+                closeConnected(blueData.mac);
             } else if (msg.what == States.RECEIVE_OK) {
                 ResultData blueData = (ResultData) msg.obj;
                 if (blueToothCallback != null) {
-                    blueToothCallback.onReceiveData(blueData.bluetoothGattCharacteristic.getUuid().toString(), blueData.value);
+                    blueToothCallback.onReceiveData(blueData.bluetoothGattCharacteristic, blueData.value);
                 }
             }
 

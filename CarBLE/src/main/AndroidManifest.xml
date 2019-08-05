@@ -56,11 +56,11 @@
             android:name="com.amap.api.maps.offlinemap.OfflineMapActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.bd.BDMapActivity"/>
+        <!--<activity android:name=".ui.bd.BDMapActivity"/>
 
         <service android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote"/>-->
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
