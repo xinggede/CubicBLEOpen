@@ -240,7 +240,6 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
         });
 
         tv_track_frequency = findViewById(R.id.tv_track_frequency);
-        tv_track_frequency.setText(getPresenter().getTLTime().split("-")[1]);
         tv_track_frequency.setOnClickListener(this);
         tfPopup = new ChoosePopup(this, Tool.dip2px(this, 150), getResources().getStringArray(R.array.tf_time), new ChooseAdapter.OnItemClickListener() {
             @Override

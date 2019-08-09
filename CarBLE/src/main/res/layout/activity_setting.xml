@@ -381,7 +381,7 @@
                     android:id="@+id/tv_ver"
                     style="@style/tvStyle"
                     android:padding="10dp"
-                    android:text="1.0.0" />
+                    android:text="" />
 
                 <Button
                     android:id="@+id/bt_save"
