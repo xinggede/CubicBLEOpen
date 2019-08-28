@@ -214,6 +214,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
                 seekBar.setProgress(msg.arg2);
             } else if (msg.what == 101) { //结束
                 btGetGps.setEnabled(true);
+                handler.removeMessages(103);
                 List<GpsInfo> gpsInfoList = listMap.get(day);
 
                 seekBar.setMax(gpsInfoList.size() - 1);

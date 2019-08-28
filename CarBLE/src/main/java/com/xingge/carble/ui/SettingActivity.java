@@ -306,7 +306,6 @@ public class SettingActivity extends IBaseActivity<MainPresenter> implements Mai
         });
 
         tv_output_gl = findViewById(R.id.tv_output_gl);
-        tv_output_gl.setText(getPresenter().getTLTime().split("-")[1]);
         tv_output_gl.setOnClickListener(this);
         glPopup = new ChoosePopup(this, new String[]{"低", "高"}, new ChooseAdapter.OnItemClickListener() {
             @Override

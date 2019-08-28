@@ -384,7 +384,11 @@ public class MainActivity extends IBaseActivity<MainPresenter> implements MainCo
             if (s2.length() == 5) {
                 s2 = s2.substring(0, 1) + Tool.getOneDecimal(s2.substring(1, 5)) + "°";
             }
-            tv_wd_n.setText(s2);
+            if (s2.equals("-100.0°")) {
+                tv_wd_n.setText("--");
+            } else {
+                tv_wd_n.setText(s2);
+            }
 
             setViewEnable((ViewGroup) findViewById(R.id.lin3), true);
         }
