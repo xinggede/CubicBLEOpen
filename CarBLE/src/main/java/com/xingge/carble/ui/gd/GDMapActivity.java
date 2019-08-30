@@ -226,7 +226,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
                 float totalDistance = 0;
                 long totalTime = 0;
-
+                //最后一个GpsInfo的长度就是总长度，如果有分包则累加
                 for (int i = 0; i < gpsInfoList.size(); i++) {
                     if (gpsInfoList.get(i).isStart) {
                         GpsInfo gpsInfo = gpsInfoList.get(i - 1);
