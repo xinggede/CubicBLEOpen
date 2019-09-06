@@ -203,14 +203,14 @@ public class InputLocationDialog extends BaseDialog {
             }
             lng = d + m / 60 + s / 3600;
         } else {
-            d = Tool.stringToDouble(etLatitude1.getText().toString().trim());
+            d = Tool.stringToDouble(etLatitude3.getText().toString().trim());
             if (d >= 90) {
                 d = 90;
                 etLatitude1.setText("90");
             }
             lat = d;
 
-            d = Tool.stringToDouble(etLongitude1.getText().toString().trim());
+            d = Tool.stringToDouble(etLongitude3.getText().toString().trim());
             if (d >= 180) {
                 d = 180;
                 etLongitude1.setText("180");
