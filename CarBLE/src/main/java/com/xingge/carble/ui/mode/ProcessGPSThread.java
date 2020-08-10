@@ -80,6 +80,9 @@ public class ProcessGPSThread extends Thread {
     }
 
     public static double getLatitude(String latitude) {
+        if(latitude == null || latitude.length() < 4){
+            return -1;
+        }
         latitude = latitude.substring(1);
         String a = latitude.substring(0, 2);
         String b = latitude.substring(2, 4);
@@ -90,6 +93,10 @@ public class ProcessGPSThread extends Thread {
     }
 
     public static double getLongitude(String longitude) {
+        if(longitude == null || longitude.length() < 5){
+            return -1;
+        }
+
         longitude = longitude.substring(1);
         String a = longitude.substring(0, 3);
         String b = longitude.substring(3, 5);
@@ -106,6 +113,8 @@ public class ProcessGPSThread extends Thread {
     float distance = 0;
     long time = 0;
 
+    double lat,lng;
+
     private void processCommand() {
         String data;
         while ((data = commands.poll()) != null) {
@@ -116,7 +125,12 @@ public class ProcessGPSThread extends Thread {
                 for (int i = 0; i < packInfo.gpsInfolist.size(); i++) {
                     GpsInfo gpsInfo = packInfo.gpsInfolist.get(i);
                     try {
-                        LatLng latLng = new LatLng(getLatitude(gpsInfo.latitude), getLongitude(gpsInfo.longitude));
+                        lat = getLatitude(gpsInfo.latitude);
+                        lng = getLongitude(gpsInfo.longitude);
+                        if(lat == -1 || lng == -1){
+                            continue;
+                        }
+                        LatLng latLng = new LatLng(lat, lng);
                         converter.coord(latLng);
                         gpsInfo.color = color;
                         gpsInfo.latLng = converter.convert();

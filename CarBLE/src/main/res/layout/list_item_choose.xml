@@ -4,7 +4,7 @@
     android:layout_height="50dp"
     android:background="#3e2a2a"
     android:gravity="center"
-    android:minWidth="80dp"
+    android:minWidth="100dp"
     android:orientation="horizontal">
 
     <TextView

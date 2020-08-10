@@ -270,6 +270,7 @@ public class BlueToothManage implements IBle {
                     }
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     if (gatt != null) {
+                        closeConnected(gatt.getDevice().getAddress());
                         gatt.close();
                     }
                     mBluetoothGatts.remove(gatt);
