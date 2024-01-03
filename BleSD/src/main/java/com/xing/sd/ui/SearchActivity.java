@@ -65,7 +65,6 @@ public class SearchActivity extends IBaseActivity<ActivitySearchBinding, SearchP
                 getPresenter().refreshDevices(searchTime);
             }
         });
-        ReentrantLock reentrantLock = new ReentrantLock();
     }
 
     @Override
