@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.xing.sd"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0.0"
+
+    }
+
+    signingConfigs {
+        config {
+            storeFile file("../CarBLE/xinggede.jks") // debug keystore路径。
+            storePassword 'xinggede' // 默认debug keystore的密码。
+            keyAlias 'xingge' // 默认debug keystore的alias。
+            keyPassword 'xinggede' // 默认debug keystore的alias的密码。
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.config
+        }
+
+        release {
+            debuggable false
+
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->  // each 改为 all
+                def fileName
+                if (variant.buildType.name.equals('release')) {
+                    fileName = "BLEDP-v${variant.versionName}_${releaseTime()}.apk"
+                } else {
+                    fileName = "BLEDP-v${variant.versionName}_${releaseTime()}_t.apk"
+                }
+
+                def outFile = output.outputFile
+                if (outFile != null && outFile.name.endsWith('.apk')) {
+                    outputFileName = fileName
+                }
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    testImplementation 'junit:junit:4.13.2'
+}

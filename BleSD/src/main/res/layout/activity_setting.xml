@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="设置" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="温度：" />
+
+                <TextView
+                    android:id="@+id/tv_wd"
+                    style="@style/tcStyle"
+                    android:text="10"
+                    android:gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="电压："
+                    android:layout_marginStart="40dp"/>
+
+                <TextView
+                    android:id="@+id/tv_dy"
+                    style="@style/tcStyle"
+                    android:text="10"
+                    android:gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_marginStart="10dp"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/lineStyle"/>
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="RCPWM：" />
+
+                <EditText
+                    android:id="@+id/et_rcp"
+                    style="@style/etStyleShow"
+                    android:text="0"
+                    android:maxLength="2"
+                    android:layout_width="50dp"
+                    android:layout_marginStart="10dp"
+                    android:imeOptions="actionDone"/>
+
+                <Button
+                    android:id="@+id/bt_set_rcp"
+                    style="@style/btStyle"
+                    android:layout_width="50dp"
+                    android:layout_marginStart="5dp"
+                    android:text="设置" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/tcStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="18:20:30" />
+
+                <Button
+                    android:id="@+id/bt_set_time"
+                    style="@style/btStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="时间设置" />
+            </LinearLayout>
+
+            <View
+                style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="光感亮度：" />
+
+                <TextView
+                    android:id="@+id/tv_light_brightness"
+                    style="@style/tcStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="65dp"
+                    android:text="6" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="30dp"
+                    android:text="亮度设置：" />
+
+                <TextView
+                    android:id="@+id/tv_light_set"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="80dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="屏参数设置："/>
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="屏H&#32;数量：" />
+
+                <TextView
+                    android:id="@+id/tv_screen_h_num"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="1" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="屏V&#32;数量："
+                    android:layout_marginStart="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_screen_v_num"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="80dp"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="类&#12288;&#12288;型：" />
+
+                <TextView
+                    android:id="@+id/tv_screen_type"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="R" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="扫描方式："
+                    android:layout_marginStart="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_scan_type"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="80dp"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="O&#32;E&#32;极性：" />
+
+                <TextView
+                    android:id="@+id/tv_oe_polarity"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="1" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="Data极性："
+                    android:layout_marginStart="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_data_polarity"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="80dp"
+                    android:text="1" />
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="移动速度：" />
+
+                <TextView
+                    android:id="@+id/tv_move_speed"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/bt_set_screen"
+                    style="@style/btStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="设置" />
+
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="字库选择：" />
+
+                <TextView
+                    android:id="@+id/tv_font_type"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:text="GB2312" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="30dp"
+                    android:text="字体像素：" />
+
+                <TextView
+                    android:id="@+id/tv_font_size"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:text="16" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="UART设置："/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="UART选择：" />
+
+                <TextView
+                    android:id="@+id/tv_uart_choose"
+                    style="@style/tvBJStyle"
+                    android:layout_width="150dp"
+                    android:layout_marginStart="10dp"
+                    android:text="UART0 (RS485)" />
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="工作模式：" />
+
+                <TextView
+                    android:id="@+id/tv_uart_mode"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="手动" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_marginStart="30dp"
+                    android:text="数&#8194;据&#8194;位：" />
+
+                <TextView
+                    android:id="@+id/tv_uart_data"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:text="8" />
+
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="停&#8194;止&#8194;位：" />
+
+                <TextView
+                    android:id="@+id/tv_uart_stop"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="1" />
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="效&#8194;验&#8194;位："
+                    android:layout_marginStart="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_uart_check"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="波&#8194;特&#8194;率：" />
+
+                <EditText
+                    android:id="@+id/et_uart_baud"
+                    style="@style/etStyleShow"
+                    android:text="115200"
+                    android:layout_width="200dp"
+                    android:imeOptions="actionDone"
+                    android:maxLength="7"
+                    android:layout_marginStart="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="通信协议：" />
+
+                <TextView
+                    android:id="@+id/tv_uart_comm"
+                    style="@style/tvBJStyle"
+                    android:layout_width="150dp"
+                    android:layout_marginStart="10dp"
+                    android:text="MODBUS_ASCII" />
+
+                <Button
+                    android:id="@+id/bt_uart_set"
+                    style="@style/btStyle"
+                    android:text="设置"
+                    android:layout_marginStart="30dp"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="网络设置："/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="I&#32;P&#32;类型：" />
+
+                <TextView
+                    android:id="@+id/tv_ip_mode"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="静态" />
+
+                <Button
+                    android:id="@+id/bt_ip_set"
+                    style="@style/btStyle"
+                    android:text="设置"
+                    android:layout_marginStart="50dp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_ip"
+                style="@style/linStyle"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_ip_address"
+                    style="@style/etStyleShow"
+                    android:text="192.168.10.10"
+                    android:layout_width="150dp"
+                    android:maxLength="15"/>
+
+                <EditText
+                    android:id="@+id/et_ip_gateway"
+                    style="@style/etStyleShow"
+                    android:text="192.168.10.1"
+                    android:layout_width="150dp"
+                    android:maxLength="15"
+                    android:layout_alignParentEnd="true" />
+
+                <EditText
+                    android:id="@+id/et_ip_mask"
+                    style="@style/etStyleShow"
+                    android:text="255.255.255.0"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="150dp"
+                    android:maxLength="15"
+                    android:layout_below="@+id/et_ip_address"/>
+
+                <EditText
+                    android:id="@+id/et_ip_dns"
+                    style="@style/etStyleShow"
+                    android:text="192.168.10.1"
+                    android:layout_width="150dp"
+                    android:maxLength="15"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/et_ip_address"
+                    android:imeOptions="actionDone"/>
+            </RelativeLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="升级设置："/>
+
+            <RelativeLayout
+                style="@style/linStyle">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    style="@style/tvStyle"
+                    android:layout_alignBaseline="@+id/bt_choose_font"
+                    android:text="字库文件选择：" />
+
+                <Button
+                    android:id="@+id/bt_choose_font"
+                    style="@style/btStyle"
+                    android:layout_toEndOf="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="点击选择" />
+
+                <Button
+                    android:id="@+id/bt_update_font"
+                    style="@style/btStyle"
+                    android:layout_below="@+id/bt_choose_font"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="升级字库" />
+            </RelativeLayout>
+
+            <View style="@style/lineStyle"/>
+            <RelativeLayout
+                style="@style/linStyle">
+
+                <TextView
+                    android:id="@+id/tv2"
+                    style="@style/tvStyle"
+                    android:layout_alignBaseline="@+id/bt_choose_sys"
+                    android:text="系统文件选择：" />
+
+                <Button
+                    android:id="@+id/bt_choose_sys"
+                    style="@style/btStyle"
+                    android:layout_toEndOf="@+id/tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="点击选择" />
+
+                <TextView
+                    android:id="@+id/tv_sys_ver"
+                    style="@style/tvStyle"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/bt_choose_sys"
+                    android:text="软件版本：" />
+
+                <Button
+                    android:id="@+id/bt_update_sys"
+                    style="@style/btStyle"
+                    android:layout_toEndOf="@+id/tv_sys_ver"
+                    android:layout_below="@+id/bt_choose_sys"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:text="升级系统" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="系统："/>
+
+            <RelativeLayout
+                style="@style/linStyle"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/bt_reset"
+                    style="@style/btStyle"
+                    android:text="复位系统" />
+
+                <TextView
+                    android:id="@+id/tv_ver"
+                    style="@style/tcStyle"
+                    android:textSize="12sp"
+                    android:layout_centerInParent="true"
+                    android:text="VER：T2_06" />
+
+                <Button
+                    android:id="@+id/bt_restore_factory"
+                    style="@style/btStyle"
+                    android:layout_width="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:text="恢复出厂设置" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="信息显示" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="标题内容设置："
+                android:layout_marginTop="5dp"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <EditText
+                    android:id="@+id/et_title"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="请输入标题内容"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:maxLines="5"
+                    android:maxLength="50"
+                    android:gravity="start|top"/>
+
+                <RelativeLayout
+                    style="@style/linStyle"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        style="@style/tvStyle"
+                        android:text="移动类型："
+                        android:layout_alignBaseline="@+id/tv_title_move_type"
+                        android:layout_marginStart="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_move_type"
+                        style="@style/tvBJStyle"
+                        android:layout_toEndOf="@+id/tv1"
+                        android:layout_width="90dp"
+                        android:text="无" />
+
+                    <View
+                        android:id="@+id/v1"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_below="@+id/tv_title_move_type"/>
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        style="@style/tvStyle"
+                        android:text="间隔像素："
+                        android:layout_alignBaseline="@+id/et_title_space_px"
+                        android:layout_marginStart="10dp"
+                        android:layout_below="@+id/v1"/>
+
+                    <EditText
+                        android:id="@+id/et_title_space_px"
+                        style="@style/etStyleShow"
+                        android:maxLength="2"
+                        android:imeOptions="actionDone"
+                        android:layout_toEndOf="@+id/tv2"
+                        android:layout_width="match_parent"
+                        android:text="0"
+                        android:layout_below="@+id/v1"/>
+
+                    <View
+                        android:id="@+id/v2"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_below="@+id/et_title_space_px"/>
+
+                    <Button
+                        android:id="@+id/bt_set_title"
+                        style="@style/btStyle"
+                        android:text="设置"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/v2"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="显示组公共内容设置："
+                android:layout_marginTop="5dp"/>
+
+            <RelativeLayout
+                style="@style/linStyle">
+
+                <TextView
+                    android:id="@+id/tv3"
+                    style="@style/tvStyle"
+                    android:text="移动类型："
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_show_move_type"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/tv3"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:text="无" />
+
+                <TextView
+                    android:id="@+id/tv4"
+                    style="@style/tvStyle"
+                    android:text="间隔像素："
+                    android:layout_toStartOf="@+id/et_show_space_px"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_show_space_px"
+                    style="@style/etStyleShow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="90dp"
+                    android:maxLength="2"
+                    android:imeOptions="actionDone"
+                    android:text="0"/>
+            </RelativeLayout>
+
+            <View
+                style="@style/lineStyle"/>
+
+            <RelativeLayout
+                style="@style/linStyle">
+
+                <TextView
+                    android:id="@+id/tv5"
+                    style="@style/tvStyle"
+                    android:text="变量来源："
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_show_source"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/tv5"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:text="R" />
+
+                <TextView
+                    android:id="@+id/tv6"
+                    style="@style/tvStyle"
+                    android:text="空闲显示："
+                    android:layout_toStartOf="@+id/tv_show_idle"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_show_idle"
+                    style="@style/tvBJStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="90dp"
+                    android:text="1"/>
+            </RelativeLayout>
+
+            <View
+                style="@style/lineStyle"/>
+
+            <RelativeLayout
+                style="@style/linStyle">
+
+                <TextView
+                    android:id="@+id/tv7"
+                    style="@style/tvStyle"
+                    android:text="内容显示时间："
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_show_time"
+                    style="@style/etStyleShow"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/tv7"
+                    android:layout_centerVertical="true"
+                    android:layout_width="80dp"
+                    android:maxLength="2"
+                    android:imeOptions="actionDone"
+                    android:text="10" />
+
+                <TextView
+                    android:id="@+id/tv8"
+                    style="@style/tvStyle"
+                    android:text="秒S"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/et_show_time"
+                    android:layout_centerVertical="true"/>
+                <Button
+                    android:id="@+id/bt_set_show"
+                    style="@style/btStyle"
+                    android:text="设置"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@+id/tv8"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="组1内容设置："
+                android:layout_marginTop="5dp"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <EditText
+                    android:id="@+id/et_content1"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/pls_input_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:maxLines="5"
+                    android:maxLength="50"
+                    android:gravity="start|top"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/linStyle"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv9"
+                        style="@style/tvStyle"
+                        android:text="@string/x"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@+id/et_x1"
+                        app:layout_constraintTop_toTopOf="@+id/et_x1"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_x1"/>
+
+                    <EditText
+                        android:id="@+id/et_x1"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        app:layout_constraintStart_toEndOf="@+id/tv9"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v3"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_x1"/>
+
+                    <TextView
+                        android:id="@+id/tv10"
+                        style="@style/tvStyle"
+                        android:text="@string/y"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_y1"
+                        app:layout_constraintTop_toTopOf="@+id/et_y1"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_y1"/>
+
+                    <EditText
+                        android:id="@+id/et_y1"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv10"
+                        app:layout_constraintTop_toBottomOf="@+id/v3"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v4"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_y1" />
+
+                    <TextView
+                        android:id="@+id/tv11"
+                        style="@style/tvStyle"
+                        android:text="@string/show_window"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_show_window1"
+                        app:layout_constraintTop_toTopOf="@+id/et_show_window1"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_show_window1"/>
+
+                    <EditText
+                        android:id="@+id/et_show_window1"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        android:imeOptions="actionDone"
+                        app:layout_constraintStart_toEndOf="@+id/tv11"
+                        app:layout_constraintTop_toBottomOf="@+id/v4"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v5"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_show_window1" />
+
+                    <TextView
+                        android:id="@+id/tv12"
+                        style="@style/tvStyle"
+                        android:text="@string/show_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_show_type1"
+                        app:layout_constraintTop_toTopOf="@+id/tv_show_type1"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_show_type1"/>
+
+                    <TextView
+                        android:id="@+id/tv_show_type1"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv12"
+                        app:layout_constraintTop_toBottomOf="@+id/v5"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v6"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_show_type1" />
+
+                    <TextView
+                        android:id="@+id/tv13"
+                        style="@style/tvStyle"
+                        android:text="@string/move_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_move_type1"
+                        app:layout_constraintTop_toTopOf="@+id/tv_move_type1"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_move_type1"/>
+
+                    <TextView
+                        android:id="@+id/tv_move_type1"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv13"
+                        app:layout_constraintTop_toBottomOf="@+id/v6"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v7"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_move_type1" />
+
+                    <Button
+                        android:id="@+id/bt_set_content1"
+                        style="@style/btStyle"
+                        android:text="@string/setting"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v7"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="组2内容设置："
+                android:layout_marginTop="5dp"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <EditText
+                    android:id="@+id/et_content2"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/pls_input_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:maxLines="5"
+                    android:maxLength="50"
+                    android:gravity="start|top"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/linStyle"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv19"
+                        style="@style/tvStyle"
+                        android:text="@string/x"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@+id/et_x2"
+                        app:layout_constraintTop_toTopOf="@+id/et_x2"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_x2"/>
+
+                    <EditText
+                        android:id="@+id/et_x2"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        app:layout_constraintStart_toEndOf="@+id/tv19"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v13"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_x2"/>
+
+                    <TextView
+                        android:id="@+id/tv20"
+                        style="@style/tvStyle"
+                        android:text="@string/y"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_y2"
+                        app:layout_constraintTop_toTopOf="@+id/et_y2"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_y2"/>
+
+                    <EditText
+                        android:id="@+id/et_y2"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv20"
+                        app:layout_constraintTop_toBottomOf="@+id/v13"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v14"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_y2" />
+
+                    <TextView
+                        android:id="@+id/tv21"
+                        style="@style/tvStyle"
+                        android:text="@string/show_window"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_show_window2"
+                        app:layout_constraintTop_toTopOf="@+id/et_show_window2"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_show_window2"/>
+
+                    <EditText
+                        android:id="@+id/et_show_window2"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        android:imeOptions="actionDone"
+                        app:layout_constraintStart_toEndOf="@+id/tv21"
+                        app:layout_constraintTop_toBottomOf="@+id/v14"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v15"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_show_window2" />
+
+                    <TextView
+                        android:id="@+id/tv22"
+                        style="@style/tvStyle"
+                        android:text="@string/show_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_show_type2"
+                        app:layout_constraintTop_toTopOf="@+id/tv_show_type2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_show_type2"/>
+
+                    <TextView
+                        android:id="@+id/tv_show_type2"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv22"
+                        app:layout_constraintTop_toBottomOf="@+id/v15"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v16"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_show_type2" />
+
+                    <TextView
+                        android:id="@+id/tv23"
+                        style="@style/tvStyle"
+                        android:text="@string/move_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_move_type2"
+                        app:layout_constraintTop_toTopOf="@+id/tv_move_type2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_move_type2"/>
+
+                    <TextView
+                        android:id="@+id/tv_move_type2"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv23"
+                        app:layout_constraintTop_toBottomOf="@+id/v16"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v17"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_move_type2" />
+
+                    <Button
+                        android:id="@+id/bt_set_content2"
+                        style="@style/btStyle"
+                        android:text="@string/setting"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v17"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="组3内容设置："
+                android:layout_marginTop="5dp"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <EditText
+                    android:id="@+id/et_content3"
+                    style="@style/etStyle"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/pls_input_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:maxLines="5"
+                    android:maxLength="50"
+                    android:gravity="start|top"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/linStyle"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv29"
+                        style="@style/tvStyle"
+                        android:text="@string/x"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@+id/et_x3"
+                        app:layout_constraintTop_toTopOf="@+id/et_x3"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_x3"/>
+
+                    <EditText
+                        android:id="@+id/et_x3"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        app:layout_constraintStart_toEndOf="@+id/tv29"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v23"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_x3"/>
+
+                    <TextView
+                        android:id="@+id/tv30"
+                        style="@style/tvStyle"
+                        android:text="@string/y"
+                        android:layout_width="70dp"
+                        android:gravity="center"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_y3"
+                        app:layout_constraintTop_toTopOf="@+id/et_y3"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_y3"/>
+
+                    <EditText
+                        android:id="@+id/et_y3"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv30"
+                        app:layout_constraintTop_toBottomOf="@+id/v23"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v24"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_y3" />
+
+                    <TextView
+                        android:id="@+id/tv31"
+                        style="@style/tvStyle"
+                        android:text="@string/show_window"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/et_show_window3"
+                        app:layout_constraintTop_toTopOf="@+id/et_show_window3"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_show_window3"/>
+
+                    <EditText
+                        android:id="@+id/et_show_window3"
+                        style="@style/etStyleShow"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        android:imeOptions="actionDone"
+                        app:layout_constraintStart_toEndOf="@+id/tv31"
+                        app:layout_constraintTop_toBottomOf="@+id/v24"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v25"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_show_window3" />
+
+                    <TextView
+                        android:id="@+id/tv32"
+                        style="@style/tvStyle"
+                        android:text="@string/show_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_show_type3"
+                        app:layout_constraintTop_toTopOf="@+id/tv_show_type3"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_show_type3"/>
+
+                    <TextView
+                        android:id="@+id/tv_show_type3"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv32"
+                        app:layout_constraintTop_toBottomOf="@+id/v25"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v26"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_show_type3" />
+
+                    <TextView
+                        android:id="@+id/tv33"
+                        style="@style/tvStyle"
+                        android:text="@string/move_type"
+                        android:layout_width="70dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_move_type3"
+                        app:layout_constraintTop_toTopOf="@+id/tv_move_type3"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_move_type3"/>
+
+                    <TextView
+                        android:id="@+id/tv_move_type3"
+                        style="@style/tvBJStyle"
+                        android:layout_width="90dp"
+                        android:text="0"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toEndOf="@+id/tv33"
+                        app:layout_constraintTop_toBottomOf="@+id/v26"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/v27"
+                        style="@style/lineStyle"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_move_type3" />
+
+                    <Button
+                        android:id="@+id/bt_set_content3"
+                        style="@style/btStyle"
+                        android:text="@string/setting"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v27"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <View
+                style="@style/lineStyle" />
+            <LinearLayout
+                style="@style/linStyle"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/bt_reset_show_group"
+                    android:layout_width="100dp"
+                    android:textColor="#f00"
+                    style="@style/btStyle"
+                    android:text="@string/reset_show_group"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

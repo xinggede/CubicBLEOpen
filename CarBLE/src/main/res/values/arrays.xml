@@ -41,6 +41,7 @@
         <item>混合(GPS+BEIDOU)</item>
         <item>混合(GPS+GLONASS)</item>
         <item>混合(BEIDOU+GLONASS)</item>
+        <item>混合(GPS+BEIDOU+GLONASS)</item>
     </string-array>
 
     <string-array name="gps_show_type">

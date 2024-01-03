@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="move_mode">
+        <item>无</item>
+        <item>左移</item>
+        <item>右移</item>
+        <item>上移</item>
+        <item>下移</item>
+        <item>左出</item>
+        <item>右出</item>
+        <item>上出</item>
+        <item>下出</item>
+        <item>循环左移</item>
+        <item>循环右移</item>
+        <item>循环上移</item>
+        <item>循环下移</item>
+        <item>循环左出</item>
+        <item>循环右出</item>
+        <item>循环上出</item>
+        <item>循环下出</item>
+    </string-array>
+
+    <!--0：自动，优先顺序123；1：RS232；2：RS485；3：RCC；4：网线；5：USB。-->
+
+    <string-array name="show_source">
+        <item>自动</item>
+        <item>RS232</item>
+        <item>RS485</item>
+        <item>RCC</item>
+        <item>网线</item>
+        <item>USB</item>
+    </string-array>
+
+    <!--0：不显示；1：内容；2：标题；3：时间。-->
+    <string-array name="idle_state">
+        <item>不显示</item>
+        <item>内容</item>
+        <item>标题</item>
+        <item>时间</item>
+    </string-array>
+
+    <!--0：无；1：固定字符；2：时间；3：变量1；4：变量2。-->
+
+    <string-array name="show_type">
+        <item>无</item>
+        <item>字符</item>
+        <item>时间</item>
+        <item>变量1</item>
+        <item>变量2</item>
+    </string-array>
+
+    <string-array name="num_0_9">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <!--分别代表：0:R_1；1：RG_1；2：RG_2；3：RGB_1；4：RGB_2-->
+
+    <string-array name="screen_type">
+        <item>R_1</item>
+        <item>RG_1</item>
+        <item>RG_2</item>
+        <item>RGB_1</item>
+        <item>RGB_2</item>
+    </string-array>
+
+
+    <!--0：SCAN_MODE_1_2 = 0,
+    1： SCAN_MODE_0_4, ///// 4.0：直行走线，一路数据带4行
+    2： SCAN_MODE_1_4, /////上蛇行，一路数据带16行，8行折列。
+    3： SCAN_MODE_2_4, /////下蛇行，一路数据带16行，8行折列。
+    4： SCAN_MODE_3_4, /////上蛇行，一路数据带8行，8行折列。
+    5： SCAN_MODE_4_4, /////下蛇行，一路数据带8行，8行折列。
+    6： SCAN_MODE_0_8, ///// 8.0：直行走线，一路数据带8行
+    7： SCAN_MODE_1_8, /////上蛇行，一路数据带16行，8行折列。
+    8： SCAN_MODE_2_8, /////下蛇行，一路数据带16行，8行折列。
+    9： SCAN_MODE_0_16, ///// 16.0：直行走线，一路数据带16行-->
+
+    <string-array name="scan_type">
+        <item>SM_1_2</item>
+        <item>SM_0_4</item>
+        <item>SM_1_4</item>
+        <item>SM_2_4</item>
+        <item>SM_3_4</item>
+        <item>SM_4_4</item>
+        <item>SM_0_8</item>
+        <item>SM_1_8</item>
+        <item>SM_2_8</item>
+        <item>SM_0_16</item>
+    </string-array>
+
+    <!--0：ASIIC；1：GB2312；2：GBK；4：UTF8-->
+    <string-array name="font_type">
+        <item>ASIIC</item>
+        <item>GB2312</item>
+        <item>GBK</item>
+        <item>UTF8</item>
+    </string-array>
+
+    <string-array name="font_size">
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
+        <item>24</item>
+        <item>32</item>
+    </string-array>
+</resources>

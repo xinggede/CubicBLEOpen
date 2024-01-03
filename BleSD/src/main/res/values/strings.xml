@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BLEDP</string>
+    <string name="setting">设置</string>
+    <string name="x">X：</string>
+    <string name="y">Y：</string>
+    <string name="show_window">显示窗口：</string>
+    <string name="show_type">显示类型：</string>
+    <string name="move_type">移动类型：</string>
+    <string name="reset_show_group">复位显示组</string>
+
+    <string name="pls_input_content">请输入内容：</string>
+</resources>

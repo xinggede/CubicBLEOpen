@@ -300,6 +300,7 @@ public class BlueToothManage implements IBle {
             } else {
                 mBluetoothGatts.remove(gatt);
                 gatt.close();
+                handler.sendEmptyMessage(States.DISCONNECTED);
             }
         }
 
