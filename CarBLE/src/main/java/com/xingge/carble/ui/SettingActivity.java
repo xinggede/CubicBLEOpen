@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,8 @@ import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.util.CommandUtil;
 import com.xingge.carble.util.Tool;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class SettingActivity extends IBaseActivity<MainPresenter> implements MainContract.View {
 

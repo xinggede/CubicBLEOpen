@@ -2,7 +2,6 @@ package com.xingge.carble.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,8 @@ import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
 import com.xingge.carble.util.CommandUtil;
 import com.xingge.carble.util.Tool;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends IBaseActivity<MainPresenter> implements MainContract.View, AdapterView.OnItemSelectedListener {
 

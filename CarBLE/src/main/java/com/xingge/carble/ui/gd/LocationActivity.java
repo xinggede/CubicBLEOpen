@@ -1,8 +1,10 @@
 package com.xingge.carble.ui.gd;
 
+import android.Manifest;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
 
@@ -18,11 +20,13 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.xingge.carble.R;
+import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputLocationDialog;
 import com.xingge.carble.dialog.SendLocationDialog;
+import com.xingge.carble.ui.MainActivity;
 import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
@@ -32,6 +36,8 @@ import com.xingge.carble.util.Tool;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * @author 星哥的
@@ -60,6 +66,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        MapsInitializer.updatePrivacyShow(MainActivity.this,true,true);
+        MapsInitializer.updatePrivacyAgree(MainActivity.this,true);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -92,6 +100,14 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
 
     @Override
     protected void initEventAndData() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            checkPermission(new CheckPermListener() {
+                @Override
+                public void superPermission() {
+
+                }
+            }, R.string.permiss_tip, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        }
         getPresenter().getGMDF();
 
         UiSettings uiSettings = aMap.getUiSettings();

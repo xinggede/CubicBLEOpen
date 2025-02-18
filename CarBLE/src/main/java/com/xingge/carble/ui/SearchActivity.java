@@ -4,11 +4,12 @@ import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,7 +103,7 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
             public void superPermission() {
                 searchBle();
             }
-        }, R.string.permiss_tip, Manifest.permission.ACCESS_FINE_LOCATION);
+        }, R.string.permiss_tip, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT);
 
         checkPermission(new BaseActivity.CheckPermListener() {
             @Override
@@ -154,7 +155,6 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
     private void searchBle() {
         if (!getPresenter().isOpenBlue()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            enableBtIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(enableBtIntent, 1);
         } else {
             getPresenter().refreshDevices(searchTime);

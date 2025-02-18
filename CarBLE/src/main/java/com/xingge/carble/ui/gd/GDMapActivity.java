@@ -1,5 +1,6 @@
 package com.xingge.carble.ui.gd;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.xingge.carble.R;
+import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bean.RecordInfo;
@@ -27,6 +29,7 @@ import com.xingge.carble.dialog.ChooseAdapter;
 import com.xingge.carble.dialog.ChoosePopup;
 import com.xingge.carble.dialog.LineChartDialog;
 import com.xingge.carble.ui.CusSeekBar;
+import com.xingge.carble.ui.MainActivity;
 import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
@@ -73,6 +76,8 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        MapsInitializer.updatePrivacyShow(MainActivity.this,true,true);
+        MapsInitializer.updatePrivacyAgree(MainActivity.this,true);
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
 
