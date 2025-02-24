@@ -1,9 +1,10 @@
 package com.xingge.carble.base.mode;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.xingge.carble.base.BaseFragment;
+
+import androidx.annotation.Nullable;
 
 
 /**

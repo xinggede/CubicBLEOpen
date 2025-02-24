@@ -1,6 +1,6 @@
 package com.xingge.carble.ui.gd;
 
-import android.Manifest;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +20,6 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.xingge.carble.R;
-import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bean.RecordInfo;
@@ -29,7 +28,6 @@ import com.xingge.carble.dialog.ChooseAdapter;
 import com.xingge.carble.dialog.ChoosePopup;
 import com.xingge.carble.dialog.LineChartDialog;
 import com.xingge.carble.ui.CusSeekBar;
-import com.xingge.carble.ui.MainActivity;
 import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
@@ -76,8 +74,8 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        MapsInitializer.updatePrivacyShow(MainActivity.this,true,true);
-        MapsInitializer.updatePrivacyAgree(MainActivity.this,true);
+//        MapsInitializer.updatePrivacyShow(this,true,true);
+//        MapsInitializer.updatePrivacyAgree(this,true);
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
 
@@ -106,7 +104,14 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
         seekBar.setChangedListener(new CusSeekBar.onChangedListener() {
             @Override
             public void onProgressChanged(int progress) {
-                GpsInfo gInfo = Objects.requireNonNull(listMap.get(day)).get(progress);
+                List<GpsInfo> gpsInfos = listMap.get(day);
+                if(gpsInfos == null || gpsInfos.isEmpty()){
+                    return;
+                }
+                if(progress > gpsInfos.size() - 1){
+                    return;
+                }
+                GpsInfo gInfo = gpsInfos.get(progress);
                 if (gInfo != null) {
                     aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gInfo.latLng, aMap.getCameraPosition().zoom));
                     String str = Tool.dateToTime(gInfo.date);
@@ -186,74 +191,83 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            if (msg.what == 97) { //开始
-                btGetGps.setEnabled(false);
-                seekBar.setEnabled(false);
-                seekBar.setMax(msg.arg1);
-                GpsInfo gpsInfo = (GpsInfo) msg.obj;
-                showFirst(gpsInfo);
-                tvTime1.setText(Tool.dateToHour(gpsInfo.date));
-            } else if (msg.what == 98) { //更新每个包
-                List<GpsInfo> infos = (List<GpsInfo>) msg.obj;
-
-                List<GpsInfo> gpsInfoList = listMap.get(day);
-                if (gpsInfoList == null) {
-                    showMap(null, infos);
-
-                    gpsInfoList = new ArrayList<>();
-                    gpsInfoList.addAll(infos);
-                    listMap.put(day, gpsInfoList);
-                } else {
-                    if (infos.get(0).isStart) {
-                        showMap(null, infos);
-                    } else {
-                        showMap(gpsInfoList.get(gpsInfoList.size() - 1), infos);
-                    }
-                    gpsInfoList.addAll(infos);
-                }
-            } else if (msg.what == 99) { //分包
-                GpsInfo gpsInfo = (GpsInfo) msg.obj;
-                showFirst(gpsInfo);
-                seekBar.setColor(gpsInfo.color);
-            } else if (msg.what == 100) { //进度
-                seekBar.setProgress(msg.arg2);
-            } else if (msg.what == 101) { //结束
+            if (msg.what == 103) {
                 btGetGps.setEnabled(true);
-                handler.removeMessages(103);
-                List<GpsInfo> gpsInfoList = listMap.get(day);
-
-                seekBar.setMax(gpsInfoList.size() - 1);
-                seekBar.setProgress(seekBar.getMax());
                 seekBar.setEnabled(true);
+                handler.sendEmptyMessage(101);
+            } else {
+                handler.removeMessages(103);
+                if (msg.what == 97) { //开始
+                    btGetGps.setEnabled(false);
+                    seekBar.setEnabled(false);
+                    seekBar.setMax(msg.arg1);
+                    GpsInfo gpsInfo = (GpsInfo) msg.obj;
+                    showFirst(gpsInfo);
+                    tvTime1.setText(Tool.dateToHour(gpsInfo.date));
+                } else if (msg.what == 98) { //更新每个包
+                    List<GpsInfo> infos = (List<GpsInfo>) msg.obj;
+
+                    List<GpsInfo> gpsInfoList = listMap.get(day);
+                    if (gpsInfoList == null) {
+                        showMap(null, infos);
+                        gpsInfoList = new ArrayList<>(infos);
+                        listMap.put(day, gpsInfoList);
+                    } else {
+                        if (!infos.isEmpty() && infos.get(0).isStart) {
+                            showMap(null, infos);
+                        } else {
+                            showMap(gpsInfoList.get(gpsInfoList.size() - 1), infos);
+                        }
+                        gpsInfoList.addAll(infos);
+                    }
+                } else if (msg.what == 99) { //分包
+                    GpsInfo gpsInfo = (GpsInfo) msg.obj;
+                    showFirst(gpsInfo);
+                    seekBar.setColor(gpsInfo.color);
+                } else if (msg.what == 100) { //进度
+                    seekBar.setProgress(msg.arg2);
+                } else if (msg.what == 101) { //结束
+                    btGetGps.setEnabled(true);
+                    List<GpsInfo> gpsInfoList = listMap.get(day);
+
+                    seekBar.setMax(gpsInfoList.size() - 1);
+                    seekBar.setProgress(seekBar.getMax());
+                    seekBar.setEnabled(true);
 
 //                tvTime2.setText(Tool.dateToHour(gpsInfoList.get(gpsInfoList.size() / 2).date));
-                tvTime3.setText(Tool.dateToHour(gpsInfoList.get(seekBar.getMax()).date));
+                    tvTime3.setText(Tool.dateToHour(gpsInfoList.get(seekBar.getMax()).date));
 
-                float totalDistance = 0;
-                long totalTime = 0;
-                //最后一个GpsInfo的长度就是总长度，如果有分包则累加
-                for (int i = 0; i < gpsInfoList.size(); i++) {
-                    if (gpsInfoList.get(i).isStart) {
-                        GpsInfo gpsInfo = gpsInfoList.get(i - 1);
-                        totalDistance += gpsInfo.distance;
-                        totalTime += gpsInfo.time;
+                    float totalDistance = 0;
+                    long totalTime = 0;
+                    //最后一个GpsInfo的长度就是总长度，如果有分包则累加
+                    for (int i = 0; i < gpsInfoList.size(); i++) {
+                        if (gpsInfoList.get(i).isStart) {
+                            GpsInfo gpsInfo;
+                            if (i > 0) {
+                                gpsInfo = gpsInfoList.get(i - 1);
+                            } else {
+                                gpsInfo = gpsInfoList.get(i);
+                            }
+                            totalDistance += gpsInfo.distance;
+                            totalTime += gpsInfo.time;
+                        }
                     }
-                }
-                totalDistance += gpsInfoList.get(seekBar.getMax()).distance;
-                totalTime += gpsInfoList.get(seekBar.getMax()).time;
+                    totalDistance += gpsInfoList.get(seekBar.getMax()).distance;
+                    totalTime += gpsInfoList.get(seekBar.getMax()).time;
 
-                StringBuilder sb = new StringBuilder();
-                sb.append("总路程：").append(Tool.mToKM(totalDistance)).append("KM  ")
-                        .append("用时：").append(Tool.sToM(totalTime)).append("  平均时速：")
-                        .append(Tool.calcAverageSpeed(totalDistance, totalTime));
-                tvTotalInfo.setText(sb.toString());
-            } else if (msg.what == 102) {
-                seekBar.setMax(seekBar.getMax() - 1);
-            } else if (msg.what == 103) {
-                btGetGps.setEnabled(true);
-                seekBar.setEnabled(true);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("总路程：").append(Tool.mToKM(totalDistance)).append("KM  ")
+                            .append("用时：").append(Tool.sToM(totalTime)).append("  平均时速：")
+                            .append(Tool.calcAverageSpeed(totalDistance, totalTime));
+                    tvTotalInfo.setText(sb.toString());
+                } else if (msg.what == 102) {
+                    seekBar.setMax(seekBar.getMax() - 1);
+                }
+                if (msg.what != 101) {
+                    handler.sendEmptyMessageDelayed(103, 10000);
+                }
             }
-            return false;
+            return true;
         }
     });
 
@@ -282,7 +296,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
             }
         } else if (v.getId() == R.id.bt_chart) {
             List<GpsInfo> infoList = listMap.get(day);
-            if (infoList != null && infoList.size() > 0) {
+            if (infoList != null && !infoList.isEmpty()) {
                 showChartDialog(infoList);
             }
         } else if (v.getId() == R.id.ic_back) {
@@ -303,7 +317,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
         tvTotalInfo.setText("");
         btGetGps.setEnabled(false);
         List<GpsInfo> infoList = listMap.get(day);
-        if (infoList != null && infoList.size() > 0) {
+        if (infoList != null && !infoList.isEmpty()) {
             int size = infoList.size();
             seekBar.clear();
             seekBar.setEnabled(true);
@@ -324,9 +338,14 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
                 if (!gpsInfo.isStart) {
                     list.add(gpsInfo);
                 } else {
-
-                    GpsInfo g = infoList.get(i - 1);
-                    seekBar.addProgress(first, i - 1, g.color);
+                    GpsInfo g;
+                    if (i > 0) {
+                        g = infoList.get(i - 1);
+                        seekBar.addProgress(first, i - 1, g.color);
+                    } else {
+                        g = infoList.get(i);
+                        seekBar.addProgress(first, i, g.color);
+                    }
                     first = i;
                     totalDistance += g.distance;
                     totalTime += g.time;
@@ -365,7 +384,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
             seekBar.clear();
             seekBar.setEnabled(false);
             seekBar.setProgress(0);
-            handler.sendEmptyMessageDelayed(103, 15000);
+            handler.sendEmptyMessageDelayed(103, 10000);
         }
     }
 
@@ -397,7 +416,7 @@ public class GDMapActivity extends IBaseActivity<MainPresenter> implements MainC
     }
 
     private synchronized void showMap(GpsInfo lastInfo, List<GpsInfo> infoList) {
-        if (infoList.size() == 0) {
+        if (infoList.isEmpty()) {
             return;
         }
         List<LatLng> latLngs = new ArrayList<>();

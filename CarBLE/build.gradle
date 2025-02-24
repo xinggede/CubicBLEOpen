@@ -8,11 +8,12 @@ android {
     defaultConfig {
         applicationId "com.xingge.carble"
         minSdkVersion 23
-        targetSdkVersion 32
+        targetSdkVersion 28
         versionCode 18
         versionName "1.1.1"
 
         resConfigs "zh" //选择默认英语和中文语言
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a'/*,'x86','x86_64'*/
     }
 
     signingConfigs {
@@ -74,6 +75,9 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 static def releaseTime() {
@@ -82,7 +86,7 @@ static def releaseTime() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.4.0'
 //    implementation 'com.android.support:appcompat-v7:32.0.0'
 //    implementation 'com.android.support:design:32.0.0'
@@ -91,6 +95,9 @@ dependencies {
     implementation 'com.github.huangyanbin:SmartChart:1.4.1'
     implementation files('libs/pgyer_sdk_3.0.4.jar')
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation files('libs\\AMap3DMap_10.1.200_AMapSearch_9.7.4_AMapLocation_6.4.9_20241226.jar')
+//    implementation files('libs/AMap3DMap_10.1.200_AMapSearch_9.7.4_AMapLocation_6.4.9_20241226.jar')
 //    implementation files('libs/BaiduLBS_Android.jar')
+
+    implementation 'com.amap.api:3dmap:6.8.0'
+//    implementation 'com.amap.api:location:4.6.0'
 }

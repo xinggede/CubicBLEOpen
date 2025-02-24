@@ -20,13 +20,11 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.xingge.carble.R;
-import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bean.GpsInfo;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputLocationDialog;
 import com.xingge.carble.dialog.SendLocationDialog;
-import com.xingge.carble.ui.MainActivity;
 import com.xingge.carble.ui.SearchActivity;
 import com.xingge.carble.ui.mode.MainContract;
 import com.xingge.carble.ui.mode.MainPresenter;
@@ -66,8 +64,8 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        MapsInitializer.updatePrivacyShow(MainActivity.this,true,true);
-        MapsInitializer.updatePrivacyAgree(MainActivity.this,true);
+//        MapsInitializer.updatePrivacyShow(this,true,true);
+//        MapsInitializer.updatePrivacyAgree(this,true);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -116,9 +114,10 @@ public class LocationActivity extends IBaseActivity<MainPresenter> implements Ma
 
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.interval(2000);
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
-        myLocationStyle.showMyLocation(false);
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);
+        myLocationStyle.showMyLocation(true);
         aMap.setMyLocationStyle(myLocationStyle);
+        aMap.setMyLocationEnabled(true);
     }
 
     @Override

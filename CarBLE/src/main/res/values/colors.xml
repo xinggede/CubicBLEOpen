@@ -10,4 +10,6 @@
     <color name="bj_color">#649c9494</color>
 
     <color name="unable_color">#afafaf</color>
+
+    <color name="white">#fff</color>
 </resources>

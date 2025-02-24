@@ -170,7 +170,7 @@ public class ProcessGPSThread extends Thread {
                             Message.obtain(handler, 97, packInfo.pckTotal - 1, 0, gpsInfo).sendToTarget();
                         }
                     } catch (Exception e) {
-                        Tool.logd("解析异常");
+                        Tool.loge("解析异常");
                     }
                     lastInfo = gpsInfo;
                 }

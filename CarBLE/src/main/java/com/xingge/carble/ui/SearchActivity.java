@@ -20,11 +20,14 @@ import com.xingge.carble.base.BaseActivity;
 import com.xingge.carble.base.mode.IBaseActivity;
 import com.xingge.carble.bluetooth.States;
 import com.xingge.carble.dialog.InputPwdDialog;
+import com.xingge.carble.ui.gd.GDMapActivity;
+import com.xingge.carble.ui.gd.LocationActivity;
 import com.xingge.carble.ui.mode.SearchContract;
 import com.xingge.carble.ui.mode.SearchPresenter;
 import com.xingge.carble.util.Tool;
 
 import java.util.List;
+import java.util.Locale;
 
 public class SearchActivity extends IBaseActivity<SearchPresenter> implements SearchContract.View, SearchDevAdapter.OnItemClickListener {
 
@@ -70,6 +73,7 @@ public class SearchActivity extends IBaseActivity<SearchPresenter> implements Se
                 getPresenter().refreshDevices(searchTime);
             }
         });*/
+//        startActivity(new Intent(this, LocationActivity.class));
     }
 
 

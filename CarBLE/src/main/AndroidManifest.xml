@@ -59,6 +59,7 @@
         <activity
             android:name="com.amap.api.maps.offlinemap.OfflineMapActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.CrashActivity"/>
 
         <!--<activity android:name=".ui.bd.BDMapActivity"/>
 
