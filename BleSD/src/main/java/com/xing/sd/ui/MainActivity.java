@@ -29,7 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresenter> implements MainContract.View {
 
-    private ChoosePopup moveTypeChoose, sourceChoose, idleStateChoose, showTypeChoose;
+    private ChoosePopup moveTypeChoose, sourceChoose, idleStateChoose, showTypeChoose, protocolChoose;
 
     private TextView curMoveTV, curShowTV;
 
@@ -65,6 +65,7 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
         binding.tvTitleMoveType.setOnClickListener(this);
         binding.tvShowMoveType.setOnClickListener(this);
         binding.tvShowSource.setOnClickListener(this);
+        binding.tvShowProtocol.setOnClickListener(this);
         binding.tvShowIdle.setOnClickListener(this);
         binding.tvShowType1.setOnClickListener(this);
         binding.tvMoveType1.setOnClickListener(this);
@@ -96,6 +97,14 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
             public void onItemClickListener(View view, int position) {
                 binding.tvShowSource.setText(sourceChoose.getValue(position));
                 sourceChoose.dismiss();
+            }
+        });
+
+        protocolChoose = new ChoosePopup(this, getResources().getStringArray(R.array.show_protocol), new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                binding.tvShowProtocol.setText(protocolChoose.getValue(position));
+                protocolChoose.dismiss();
             }
         });
 
@@ -170,6 +179,10 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
                 sourceChoose.showAsDropDown(v);
                 break;
 
+            case R.id.tv_show_protocol:
+                protocolChoose.showAsDropDown(v);
+                break;
+
             case R.id.tv_show_idle:
                 idleStateChoose.showAsDropDown(v);
                 break;
@@ -233,6 +246,7 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
         }
 
         int source = sourceChoose.getSelect(binding.tvShowSource.getText().toString());
+        int protocol = protocolChoose.getSelect(binding.tvShowProtocol.getText().toString());
         int kx = idleStateChoose.getSelect(binding.tvShowIdle.getText().toString());
         text = binding.etShowTime.getText().toString();
         int time = Tool.stringToInt(text);
@@ -240,7 +254,7 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
             Tool.toastShow(MainActivity.this, "内容显示时间，范围0~99");
             return;
         }
-        if(mPresenter.setDGType(move, px, source, kx, time)){
+        if(mPresenter.setDGType(move, px, source, protocol, kx, time)){
             Tool.toastShow(this, "设置成功");
         } else {
             Tool.toastShow(this, "设置失败");
@@ -345,12 +359,15 @@ public class MainActivity extends IBaseActivity<ActivityMainBinding, MainPresent
 
     private void getDGType(String data) {
         String[] vs = data.split(",");
-        if (vs.length >= 5) {
+        if (vs.length >= 6) {
             binding.tvShowMoveType.setText(moveTypeChoose.getValue(Tool.stringToInt(vs[0])));
             binding.etShowSpacePx.setText(String.valueOf(Tool.stringToInt(vs[1])));
             binding.tvShowSource.setText(sourceChoose.getValue(Tool.stringToInt(vs[2])));
-            binding.tvShowIdle.setText(idleStateChoose.getValue(Tool.stringToInt(vs[3])));
-            binding.etShowTime.setText(String.valueOf(Tool.stringToInt(vs[4])));
+
+            binding.tvShowProtocol.setText(protocolChoose.getValue(Tool.stringToInt(vs[3])));
+
+            binding.tvShowIdle.setText(idleStateChoose.getValue(Tool.stringToInt(vs[4])));
+            binding.etShowTime.setText(String.valueOf(Tool.stringToInt(vs[5])));
         }
     }
 

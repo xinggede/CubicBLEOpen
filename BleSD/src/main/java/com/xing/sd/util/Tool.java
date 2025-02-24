@@ -26,6 +26,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import androidx.core.content.ContextCompat;
 
@@ -336,6 +338,42 @@ public class Tool {
         {
             return 180 - Azimuth;
         }
+    }
+
+    public static boolean isIP(String ips) {
+        String str = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(ips);
+        return m.matches();
+    }
+
+    public static String parserIp(String text){
+        if(text.length() >= 12){
+            return Tool.stringToInt(text.substring(0,3)) + "." + Tool.stringToInt(text.substring(3,6)) + "." + Tool.stringToInt(text.substring(6,9)) + "." + Tool.stringToInt(text.substring(9));
+        }
+        return text;
+    }
+
+    public static String concatIp(String text){
+        String[] str = text.split("\\.");
+        String value = "";
+        for (String s : str) {
+            value += getLenData(s, 3);
+        }
+        return value;
+    }
+
+    public static String getLenData(Object value, int len) {
+        String str = String.valueOf(value);
+        if (str.length() < len) {
+            String d = "";
+            for (int i = 0; i < len - str.length(); i++) {
+                d += "0";
+            }
+            d += value;
+            return d;
+        }
+        return str;
     }
 
     public static long getVerCode(Context context) {

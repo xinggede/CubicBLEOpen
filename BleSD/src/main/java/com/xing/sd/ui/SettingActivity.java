@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.xing.sd.bluetooth.UpdateCallback;
 import com.xing.sd.databinding.ActivitySettingBinding;
 import com.xing.sd.dialog.ChooseAdapter;
 import com.xing.sd.dialog.ChoosePopup;
+import com.xing.sd.dialog.ReceiveDialog;
 import com.xing.sd.dialog.UpdateHintDialog;
 import com.xing.sd.ui.mode.MainContract;
 import com.xing.sd.ui.mode.MainPresenter;
@@ -42,10 +45,12 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
 
 
     private ChoosePopup lightChoose, screenHNumChoose, screenVNumChoose, screenTypeChoose, scanTypeChoose,
-            oeChoose, dataChoose, moveSpeedChoose, fontTypeChoose, fontSizeChoose,
-            uartChoose, uartModeChoose, uartDataChoose, uartStopChoose, uartCheckChoose, uartCommChoose;
+            oeChoose, dataChoose, moveSpeedChoose, fontTypeChoose, fontSizeChoose, fontFaceChoose,
+            uartChoose, uartModeChoose, uartDataChoose, uartStopChoose, uartCheckChoose, uartCommChoose,
+            ipModeChoose, rPolarityChoose;
 
     private UpdateHintDialog updateHintDialog;
+    private ReceiveDialog receiveDialog;
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -84,6 +89,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             }
         });
 
+        binding.tvRcpwmPolarity.setOnClickListener(this);
         binding.tvLightSet.setOnClickListener(this);
         binding.tvScreenHNum.setOnClickListener(this);
         binding.tvScreenVNum.setOnClickListener(this);
@@ -94,7 +100,9 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         binding.tvMoveSpeed.setOnClickListener(this);
         binding.tvFontType.setOnClickListener(this);
         binding.tvFontSize.setOnClickListener(this);
+        binding.tvFontFace.setOnClickListener(this);
         binding.tvUartChoose.setOnClickListener(this);
+        binding.tvUartMode.setOnClickListener(this);
         binding.tvUartData.setOnClickListener(this);
         binding.tvUartCheck.setOnClickListener(this);
         binding.tvUartStop.setOnClickListener(this);
@@ -104,6 +112,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         binding.btSetRcp.setOnClickListener(this);
         binding.btSetTime.setOnClickListener(this);
         binding.btSetScreen.setOnClickListener(this);
+        binding.btSetFont.setOnClickListener(this);
         binding.btUartSet.setOnClickListener(this);
         binding.btIpSet.setOnClickListener(this);
         binding.btChooseFont.setOnClickListener(this);
@@ -112,6 +121,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         binding.btUpdateSys.setOnClickListener(this);
         binding.btReset.setOnClickListener(this);
         binding.btRestoreFactory.setOnClickListener(this);
+        binding.btMsSet.setOnClickListener(this);
         initPopup();
         binding.btChooseFont.setText("GB2312_16_16.FON");
         fontUri = Uri.parse("/assets/GB2312_16_16.FON");
@@ -122,6 +132,21 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         updateHintDialog.setOnClickListener((v)->{
             mPresenter.stopUpdate(updateHintDialog.getIndex());
             updateHintDialog.dismiss();
+        });
+        receiveDialog = new ReceiveDialog(this);
+        receiveDialog.setOnClickListener(v -> {
+            receiveDialog.setTvShow("");
+            getPresenter().getAll();
+            getPresenter().setUpdateCallback(this);
+            getPresenter().getCurrentImageInfo();
+        });
+
+        rPolarityChoose = new ChoosePopup(this, getResources().getStringArray(R.array.polarity), new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                binding.tvRcpwmPolarity.setText(rPolarityChoose.getValue(position));
+                rPolarityChoose.dismiss();
+            }
         });
         lightChoose = new ChoosePopup(this, getResources().getStringArray(R.array.num_0_9), new ChooseAdapter.OnItemClickListener() {
             @Override
@@ -164,7 +189,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             }
         });
 
-        oeChoose = new ChoosePopup(this, new String[]{"低", "高"}, new ChooseAdapter.OnItemClickListener() {
+        oeChoose = new ChoosePopup(this, getResources().getStringArray(R.array.polarity), new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 binding.tvOePolarity.setText(oeChoose.getValue(position));
@@ -172,7 +197,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             }
         });
 
-        dataChoose = new ChoosePopup(this, new String[]{"低", "高"}, new ChooseAdapter.OnItemClickListener() {
+        dataChoose = new ChoosePopup(this, getResources().getStringArray(R.array.polarity), new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 binding.tvDataPolarity.setText(dataChoose.getValue(position));
@@ -193,7 +218,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             public void onItemClickListener(View view, int position) {
                 binding.tvFontType.setText(fontTypeChoose.getValue(position));
                 fontTypeChoose.dismiss();
-                setFont();
+//                setFont();
             }
         });
 
@@ -202,11 +227,20 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             public void onItemClickListener(View view, int position) {
                 binding.tvFontSize.setText(fontSizeChoose.getValue(position));
                 fontSizeChoose.dismiss();
-                setFont();
+//                setFont();
             }
         });
 
-        uartChoose = new ChoosePopup(this, new String[]{"UART0(RS485)", "UART1(RS232)", "UART2(Debug)", "UART3(RCC)"}, new ChooseAdapter.OnItemClickListener() {
+        fontFaceChoose = new ChoosePopup(this, getResources().getStringArray(R.array.font_face), new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                binding.tvFontFace.setText(fontFaceChoose.getValue(position));
+                fontFaceChoose.dismiss();
+//                setFont();
+            }
+        });
+
+        uartChoose = new ChoosePopup(this, new String[]{"UART0(RS485)", "UART1(RS232)", /*"UART2(Debug)",*/ "UART3(RCC)"}, new ChooseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
                 binding.tvUartChoose.setText(uartChoose.getValue(position));
@@ -259,7 +293,17 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 getCurrentUart().comm = position;
             }
         });
+
+        ipModeChoose = new ChoosePopup(this, getResources().getStringArray(R.array.ip_mode), new ChooseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                binding.tvIpMode.setText(ipModeChoose.getValue(position));
+                ipModeChoose.dismiss();
+                binding.reIp.setVisibility(position == 0?View.VISIBLE:View.GONE);
+            }
+        });
     }
+
 
     @Override
     protected void initEventAndData() {
@@ -300,6 +344,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         getPresenter().setUpdateCallback(null);
         updateHintDialog.dismiss();
         handler.removeCallbacksAndMessages(null);
+        receiveDialog.dismiss();
         super.onDestroy();
     }
 
@@ -339,7 +384,6 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 }
                 mcuUri = result.getData().getData();
                 binding.btChooseSys.setText(Tool.uriToFileName(SettingActivity.this, mcuUri));
-
             }
         }
     });
@@ -363,6 +407,10 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         switch (v.getId()) {
             case R.id.bt_set_rcp:
                 setRcp();
+                break;
+
+            case R.id.tv_rcpwm_polarity:
+                showPopup(v, rPolarityChoose);
                 break;
 
             case R.id.bt_set_time:
@@ -412,6 +460,14 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 showPopup(v, fontSizeChoose);
                 break;
 
+            case R.id.tv_font_face:
+                showPopup(v, fontFaceChoose);
+                break;
+
+            case R.id.bt_set_font:
+                setFont();
+                break;
+
             case R.id.tv_uart_choose:
                 showPopup(v, uartChoose);
                 break;
@@ -441,11 +497,11 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 break;
 
             case R.id.tv_ip_mode:
-
+                showPopup(v, ipModeChoose);
                 break;
 
             case R.id.bt_ip_set:
-
+                setIp();
                 break;
 
             case R.id.bt_choose_font:
@@ -501,6 +557,10 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 }
                 break;
 
+            case R.id.bt_ms_set:
+                setModeBus();
+                break;
+
             case R.id.bt_reset:
                 setReset(3);
                 break;
@@ -511,6 +571,93 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
 
             default:
                 break;
+        }
+    }
+
+    private void setModeBus() {
+        String text = binding.etMsAddress.getText().toString();
+        int address = Tool.stringToInt(text);
+        if(address < 0 || address > 127){
+            Tool.toastShow(this, "设备地址范围0~127");
+            return;
+        }
+        text = binding.etMsCode.getText().toString();
+        int code = Tool.stringToInt(text);
+        if(code < 0 || code > 99){
+            Tool.toastShow(this, "功能码范围0~99");
+            return;
+        }
+        text = binding.etMsRegAddress.getText().toString();
+        int reg = Tool.stringToInt(text);
+        if(reg < 0 || reg > 9999){
+            Tool.toastShow(this, "寄存器地址范围0~9999");
+            return;
+        }
+        if(mPresenter.setModbus(address, code, reg)){
+            Tool.toastShow(this, "设置成功");
+        } else {
+            Tool.toastShow(this, "设置失败");
+        }
+    }
+
+    private void setIp() {
+        int mode = ipModeChoose.getSelect(binding.tvIpMode.getText().toString());
+        String port = binding.etPort.getText().toString();
+        if(TextUtils.isEmpty(port)){
+            Tool.toastShow(this, "请设置端口号（0~9999）");
+            return;
+        }
+        String ip = "000000000000";
+        String gateway = "000000000000";
+        String mask = "000000000000";
+        String dns = "000000000000";
+        if(mode == 0){
+            ip = binding.etIpAddress.getText().toString();
+            if(TextUtils.isEmpty(ip)){
+                Tool.toastShow(this, "请设置IP地址");
+                return;
+            }
+            if(!Tool.isIP(ip)){
+                Tool.toastShow(this, "IP地址不正确");
+                return;
+            }
+            gateway = binding.etIpGateway.getText().toString();
+            if(TextUtils.isEmpty(gateway)){
+                Tool.toastShow(this, "请设置网关地址");
+                return;
+            }
+            if(!Tool.isIP(gateway)){
+                Tool.toastShow(this, "网关地址不正确");
+                return;
+            }
+            mask = binding.etIpMask.getText().toString();
+            if(TextUtils.isEmpty(mask)){
+                Tool.toastShow(this, "请设置子网掩码");
+                return;
+            }
+            if(!Tool.isIP(mask)){
+                Tool.toastShow(this, "子网掩码不正确");
+                return;
+            }
+            dns = binding.etIpDns.getText().toString();
+            /*if(TextUtils.isEmpty(dns)){
+                Tool.toastShow(this, "请设置DNS");
+                return;
+            }*/
+           /* if(!Tool.isIP(dns)){
+                Tool.toastShow(this, "DNS地址不正确");
+                return;
+            }*/
+            ip = Tool.concatIp(ip);
+            gateway = Tool.concatIp(gateway);
+            mask = Tool.concatIp(mask);
+//            dns = Tool.concatIp(dns);
+        }
+
+        if(mPresenter.setEnetIp(mode, ip, gateway, mask, dns, Tool.stringToInt(port))){
+            Tool.toastShow(this, "设置成功");
+        } else {
+            Tool.toastShow(this, "设置失败");
         }
     }
 
@@ -542,7 +689,8 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 cmd = CommandUtil.UART1;
                 break;
             case 2:
-                cmd = CommandUtil.UART2;
+//                cmd = CommandUtil.UART2;
+                cmd = CommandUtil.UART3;
                 break;
             case 3:
                 cmd = CommandUtil.UART3;
@@ -558,7 +706,8 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
     private void setFont(){
         int type = fontTypeChoose.getSelect(binding.tvFontType.getText().toString());
         int size = Tool.stringToInt(binding.tvFontSize.getText().toString());
-        if(mPresenter.setFont(type, sysFont, size, size)){
+        int face = fontFaceChoose.getSelect(binding.tvFontFace.getText().toString());
+        if(mPresenter.setFont(type, sysFont, size, size, face)){
             Tool.toastShow(this, "设置成功");
         } else {
             Tool.toastShow(this, "设置失败");
@@ -607,7 +756,8 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
             Tool.toastShow(SettingActivity.this, "RCPWM设置范围0~99");
             return;
         }
-        if (mPresenter.setRCPwm(Tool.stringToInt(text))) {
+        int r = rPolarityChoose.getSelect(binding.tvRcpwmPolarity.getText().toString());
+        if (mPresenter.setRCPwm(Tool.stringToInt(text), r)) {
             Tool.toastShow(this, "设置成功");
         } else {
             Tool.toastShow(this, "设置失败");
@@ -628,6 +778,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
 
     @Override
     public void onReceiveData(String command, String data) {
+        receiveDialog.addTvShow(command + ": " + data);
         if (CommandUtil.VER.startsWith(command)) {
             getVer(data);
         } else if (CommandUtil.SYST.startsWith(command)) {
@@ -648,11 +799,22 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         } else if (CommandUtil.UART1.startsWith(command)) {
             getUART(1, data);
         } else if (CommandUtil.UART2.startsWith(command)) {
-            getUART(2, data);
+//            getUART(2, data);
         } else if (CommandUtil.UART3.startsWith(command)) {
-            getUART(3, data);
+            getUART(2, data);
+        } else if (CommandUtil.MODBUS.startsWith(command)) {
+            getModeBus(data);
         } else if (CommandUtil.ENETIP.startsWith(command)) {
             getIp(data);
+        }
+    }
+
+    private void getModeBus(String data) {
+        String[] vs = data.split(",");
+        if (vs.length >= 3) {
+            binding.etMsAddress.setText(vs[0]);
+            binding.etMsCode.setText(vs[1]);
+            binding.etMsRegAddress.setText(vs[2]);
         }
     }
 
@@ -672,7 +834,18 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
     }
 
     private void getIp(String data) {
-
+        String[] vs = data.split(",");
+        if (vs.length >= 5) {
+            int ipMode = Tool.stringToInt(vs[0]);
+            binding.tvIpMode.setText(ipModeChoose.getValue(ipMode));
+            binding.reIp.setVisibility(ipMode == 0?View.VISIBLE:View.GONE);
+            String ip = Tool.parserIp(vs[1]);
+            binding.etIpAddress.setText(ip);
+            binding.etIpGateway.setText(Tool.parserIp(vs[2]));
+            binding.etIpMask.setText(Tool.parserIp(vs[3]));
+//            binding.etIpDns.setText(Tool.parserIp(vs[4]));
+            binding.etPort.setText(String.valueOf(Tool.stringToInt(vs[4])));
+        }
     }
 
     Map<Integer, UartInfo> uartMap = new HashMap<>();
@@ -680,13 +853,13 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
     private void getUART(int type, String data) {
         UartInfo uartInfo = new UartInfo();
         String[] vs = data.split(",");
-        if (vs.length >= 6) {
+        if (vs.length >= 5) {
             uartInfo.workBit = Tool.stringToInt(vs[0]);
             uartInfo.baud = Tool.stringToInt(vs[1]);
             uartInfo.dataBit = Tool.stringToInt(vs[2]);
             uartInfo.stopBit = Tool.stringToInt(vs[3]);
             uartInfo.checkBit = Tool.stringToInt(vs[4]);
-            uartInfo.comm = Tool.stringToInt(vs[5]);
+//            uartInfo.comm = Tool.stringToInt(vs[5]);
         }
         uartMap.put(type, uartInfo);
     }
@@ -700,7 +873,7 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         binding.tvUartData.setText(String.valueOf(uartInfo.dataBit));
         binding.tvUartStop.setText(String.valueOf(uartInfo.stopBit));
         binding.tvUartCheck.setText(uartCheckChoose.getValue(uartInfo.checkBit));
-        binding.tvUartComm.setText(uartCommChoose.getValue(uartInfo.comm));
+//        binding.tvUartComm.setText(uartCommChoose.getValue(uartInfo.comm));
     }
 
     private UartInfo getCurrentUart(){
@@ -712,10 +885,11 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
     private int sysFont;
     private void getFont(String data) {
         String[] vs = data.split(",");
-        if (vs.length >= 4) {
+        if (vs.length >= 5) {
             binding.tvFontType.setText(fontTypeChoose.getValue(Tool.stringToInt(vs[0])));
             sysFont = Tool.stringToInt(vs[1]);
             binding.tvFontSize.setText(String.valueOf(Tool.stringToInt(vs[2])));
+            binding.tvFontFace.setText(fontFaceChoose.getValue(Tool.stringToInt(vs[4])));
         }
     }
 
@@ -756,8 +930,9 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
 
     private void getRCPWm(String data) {
         String[] vs = data.split(",");
-        if (vs.length >= 1) {
+        if (vs.length >= 2) {
             binding.etRcp.setText(String.valueOf(Tool.stringToInt(vs[0])));
+            binding.tvRcpwmPolarity.setText(rPolarityChoose.getValue(Tool.stringToInt(vs[1])));
         }
     }
 
@@ -775,6 +950,8 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
         if(currentImageInfo != null){
             this.currentImageInfo = currentImageInfo;
             binding.tvSysVer.setText("软件版本：" + currentImageInfo.getVersion());
+
+            receiveDialog.addTvShow("CurrentImageInfo: " + currentImageInfo);
         }
     }
 
@@ -789,5 +966,30 @@ public class SettingActivity extends IBaseActivity<ActivitySettingBinding, MainP
                 Tool.toastShow(this, "升级失败");
             }
         }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_show, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.show) {
+            if(!receiveDialog.isShowing()){
+                receiveDialog.show();
+            }
+            return true;
+        }
+        try {
+
+        }catch (Exception e){
+
+        }finally {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

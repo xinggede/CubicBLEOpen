@@ -76,8 +76,8 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     }
 
     @Override
-    public boolean setFont(int type, int sys, int x, int y) {
-        return mainModel.setFont(type, sys, x, y);
+    public boolean setFont(int type, int sys, int x, int y, int face) {
+        return mainModel.setFont(type, sys, x, y, face);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     }
 
     @Override
-    public boolean setRCPwm(int flag) {
-        return mainModel.setRCPwm(flag);
+    public boolean setRCPwm(int flag, int r) {
+        return mainModel.setRCPwm(flag, r);
     }
 
     @Override
@@ -95,9 +95,14 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
         return mainModel.setUart(cmd, mode, baud, dataBit, stopBit, checkBit, protocol);
     }
 
+    public boolean setModbus(int d1, int d2, int d3){
+        return mainModel.setModbus(d1, d2, d3);
+    }
+
     @Override
-    public boolean setEnetIp(int mode, String ip, String mask, String gateway, String dns) {
-        return false;
+    public boolean setEnetIp(int mode, String ip, String gateway, String mask, String dns, int port) {
+        getView().showProDialog();
+        return mainModel.setEnetIp(mode, ip, gateway, mask, dns, port);
     }
 
     @Override
@@ -107,9 +112,9 @@ public class MainPresenter extends BaseNetPresenter<MainContract.View, MainContr
     }
 
     @Override
-    public boolean setDGType(int d1, int d2, int d3, int d4, int d5) {
+    public boolean setDGType(int d1, int d2, int d3, int d4, int d5, int d6) {
         getView().showProDialog();
-        return mainModel.setDGType(d1, d2, d3, d4, d5);
+        return mainModel.setDGType(d1, d2, d3, d4, d5, d6);
     }
 
     @Override

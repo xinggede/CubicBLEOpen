@@ -2,6 +2,7 @@ package com.xing.sd.dialog;
 
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,18 @@ public class UpdateHintDialog extends BaseDialog {
 
     public void addTvShow(String str) {
         tvShow.append(str + "\r\n");
+        scrollToLastLine(tvShow);
+    }
+
+    private void scrollToLastLine(TextView tv){
+        int scrollY = 0;
+        if(!TextUtils.isEmpty(tv.getText())){
+            final  int linesCount = tv.getLineCount();
+            if(linesCount > 0){
+                scrollY = Math.max(0,(tv.getLayout().getLineTop(linesCount)-tv.getHeight()));
+            }
+        }
+        tv.scrollTo(0,scrollY);
     }
 
     public void setCloseEnable(boolean b) {

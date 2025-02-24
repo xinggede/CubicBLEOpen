@@ -88,8 +88,8 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
-    public boolean setFont(int type, int sys, int x, int y) {
-        String data = getLenData(type, 2) + "," + getLenData(sys, 2) + "," + getLenData(x, 2) + "," + getLenData(y, 2);
+    public boolean setFont(int type, int sys, int x, int y, int face) {
+        String data = getLenData(type, 2) + "," + getLenData(sys, 2) + "," + getLenData(x, 2) + "," + getLenData(y, 2) + "," + face;
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.FONT, data));
     }
 
@@ -100,8 +100,8 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
-    public boolean setRCPwm(int flag) {
-        String data = getLenData(flag, 2);
+    public boolean setRCPwm(int flag, int r) {
+        String data = getLenData(flag, 2) + "," + r;
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.RCPWM, data));
     }
 
@@ -112,8 +112,14 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
-    public boolean setEnetIp(int mode, String ip, String mask, String gateway, String dns) {
-        String data = mode + "," + ip + "," + mask + "," + gateway + "," + dns;
+    public boolean setModbus(int d1, int d2, int d3) {
+        String data = getLenData(d1, 3) + "," + getLenData(d2, 2) + "," + getLenData(d3, 4);
+        return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.MODBUS, data));
+    }
+
+    @Override
+    public boolean setEnetIp(int mode, String ip, String gateway, String mask, String dns, int port) {
+        String data = mode + "," + ip + "," + gateway + "," + mask /*+ "," + dns*/ + "," + getLenData(port, 4);
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.ENETIP, data));
     }
 
@@ -124,8 +130,8 @@ public class MainModel extends BleModel implements MainContract.Model {
     }
 
     @Override
-    public boolean setDGType(int d1, int d2, int d3, int d4, int d5) {
-        String data = getLenData(d1, 2) + "," + getLenData(d2, 2) + "," + d3 + "," + d4 + "," + getLenData(d5, 2);
+    public boolean setDGType(int d1, int d2, int d3, int d4, int d5, int d6) {
+        String data = getLenData(d1, 2) + "," + getLenData(d2, 2) + "," + d3 + "," + d4 + "," + d5 + "," + getLenData(d6, 2);
         return sendData(mac, CommandUtil.SEND_SID, CommandUtil.SEND_CID, CommandUtil.setCommandByte(CommandUtil.DGTYPE, data));
     }
 

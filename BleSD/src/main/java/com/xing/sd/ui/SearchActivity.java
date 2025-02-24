@@ -49,15 +49,10 @@ public class SearchActivity extends IBaseActivity<ActivitySearchBinding, SearchP
     @Override
     protected void initViews(Bundle savedInstanceState) {
         setSupportActionBar(binding.toolbar);
-
         binding.toolbar.setTitle("设备列表: " + Tool.getVersionName(this));
-
         binding.swipeRefreshLayout.setEnabled(true);
-
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

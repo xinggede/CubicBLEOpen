@@ -31,6 +31,17 @@
         <item>USB</item>
     </string-array>
 
+    <!--0：NONE；1：CUSTOM；2：HQMEMS；3：HQLED；4：MODBUS_ASCII；5：MODBUS_RTU；6：MODBUS_RTU_TCP。-->
+    <string-array name="show_protocol">
+        <item>NONE</item>
+        <item>CUSTOM</item>
+        <item>HQMEMS</item>
+        <item>HQLED</item>
+        <item>MODBUS_ASCII</item>
+        <item>MODBUS_RTU</item>
+        <item>MODBUS_RTU_TCP</item>
+    </string-array>
+
     <!--0：不显示；1：内容；2：标题；3：时间。-->
     <string-array name="idle_state">
         <item>不显示</item>
@@ -48,6 +59,13 @@
         <item>变量1</item>
         <item>变量2</item>
     </string-array>
+
+    <string-array name="polarity">
+        <item>低</item>
+        <item>高</item>
+    </string-array>
+
+
 
     <string-array name="num_0_9">
         <item>0</item>
@@ -111,5 +129,15 @@
         <item>16</item>
         <item>24</item>
         <item>32</item>
+    </string-array>
+
+    <string-array name="font_face">
+        <item>标准</item>
+        <item>中粗</item>
+        <item>粗体</item>
+    </string-array>
+    <string-array name="ip_mode">
+        <item>静态</item>
+        <item>动态</item>
     </string-array>
 </resources>

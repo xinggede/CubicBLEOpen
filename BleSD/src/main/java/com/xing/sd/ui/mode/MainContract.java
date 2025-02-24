@@ -43,19 +43,21 @@ public class MainContract {
 
         boolean setPType(int range, int scanMode, int oe, int data, int move);
 
-        boolean setFont(int type, int sys, int x, int y);
+        boolean setFont(int type, int sys, int x, int y, int face);
 
         boolean setLPBri(int flag1, int flag2);
 
-        boolean setRCPwm(int flag);
+        boolean setRCPwm(int flag, int r);
 
         boolean setUart(String cmd, int mode, int baud, int dataBit, int stopBit, int checkBit, int protocol);
 
-        boolean setEnetIp(int mode, String ip, String mask, String gateway, String dns);
+        boolean setModbus(int d1, int d2, int d3);
+
+        boolean setEnetIp(int mode, String ip, String gateway, String mask, String dns, int port);
 
         boolean setDTitle(int d1, int d2, String title);
 
-        boolean setDGType(int d1, int d2, int d3, int d4, int d5);
+        boolean setDGType(int d1, int d2, int d3, int d4, int d5, int d6);
 
         boolean setDGShow(int d1, int d2, int d3, int d4, int d5, int d6, int d7, String content);
 
@@ -92,19 +94,19 @@ public class MainContract {
 
         boolean setPType(int range, int scanMode, int oe, int data, int move);
 
-        boolean setFont(int type, int sys, int x, int y);
+        boolean setFont(int type, int sys, int x, int y, int face);
 
         boolean setLPBri(int flag1, int flag2);
 
-        boolean setRCPwm(int flag);
+        boolean setRCPwm(int flag, int r);
 
         boolean setUart(String cmd, int mode, int baud, int dataBit, int stopBit, int checkBit, int protocol);
 
-        boolean setEnetIp(int mode, String ip, String mask, String gateway, String dns);
+        boolean setEnetIp(int mode, String ip, String gateway, String mask, String dns, int port);
 
         boolean setDTitle(int d1, int d2, String title);
 
-        boolean setDGType(int d1, int d2, int d3, int d4, int d5);
+        boolean setDGType(int d1, int d2, int d3, int d4, int d5, int d6);
 
         boolean setDGShow(int d1, int d2, int d3, int d4, int d5, int d6, int d7, String content);
 

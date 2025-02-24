@@ -57,7 +57,7 @@ public class CommandUtil {
     public static final String DTITLE = "DTITLE-"; //显示标题的获取和设置； APP- 或 APP->MCU:-Dx ；MCU->APP:-Dx
     public static final String DGTYPE = "DGTYPE-"; //显示方式的获取和设置；
     public static final String DGSHOW = "DGSHOW-"; //显示内容的获取和设置；
-
+    public static final String MODBUS = "MODBUS-"; //MODBUS的获取和设置；
     public static final String UPG = "UPG-"; //升级开始设置；
     public static final String RESET = "RESET-"; ///复位的设置; APP->MCU:-Dx
 

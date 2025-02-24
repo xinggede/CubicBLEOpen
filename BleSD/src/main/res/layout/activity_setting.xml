@@ -40,22 +40,30 @@
                     android:id="@+id/tv_wd"
                     style="@style/tcStyle"
                     android:text="10"
-                    android:gravity="center"
-                    android:layout_width="60dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_width="30dp"/>
 
                 <TextView
                     style="@style/tvStyle"
                     android:text="电压："
-                    android:layout_marginStart="40dp"/>
+                    android:layout_marginStart="20dp"/>
 
                 <TextView
                     android:id="@+id/tv_dy"
                     style="@style/tcStyle"
                     android:text="10"
-                    android:gravity="center"
-                    android:layout_width="60dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_width="60dp"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/tcStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="18:20:30" />
+
+                <Button
+                    android:id="@+id/bt_set_time"
+                    style="@style/btStyle"
+                    android:layout_marginStart="10dp"
+                    android:text="时间设置" />
 
             </LinearLayout>
 
@@ -77,24 +85,25 @@
                     android:layout_marginStart="10dp"
                     android:imeOptions="actionDone"/>
 
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="极性："
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_rcpwm_polarity"
+                    style="@style/tvBJStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="60dp"
+                    android:text="低" />
+
                 <Button
                     android:id="@+id/bt_set_rcp"
                     style="@style/btStyle"
                     android:layout_width="50dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     android:text="设置" />
 
-                <TextView
-                    android:id="@+id/tv_time"
-                    style="@style/tcStyle"
-                    android:layout_marginStart="20dp"
-                    android:text="18:20:30" />
-
-                <Button
-                    android:id="@+id/bt_set_time"
-                    style="@style/btStyle"
-                    android:layout_marginStart="10dp"
-                    android:text="时间设置" />
             </LinearLayout>
 
             <View
@@ -266,6 +275,31 @@
 
             </LinearLayout>
 
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="字体选择：" />
+
+                <TextView
+                    android:id="@+id/tv_font_face"
+                    style="@style/tvBJStyle"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:text="标准" />
+
+                <Button
+                    android:id="@+id/bt_set_font"
+                    android:layout_width="wrap_content"
+                    style="@style/btStyle"
+                    android:layout_marginStart="20dp"
+                    android:text="字体设置" />
+
+            </LinearLayout>
+
             <TextView
                 style="@style/tintStyle"
                 android:text="UART设置："/>
@@ -356,16 +390,23 @@
                     android:id="@+id/et_uart_baud"
                     style="@style/etStyleShow"
                     android:text="115200"
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:imeOptions="actionDone"
                     android:maxLength="7"
                     android:layout_marginStart="10dp"/>
+
+                <Button
+                    android:id="@+id/bt_uart_set"
+                    style="@style/btStyle"
+                    android:text="设置"
+                    android:layout_marginStart="30dp"/>
             </LinearLayout>
 
             <View style="@style/lineStyle"/>
 
             <LinearLayout
-                style="@style/linStyle">
+                style="@style/linStyle"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/tvStyle"
@@ -377,9 +418,66 @@
                     android:layout_width="150dp"
                     android:layout_marginStart="10dp"
                     android:text="MODBUS_ASCII" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/tintStyle"
+                android:text="MODBUS设置："/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="设备地址：" />
+
+                <EditText
+                    android:id="@+id/et_ms_address"
+                    style="@style/etStyleShow"
+                    android:hint="范围0~127"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:imeOptions="actionNext"
+                    android:maxLength="3"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="功&#8194;能&#8194;码："
+                    android:layout_marginStart="30dp"/>
+
+                <EditText
+                    android:id="@+id/et_ms_code"
+                    style="@style/etStyleShow"
+                    android:hint="范围0~99"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:imeOptions="actionNext"
+                    android:maxLength="2"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/lineStyle"/>
+
+            <LinearLayout
+                style="@style/linStyle">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:text="寄存器地址：" />
+
+                <EditText
+                    android:id="@+id/et_ms_reg_address"
+                    style="@style/etStyleShow"
+                    android:hint="范围0~9999"
+                    android:layout_width="140dp"
+                    android:imeOptions="actionDone"
+                    android:maxLength="4"
+                    android:layout_marginStart="10dp"/>
 
                 <Button
-                    android:id="@+id/bt_uart_set"
+                    android:id="@+id/bt_ms_set"
                     style="@style/btStyle"
                     android:text="设置"
                     android:layout_marginStart="30dp"/>
@@ -400,13 +498,22 @@
                     android:id="@+id/tv_ip_mode"
                     style="@style/tvBJStyle"
                     android:layout_marginStart="10dp"
-                    android:text="静态" />
+                    android:text="动态" />
+
+                <EditText
+                    android:id="@+id/et_port"
+                    style="@style/etStyleShow"
+                    android:hint="端口号"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="80dp"
+                    android:maxLength="4"
+                    android:inputType="number"/>
 
                 <Button
                     android:id="@+id/bt_ip_set"
                     style="@style/btStyle"
                     android:text="设置"
-                    android:layout_marginStart="50dp"/>
+                    android:layout_marginStart="20dp"/>
 
             </LinearLayout>
 
@@ -418,33 +525,37 @@
                 <EditText
                     android:id="@+id/et_ip_address"
                     style="@style/etStyleShow"
-                    android:text="192.168.10.10"
+                    android:hint="IP地址"
                     android:layout_width="150dp"
-                    android:maxLength="15"/>
+                    android:maxLength="15"
+                    android:inputType="text"/>
 
                 <EditText
                     android:id="@+id/et_ip_gateway"
                     style="@style/etStyleShow"
-                    android:text="192.168.10.1"
+                    android:hint="网关地址"
                     android:layout_width="150dp"
                     android:maxLength="15"
+                    android:inputType="text"
                     android:layout_alignParentEnd="true" />
 
                 <EditText
                     android:id="@+id/et_ip_mask"
                     style="@style/etStyleShow"
-                    android:text="255.255.255.0"
+                    android:hint="子网掩码"
                     android:layout_marginTop="10dp"
                     android:layout_width="150dp"
                     android:maxLength="15"
+                    android:inputType="text"
                     android:layout_below="@+id/et_ip_address"/>
 
                 <EditText
                     android:id="@+id/et_ip_dns"
                     style="@style/etStyleShow"
-                    android:text="192.168.10.1"
+                    android:hint="DNS地址"
                     android:layout_width="150dp"
                     android:maxLength="15"
+                    android:inputType="text"
                     android:layout_marginTop="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/et_ip_address"

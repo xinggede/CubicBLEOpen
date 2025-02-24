@@ -175,19 +175,20 @@
                     android:text="R" />
 
                 <TextView
-                    android:id="@+id/tv6"
+                    android:id="@+id/tv16"
                     style="@style/tvStyle"
-                    android:text="空闲显示："
-                    android:layout_toStartOf="@+id/tv_show_idle"
+                    android:text="通信协议："
+                    android:layout_toStartOf="@+id/tv_show_protocol"
                     android:layout_centerVertical="true"/>
 
                 <TextView
-                    android:id="@+id/tv_show_idle"
+                    android:id="@+id/tv_show_protocol"
                     style="@style/tvBJStyle"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_width="90dp"
-                    android:text="1"/>
+                    android:text="NONE"/>
+
             </RelativeLayout>
 
             <View
@@ -208,7 +209,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/tv7"
                     android:layout_centerVertical="true"
-                    android:layout_width="80dp"
+                    android:layout_width="50dp"
                     android:maxLength="2"
                     android:imeOptions="actionDone"
                     android:text="10" />
@@ -216,18 +217,39 @@
                 <TextView
                     android:id="@+id/tv8"
                     style="@style/tvStyle"
-                    android:text="秒S"
+                    android:text="秒"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/et_show_time"
                     android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv6"
+                    style="@style/tvStyle"
+                    android:text="空闲显示："
+                    android:layout_toStartOf="@+id/tv_show_idle"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_show_idle"
+                    style="@style/tvBJStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="90dp"
+                    android:text="1"/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/lineStyle"/>
+
+            <RelativeLayout
+                style="@style/linStyle">
+
                 <Button
                     android:id="@+id/bt_set_show"
                     style="@style/btStyle"
                     android:text="设置"
-                    android:layout_marginStart="30dp"
-                    android:layout_toEndOf="@+id/tv8"
-                    android:layout_centerVertical="true"/>
-
+                    android:layout_centerInParent="true"/>
             </RelativeLayout>
 
             <TextView
